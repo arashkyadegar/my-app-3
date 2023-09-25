@@ -16,12 +16,40 @@
   }
 }
 
+#root {
+
+  font-family:  Vazir !important;
+}
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+
+  direction: rtl;
+background-color: gainsboro;
+}
+
+
+@font-face {
+  font-family: Vazir;
+  font-weight: normal;
+  font-style: normal;
+
+  src: url('./fonts/vazir-font-v18.0.0/Vazir-Medium.eot');
+  src: url('./fonts/vazir-font-v18.0.0/Vazir-Medium.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/vazir-font-v18.0.0/Vazir-Medium.woff2') format('woff2'),
+    url('./fonts/vazir-font-v18.0.0/Vazir-Medium.woff') format('woff'),
+    url('./fonts/vazir-font-v18.0.0/Vazir-Medium.ttf') format('truetype');
+  font-display: swap;
+}
+
+@font-face {
+  font-family: Vazir;
+  font-weight: bold;
+  font-style: bold;
+
+  src: url('./fonts/vazir-font-v18.0.0/Vazir-Bold.eot');
+  src: url('./fonts/vazir-font-v18.0.0/Vazir-Bold.eot?#iefix') format('embedded-opentype'),
+    url('./fonts/vazir-font-v18.0.0/Vazir-Bold.woff2') format('woff2'),
+    url('./fonts/vazir-font-v18.0.0/Vazir-Bold.woff') format('woff'),
+    url('./fonts/vazir-font-v18.0.0/Vazir-Bold.ttf') format('truetype');
+  font-display: swap;
 }
