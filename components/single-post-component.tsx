@@ -1,25 +1,32 @@
 import { PropsWithChildren, useState } from "react";
-
-export default function SinglePost({props} : any)  {
-  const [postDrpDwnHide, setPostDrpDwnHide] = useState(true);
+import Image from 'next/image'
+import { Inter } from 'next/font/google'
+import { useRouter } from 'next/router';
+import { userAgentFromString } from 'next/server';
+import { Post, User } from "@/models/entities";
+const inter = Inter({ subsets: ['latin'] })
+export default function SinglePostComponent({props} : any)  {
+  const element = props;
+  console.log(element.tags);
+  const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
   const togglePostDrpDwn = () => {
     setPostDrpDwnHide(!postDrpDwnHide);
     };
 
   return (
-    <div className=" mb-4 rounded-lg  overflow-hidden border border-gray-400 shadow-lg">
+    <div key={element._id} className=" mb-4 rounded-lg  overflow-hidden border border-gray-400 shadow-lg">
     <div className="flex flex-col bg-white ">
   
     <div className="bg-white flex flex-row p-2 ">
     <div className=" w-full flex-wrap flex flex-row ">
        {/* img-div  */}
       <div className="">
-        <img src="avator (1).png" alt="avatar" className=" cursor-pointer aspect-square w-16 h-16 rounded-full mr-2 shadow-sm shadow-black" />
+        <img src={element.img} alt="avatar" className=" cursor-pointer aspect-square w-16 h-16 rounded-full mr-2 shadow-sm shadow-black" />
       </div>
       <div className="flex flex-col p-4 ">
-        <h3 className="w-full font-bold text-sm">ارشک یادگار</h3>
+        <h3 className="w-full font-bold text-sm">{element.author.name}</h3>
         <h3 className="text-xs">
-              ۱۵ دقیقه قبل
+              {element.date}
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-gray-600 float-left">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -82,23 +89,20 @@ export default function SinglePost({props} : any)  {
     <div className="w-full">
       <div className="px-4">
       <div className="">
-       <h3 className="font-bold">لورم ایپسوم متن ساختگی</h3>
+       <h3 className="font-bold">{element.title}</h3>
       </div>
       <div className=" text-justify py-3">
         <p className="line-clamp-2 ">
-        لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است              </p>
+        {element.body}</p>
         <a className="text-xs font-bold text-blue-700" href="">مشاهده پست </a>
       </div>
     </div>
       <div className=" p-5 pb-5 flex gap-2 flex-wrap">
-        <button className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">فیلم</button>
-        <button className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">دانشگاه</button>
-        <button className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">دکترای دانشگاه</button>
-        <button className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">کارشناسی دانشگاه</button>
-        <button className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">هنر</button>
-  
-  
-  
+
+      {element.tags.map((tag:any) => (
+       <button className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">{tag}</button>
+      ))}
+      
       </div>
       <div className="py-5 px-5 border-y text-gray-600 border-black flex flex-row justify-between">
         <div className="flex flex-row gap-2">
