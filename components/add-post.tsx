@@ -6,7 +6,7 @@ export default function AddPost({props} : any)  {
     <>
     <div className=" flex flex-row w-3/6 overflow-hidden  border-gray-900 rounded-lg bg-white  shadow-xl shadow-gray-800">
      {/* left-col */}
-    <div className=" flex flex-col items-center justify-center basis-1/4 bg-gradient-to-t from-red-400 to-white">
+    <div className=" flex flex-col items-center justify-center basis-1/4 bg-gradient-to-t from-purple-600 to-white">
           <img src="icons-new-post-64.png" alt="" />
     </div>
      {/* right-col */}

@@ -10,20 +10,18 @@ import router from "next/router";
 import { json } from "node:stream/consumers";
 
 export default function IndexComponent({props} : any)  {
-
+    const postList = JSON.parse(props.post);
 
     const [addPostHide, setAddPostHide] = useState(false);
     const togglePostDrpDwn = () => {
       setAddPostHide(!addPostHide);
       };
-  const postList = JSON.parse(props.post) ;
-  
   return (
     <>
     <div className='flex'>
     <div className=" flex flex-col sm:flex-row w-full gap-2  ">
     <div className="fixed rounded-full overflow-hidden shadow-lg">
-            <svg  onClick={togglePostDrpDwn} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-12 h-12 cursor-pointer text-white  bg-green-500" >
+            <svg  onClick={togglePostDrpDwn} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-12 h-12 cursor-pointer text-white  bg-green-300 hover:bg-green-500" >
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
         </div>
@@ -33,9 +31,9 @@ export default function IndexComponent({props} : any)  {
       </div>
       <div className=" flex flex-col sm:w-9/12">
 
-        {postList.map((element:any) => (
-          <SinglePostComponent key={element._id}  props = {element} />
-        ))}
+         {postList.map((post:any) => (
+          <SinglePostComponent key={post._id}  props = {post} />
+        ))} 
      
         <div className="flex flex-row gap-2">
         <SideNewWriters />

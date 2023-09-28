@@ -12,8 +12,6 @@ import { json } from 'stream/consumers';
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(rslt:any) {
-  const router = useRouter();
-  const { locale, locales, defaultLocale } = router
   return (
       <>
         <IndexComponent props={rslt} />
@@ -23,9 +21,9 @@ export default function Home(rslt:any) {
   // This gets called on every request
   export async function getServerSideProps() {
     const authorId = "650ec918679b6c8132cf94da"
-    const res = await fetch(`http://localhost:8000/posts/findByAuthor?authorId=${authorId}`)
+    //const res = await fetch(`http://localhost:8000/posts/findByAuthor?authorId=${authorId}`)
+    const res = await fetch(`http://localhost:8000/posts/findAll`);
     const repo = await res.json();
-
     let post = JSON.stringify(repo);
     // Pass data to the page via props
     return { props: {post }}

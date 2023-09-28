@@ -5,7 +5,7 @@ export default function SideProfile({props} : any)  {
   return (
     <>
     <div className="flex flex-col rounded-lg  border border-gray-400 bg-white shadow-lg">
-    <div className="bg-red-600  h-20 flex justify-center ">
+    <div className="bg-purple-800  h-20 flex justify-center ">
       <div className="border border-gray-300 mt-10  w-20 h-20  bg-white p-2 rounded-full overflow-hidden cursor-pointer">
         <img src="../css/images/avator (1).png" alt="" />
       </div>
