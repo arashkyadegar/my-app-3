@@ -7,11 +7,12 @@ export default function SinglePost(rslt:any) {
   const post = (JSON.parse(rslt.post))[0];
   return (
       <>
-      <SinglePostComponent props={post} />
-      {/* comments-div  */}
+      hi
+      {/* <SinglePostComponent props={post} />
 
-      <SingleCommentComponent  props= {post._id} /> 
-      
+
+      <SingleCommentComponent  props= {post._id} />  
+    */}
       </>
   )
 }
@@ -22,7 +23,7 @@ export default function SinglePost(rslt:any) {
     const repo = await res.json();
 
     let post = JSON.stringify(repo);
-
+      console.log(post)
     // // Pass data to the page via props
     return { props: {post}}
   }

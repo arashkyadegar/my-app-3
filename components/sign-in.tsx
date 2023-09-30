@@ -15,13 +15,17 @@ export default function SignIn({props} : any)  {
 
     const res = await fetch(`http://localhost:8000/auth/login/`,requestOptions);
     const repo = (await res.json())[0];
-    
+
+    console.log(repo);
+
     setUserProfile({
       ...userProfile,
       name : repo.name,
       img : repo.img,
       _id : repo._id,
-      token :repo.token
+      token :repo.token,
+      followers: repo.followers,
+      followings:repo.followings
     });
 
     }

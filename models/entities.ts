@@ -46,11 +46,14 @@ export interface  IUser {
   remember: boolean;
   tags: string[];
   likes: string[];
-  follows: string[];
+  followers: string[];
+  followings: string[];
 }
 
 
 export class User implements IUser  {
+  followers!: string[];
+  followings!: string[];
   _id!: string;
   name!: string;
   img!:string;
@@ -59,7 +62,6 @@ export class User implements IUser  {
   remember!: boolean;
   tags!: string[];
   likes!: string[];
-  follows!: string[];
 
 }
 

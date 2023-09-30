@@ -1,19 +1,21 @@
 import { PropsWithChildren, useContext, useState } from "react";
 import { Inter } from 'next/font/google'
 import Link from "next/link";
-
+import moment from "moment";
 const inter = Inter({ subsets: ['latin'] })
 export default function SinglePostComponent({props} : any)  {
+  moment.locale();
   const  post = props;
+  console.log(post);
 
+  let time = Date.now();
+  console.log(new Date(time));
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
   const togglePostDrpDwn = () => {
     setPostDrpDwnHide(!postDrpDwnHide);
   };
 
   return (
-
-
     <div key={props._id} className=" text-sm rounded-lg  overflow-hidden border border-gray-400 shadow-lg">
     <div className="flex flex-col bg-white ">
   
@@ -21,13 +23,15 @@ export default function SinglePostComponent({props} : any)  {
     <div className=" w-full flex-wrap flex flex-row ">
        {/* img-div  */}
       <div className="">
-        <img src={props.img} alt="avatar" className=" cursor-pointer aspect-square w-16 h-16 rounded-full mr-2 shadow-sm shadow-black" />
+        <img src={props.author.img} alt="avatar" className=" cursor-pointer aspect-square w-16 h-16 rounded-full mr-2 shadow-sm shadow-black" />
       </div>
       <div className="flex flex-col p-4 ">
-        <h3 className="w-full font-bold text-sm">{props.author.name}</h3>
-        <h3 className="text-xs">
-        {props.date}
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-gray-600 float-left">
+        <h3 className="w-full font-bold text-sm mb-1">{props.author.name}</h3>
+        <h3 className="text-xs ">
+        { 
+           moment(new Date(props.date)).subtract(10, 'days').calendar()
+        }
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 ml-2 text-gray-600 float-right">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
         </h3>
@@ -53,7 +57,10 @@ export default function SinglePostComponent({props} : any)  {
             <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
           </svg> 
           <h3 className="text-xs">
-            15 minutes ago
+          { 
+        moment(new Date(props.date), "YYYYMMDD").fromNow()
+
+        }
           </h3>
         </div>
         <div className="flex">

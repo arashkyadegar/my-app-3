@@ -9,14 +9,15 @@ const myAppContext = createContext({
   setUserSignInModal: (userSignInModal: boolean) => {},
   userProfile : {
     _id: "",
-    name: "arashk yadegar",
-    img: "",
+    name: "not logged in",
+    img: "unknown-avatar.png",
     password: "",
     token: "",
     remember: false,
     tags:[""],
     likes: [""],
-    follows: [""]
+    followers: [""],
+    followings: [""]
   },
   setUserProfile: (user: User) => {}
 });
