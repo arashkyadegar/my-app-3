@@ -9,12 +9,15 @@ import SideLink from '@/components/side-link';
 import { Post,User } from '@/models/entities';
 import IndexComponent from '@/components/index-component'; 
 import { json } from 'stream/consumers';
+import { createContext, useContext,useState } from 'react';
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home(rslt:any) {
   return (
       <>
-        <IndexComponent props={rslt} />
+              <IndexComponent props={rslt} />
+
       </>
   )
 }

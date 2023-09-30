@@ -1,6 +1,20 @@
+import React from "react";
 import { PropsWithChildren, useState } from "react";
+import myAppContext from "./context/context";
 
 export default function AddPost({props} : any)  {
+  const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
+  const {userProfile,setUserProfile} = React.useContext(myAppContext);
+
+   function createPost() {
+    console.log(userProfile.name);
+    setUserProfile({
+      ...userProfile,
+      name : 'ashkan yadegar'
+    })
+    console.log(userProfile.name);
+    //  setCreatePostModal(false);
+   }
 
   return (
     <>
@@ -24,10 +38,11 @@ export default function AddPost({props} : any)  {
         <input type="text" id="twitterAccount" name="twitter-account" />
       </div>
       <div className="flex justify-end">
-        <button className="bg-green-600 inline px-4 py-2 rounded-md text-white">ثبت</button>
+        <button onClick={createPost} className="bg-green-600 inline px-4 py-2 rounded-md text-white">ثبت</button>
       </div>
     </div>
 
     </div>
     </>)
   }
+

@@ -1,15 +1,9 @@
-import { PropsWithChildren, useState } from "react";
-import Image from 'next/image'
+import { PropsWithChildren, useContext, useState } from "react";
 import { Inter } from 'next/font/google'
-import { useRouter } from 'next/router';
-import { userAgentFromString } from 'next/server';
-import { Post, User } from "@/models/entities";
-import SingleCommentComponent from "./single-comment-component";
 import Link from "next/link";
 
 const inter = Inter({ subsets: ['latin'] })
 export default function SinglePostComponent({props} : any)  {
-  console.log(props);
   const  post = props;
 
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
@@ -20,7 +14,7 @@ export default function SinglePostComponent({props} : any)  {
   return (
 
 
-    <div key={props._id} className=" rounded-lg  overflow-hidden border border-gray-400 shadow-lg">
+    <div key={props._id} className=" text-sm rounded-lg  overflow-hidden border border-gray-400 shadow-lg">
     <div className="flex flex-col bg-white ">
   
     <div className="bg-white flex flex-row p-2 ">
@@ -32,6 +26,7 @@ export default function SinglePostComponent({props} : any)  {
       <div className="flex flex-col p-4 ">
         <h3 className="w-full font-bold text-sm">{props.author.name}</h3>
         <h3 className="text-xs">
+        {props.date}
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4 text-gray-600 float-left">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
@@ -94,28 +89,30 @@ export default function SinglePostComponent({props} : any)  {
       <div className="">
        <h3 className="font-bold">{props.title}</h3>
       </div>
-      <div className=" text-justify py-3">
-        <p className="line-clamp-2 ">
+      <div className="flex   flex-col justify-between text-justify py-3">
+        <div>
+        <p className="line-clamp-2 mb-5">
         {props.body}</p>
-      <a>
-      <Link href = {{
+   
+        </div>
+        <div className="flex justify-end text-blue-600 font-semibold">
+        <Link href = {{
               pathname:`/single-post` ,
               query: { postId: props._id },
               }}> مشاهده
               </Link>
-      </a>
-
-        
+        </div>
       </div>
     </div>
-      <div className=" p-5 pb-5 flex gap-2 flex-wrap">
+
+      {/* <div className=" pb-5 flex gap-2 flex-wrap">
 
       {props.tags.map((tag:any) => {
        return <button  className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">{tag}</button>
       })}
     
       
-      </div>
+      </div> */}
       <div className="py-5 px-5 border-y text-gray-600 border-black flex flex-row justify-between">
         <div className="flex flex-row gap-2">
          {/* heart-svg  */}
