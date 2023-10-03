@@ -65,7 +65,10 @@ export class User implements IUser  {
 
 }
 
-
+export class LoginFields {
+  username: string = "";
+  password: string = "";
+}
 
 export interface IComment {
   _id: string;
