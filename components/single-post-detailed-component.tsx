@@ -12,6 +12,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
 
   const {userProfile,setUserProfile} = React.useContext(myAppContext);
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
+  const [commentText, setCommentText] = useState("");
   const [comments, setComments] = useState(props.comments);
 
   moment.locale();
@@ -28,6 +29,9 @@ export default function SinglePostDetailedComponent({props} : any)  {
           })
   }
 
+  function fillCommentText(event: any) {
+    setCommentText(event.target.value);
+  }
 
   function sendComment(): void {
     if(!userProfile._id) {
@@ -42,7 +46,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
             "userId": userProfile._id,
             "postId": postId,
             "commentId": "",
-            "text": "hello nextjs world",
+            "text": commentText,
             "rate": 0,
             "isVisible": false,
             "date": ""
@@ -170,7 +174,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
               </div>
               <div className="flex flex-row w-full bg-white gap-2 ">
                 <label htmlFor="twitter-account" className="text-base ">متن</label>
-                <textarea name="" id="" rows={2}  className="w-8/12 outline-none rounded-lg bg-transparent border border-gray-600 p-2"></textarea>
+                <textarea onChange={fillCommentText} name="" id="" rows={2}  className="w-8/12 outline-none rounded-lg bg-transparent border border-gray-600 p-2"></textarea>
                 <button onClick={ () => {sendComment()}} className='bg-green-400 h-10 inline px-4 py-2 rounded-md text-white'>ارسال</button>
               </div>
             </div>

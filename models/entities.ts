@@ -79,5 +79,5 @@ export interface IComment {
   date: string;
 }
 module.exports = {
-  Post,User
+  Post,User,LoginFields
 }

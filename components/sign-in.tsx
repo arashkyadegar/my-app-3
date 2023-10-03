@@ -1,22 +1,25 @@
+import { LoginFields } from "@/models/entities";
 import myAppContext from "./context/context";
-import React from "react";
+import React, { useState } from "react";
 
 
 export default function SignIn({props} : any)  {
   const {userProfile,setUserProfile} = React.useContext(myAppContext);
-  const {userSignInModal,setUserSignInModal} = React.useContext(myAppContext);
+  const {loginFields,setLoginFields} = React.useContext(myAppContext);
 
+  const {userSignInModal,setUserSignInModal} = React.useContext(myAppContext);
   async function signinApi(): Promise<void>{
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name:"azita",password:"12345",remember:'true' })
+      body: JSON.stringify({ name:loginFields.username,password:loginFields.password,remember:'true' })
     };
 
     const res = await fetch(`http://localhost:8000/auth/login/`,requestOptions);
     const repo = (await res.json())[0];
 
-    setUserProfile({
+
+    setUserProfile ({
       ...userProfile,
       name : repo.name,
       img : repo.img,
@@ -27,10 +30,30 @@ export default function SignIn({props} : any)  {
     });
 
     setUserSignInModal(false);
+
+    }
+
+    function fillLoginUsername(event: any){
+      setLoginFields(
+        {
+          ...loginFields,
+          username: event.target.value
+        }
+      );
+    }
+
+    function fillLoginPassword(event: any){
+      setLoginFields(
+        {
+          ...loginFields,
+          password: event.target.value
+        }
+      ) ;
     }
 
   return (
   <div className="absolute bg-white w-6/12  rounded-lg">
+    
     <div  className=" mb-10 mx-auto  border-gray-500 w-full  p-5">
       <ul className="flex flex-row gap-2 ">
         <li  className="cursor-pointer p-2 border-gray-900">Sign-up</li>
@@ -59,7 +82,7 @@ export default function SignIn({props} : any)  {
           <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
         </svg>
 
-        <input type="text" id="email" name="email" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
+        <input onChange={fillLoginUsername} type="text" id="email" name="email" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
       </div>
 
       <div className="flex flex-col relative ">
@@ -68,7 +91,7 @@ export default function SignIn({props} : any)  {
           <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
         </svg>
 
-        <input type="password" id="password" name="password" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
+        <input type="password" onChange={fillLoginPassword} id="password" name="password" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
       </div>
 
       <div className="flex flex-row mt-4 justify-end">

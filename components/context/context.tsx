@@ -37,11 +37,13 @@ const myAppContext = createContext({
   setSelectedPost :(post: Post) => {},
   comments : [],
   setComments : (comments : []) => {},
-  loginFields:{
-    username:"",
-    password:""
+  loginFields: {
+    username: "",
+    password: ""
   },
- setLoginFields: (loginFields: LoginFields) =>{}
+ setLoginFields: (loginFields: LoginFields) => {},
+ commentText:"",
+ setCommentText:(commentText: string) => {}
 });
 
 
