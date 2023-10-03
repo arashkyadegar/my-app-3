@@ -5,9 +5,9 @@ export class IPost {
   body!: string;
   rate!: number;
   img!: string;
-  date!: Date;
+  date!: string;
   isVisible!: boolean;
-  documents!: Array<IDocument>;
+  documents!: Array<string>;
   tags = [];
   links = [];
   comments!: Array<IComment>;
@@ -21,12 +21,12 @@ export class Post implements IPost {
   body!: string;
   rate!: number;
   img!: string;
-  date!: Date;
+  date!: string;
   isVisible!: boolean;
-  documents!: IDocument[];
-  tags!: never[];
-  links!: never[];
-  comments!: IComment[];
+  documents!: [];
+  tags!: [];
+  links!: [];
+  comments!: [];
 
 }
 

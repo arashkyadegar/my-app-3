@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 export default function SideMostViewedPeople({props} : any)  {
 
   return (
-    <>
+    
       <div className="w-full flex flex-col rounded-lg border border-gray-400  overflow-hidden  bg-white shadow-lg">
         <div className="flex flex-row justify-between border border-gray-200   items-center  pr-4 py-2">
           <h3 className="text-md font-semibold">Most viewed people</h3>
@@ -26,13 +26,14 @@ export default function SideMostViewedPeople({props} : any)  {
               </p>
             </div>
           </div>
+          
           <div className="flex items-center justify-end  p-4">
             <div className="border border-gray-300  text-gray-500 cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </div>
-        </div>
+          </div>
         </div>
 
         <div className="flex flex-row border-b border-gray-200">
@@ -47,13 +48,14 @@ export default function SideMostViewedPeople({props} : any)  {
               </p>
             </div>
           </div>
+
           <div className="flex items-center justify-end  p-4">
             <div className="border border-gray-300  text-gray-500 cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </div>
-        </div>
+          </div>
         </div>
 
         <div className="flex flex-row border-b border-gray-200">
@@ -68,13 +70,14 @@ export default function SideMostViewedPeople({props} : any)  {
               </p>
             </div>
           </div>
+
           <div className="flex items-center justify-end  p-4">
             <div className="border border-gray-300  text-gray-500 cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </div>
-        </div>
+          </div>
         </div>
 
         <div className="flex flex-row border-b border-gray-200">
@@ -89,16 +92,17 @@ export default function SideMostViewedPeople({props} : any)  {
               </p>
             </div>
           </div>
+
           <div className="flex items-center justify-end  p-4">
             <div className="border border-gray-300  text-gray-500 cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-3 h-3">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
             </div>
+          </div>
+          
         </div>
-        </div>
-
 
       </div>
-    </>)
+  )
   }

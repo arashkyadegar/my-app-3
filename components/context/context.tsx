@@ -1,11 +1,11 @@
 import { createContext, useContext, useState } from 'react';
-import {User} from '../../models/entities';
+import {User,Post} from '../../models/entities';
 const myAppContext = createContext({
   createPostModal: false,
   setCreatePostModal: (createPostModal :boolean) => {},
-  navbarMenu:false,
+  navbarMenu: false,
   setNavBarMenu: (navbarMenu: boolean) => {},
-  userSignInModal:false,
+  userSignInModal: false,
   setUserSignInModal: (userSignInModal: boolean) => {},
   userProfile : {
     _id: "",
@@ -14,12 +14,29 @@ const myAppContext = createContext({
     password: "",
     token: "",
     remember: false,
-    tags:[""],
+    tags: [""],
     likes: [""],
     followers: [""],
     followings: [""]
   },
-  setUserProfile: (user: User) => {}
+  setUserProfile: (user: User) => {},
+  selectedPost: {
+    _id: ""  ,
+    author: new User() ,
+    title: "" ,
+    body: "" ,
+    rate: 0 ,
+    img: "" ,
+    date: "" ,
+    isVisible: false ,
+    documents: [] ,
+    tags: [] ,
+    links: [] ,
+    comments: []
+  },
+  setSelectedPost :(post: Post) => {},
+  comments : [],
+  setComments : (comments : []) => {}
 });
 
 
