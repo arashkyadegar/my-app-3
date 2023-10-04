@@ -65,10 +65,18 @@ export class User implements IUser  {
 
 }
 
-export class LoginFields {
+export interface ILoginFields {
+  username: string;
+  password: string;
+}
+export class LoginForm implements ILoginFields {
   username: string = "";
   password: string = "";
+  usernameError: string ="";
+  passwordError: string =""
+  formIsValid: boolean = false;
 }
+
 
 export interface IComment {
   _id: string;
@@ -79,5 +87,5 @@ export interface IComment {
   date: string;
 }
 module.exports = {
-  Post,User,LoginFields
+  Post,User,LoginForm
 }

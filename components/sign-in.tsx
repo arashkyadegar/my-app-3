@@ -1,55 +1,87 @@
-import { LoginFields } from "@/models/entities";
+
 import myAppContext from "./context/context";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 
 
 export default function SignIn({props} : any)  {
   const {userProfile,setUserProfile} = React.useContext(myAppContext);
-  const {loginFields,setLoginFields} = React.useContext(myAppContext);
+  const {loginForm,setLoginForm} = React.useContext(myAppContext);
 
   const {userSignInModal,setUserSignInModal} = React.useContext(myAppContext);
-  async function signinApi(): Promise<void>{
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name:loginFields.username,password:loginFields.password,remember:'true' })
-    };
-
-    const res = await fetch(`http://localhost:8000/auth/login/`,requestOptions);
-    const repo = (await res.json())[0];
 
 
-    setUserProfile ({
-      ...userProfile,
-      name : repo.name,
-      img : repo.img,
-      _id : repo._id,
-      token :repo.token,
-      followers: repo.followers,
-      followings:repo.followings
-    });
+  async function submitSigninApi(event: any): Promise<void>{
+    event.preventDefault();
+    console.log(loginForm);
+    if(loginForm.formIsValid){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name:loginForm.username,password:loginForm.password,remember:'true' })
+      };
 
-    setUserSignInModal(false);
+      const res = await fetch(`http://localhost:8000/auth/login/`,requestOptions);
+      const repo = (await res.json())[0];
 
+
+      setUserProfile ({
+        ...userProfile,
+        name : repo.name,
+        img : repo.img,
+        _id : repo._id,
+        token :repo.token,
+        followers: repo.followers,
+        followings:repo.followings
+      });
+
+      setUserSignInModal(false);
     }
+  }
 
-    function fillLoginUsername(event: any){
-      setLoginFields(
-        {
-          ...loginFields,
-          username: event.target.value
+  function fillLoginUsername(event: any){
+     let text: string = event.target.value;
+      if(text.length == 0) {
+             setLoginForm({
+                ...loginForm,
+                usernameError:"لطفا نام کاربری را وارد کنید",
+                formIsValid:false
+             }
+             ) 
+      }else{
+        setLoginForm({
+            ...loginForm,
+            username:text,
+            formIsValid:true
         }
-      );
+        ) 
+
+      }
+
+  }
+
+  function fillLoginPassword(event: any){
+    let text: string = event.target.value;
+    if(text.length == 0) {
+      setLoginForm({
+              ...loginForm,
+              passwordError:"لطفا کلمه عبور را وارد کنید",
+              formIsValid:false
+           }
+           ) 
+       
+    }else{
+      setLoginForm({
+          ...loginForm,
+          password:text,
+          formIsValid:true
+      }
+      ) 
     }
 
-    function fillLoginPassword(event: any){
-      setLoginFields(
-        {
-          ...loginFields,
-          password: event.target.value
-        }
-      ) ;
-    }
+  }
+
+
 
   return (
   <div className="absolute bg-white w-6/12  rounded-lg">
@@ -75,33 +107,34 @@ export default function SignIn({props} : any)  {
           <path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path>
         </svg>
       </div>
+      <form onSubmit={submitSigninApi}>
+        <div className="flex flex-col relative  mb-2">
+          <label htmlFor="email" className="text-base mb-2">نام کاربری</label>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute top-9 left-1 w-6 h-6 ">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+          </svg>
 
-      <div className="flex flex-col relative  mb-2">
-        <label htmlFor="email" className="text-base mb-2">نام کاربری</label>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute top-9 left-1 w-6 h-6 ">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-        </svg>
+          <input required onChange={fillLoginUsername} type="text" id="email" name="email" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
+         
+          <p className="text-red-600 text-xs">{loginForm.usernameError}</p>
+        </div>
 
-        <input onChange={fillLoginUsername} type="text" id="email" name="email" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
-      </div>
+        <div className="flex flex-col relative ">
+          <label htmlFor="password" className="text-base mb-2 ">کلمه عبور</label>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute top-9 left-1 w-6 h-6 ">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+          </svg>
 
-      <div className="flex flex-col relative ">
-        <label htmlFor="password" className="text-base mb-2 ">کلمه عبور</label>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="absolute top-9 left-1 w-6 h-6 ">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-        </svg>
+          <input required type="password" onChange={fillLoginPassword} id="password" name="password" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
+          <p className="text-red-600 text-xs">{loginForm.passwordError}</p>
+        </div>
 
-        <input type="password" onChange={fillLoginPassword} id="password" name="password" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
-      </div>
-
-      <div className="flex flex-row mt-4 justify-end">
-        <button onClick={signinApi} className="bg-cyan-300 inline px-4 py-2 rounded-md text-black">ورود</button>
-      </div>
+        <div className="flex flex-row mt-4 justify-end">
+          <button type="submit" className="bg-cyan-300 inline px-4 py-2 rounded-md text-black">ورود</button>
+        </div>
+      </form>
     </div>
   </div>
   )
 }
 
-function setUserProfile(arg0: any) {
-  throw new Error("Function not implemented.");
-}

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import {User,Post, LoginFields} from '../../models/entities';
+import {User,Post, LoginForm} from '../../models/entities';
 const myAppContext = createContext({
   createPostModal: false,
   setCreatePostModal: (createPostModal :boolean) => {},
@@ -37,13 +37,17 @@ const myAppContext = createContext({
   setSelectedPost :(post: Post) => {},
   comments : [],
   setComments : (comments : []) => {},
-  loginFields: {
-    username: "",
-    password: ""
+  loginForm: {
+    username : "",
+    password  : "",
+    usernameError :"",
+    passwordError  :"",
+    formIsValid : false
   },
- setLoginFields: (loginFields: LoginFields) => {},
- commentText:"",
- setCommentText:(commentText: string) => {}
+  setLoginForm:(loginForm: LoginForm) => {},
+  commentText:"",
+  setCommentText:(commentText: string) => {},
+
 });
 
 
