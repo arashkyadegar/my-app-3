@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 export default function SignIn({props} : any)  {
   const {userProfile,setUserProfile} = React.useContext(myAppContext);
   const {loginForm,setLoginForm} = React.useContext(myAppContext);
-
   const {userSignInModal,setUserSignInModal} = React.useContext(myAppContext);
 
 

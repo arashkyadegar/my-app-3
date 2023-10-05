@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import SingleCommentComponent from "./single-comment-component";
 import React from "react";
 import myAppContext from "./context/context";
+import { CommentForm } from "@/models/entities";
 
 
 export default function SinglePostDetailedComponent({props} : any)  {
@@ -12,7 +13,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
 
   const {userProfile,setUserProfile} = React.useContext(myAppContext);
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
-  const [commentText, setCommentText] = useState("");
+  const [commentForm, setCommentForm] = useState(new CommentForm);
   const [comments, setComments] = useState(props.comments);
 
   moment.locale();
@@ -30,35 +31,66 @@ export default function SinglePostDetailedComponent({props} : any)  {
   }
 
   function fillCommentText(event: any) {
-    setCommentText(event.target.value);
+    let text: string = event.target.value;
+     if(text.length == 0) {
+            setCommentForm({
+               ...commentForm,
+               commentTextError:"لطفا متن نظر خود را وارد کنید",
+               formIsValid:false
+            }
+            ) 
+     }else{
+      setCommentForm({
+        ...commentForm,
+           commentTextError:"",
+           commentText:text,
+           formIsValid:true
+        }
+     ) 
+     }
+
+ 
   }
 
-  function sendComment(): void {
+  function submitSendComment(event: any): void {
+    event.preventDefault();
+
     if(!userProfile._id) {
       alert("not logged in");
     } else {
 
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(
-          { 
-            "userId": userProfile._id,
-            "postId": postId,
-            "commentId": "",
-            "text": commentText,
-            "rate": 0,
-            "isVisible": false,
-            "date": ""
-          }
-          )
-      };
+      if(commentForm.formIsValid){
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(
+            { 
+              "userId": userProfile._id,
+              "postId": postId,
+              "commentId": "",
+              "text": commentForm.commentText,
+              "rate": 0,
+              "isVisible": false,
+              "date": ""
+            }
+            )
+        };
 
-      fetch(`http://localhost:8000/comments/${postId}`,requestOptions)
-        .then((res) => res.json())
-          .then((data) => {
-            loadComments();
-      });
+        fetch(`http://localhost:8000/comments/${postId}`,requestOptions)
+          .then((res) => res.json())
+            .then((data) => {
+              loadComments();
+              setCommentForm({
+                ...commentForm,
+                   commentText:"",
+                   formIsValid:false
+                }
+             ) 
+        });
+      }else{
+        console.log(commentForm.formIsValid);
+      }
+
     }
   }
   return(
@@ -172,11 +204,15 @@ export default function SinglePostDetailedComponent({props} : any)  {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M8.625 9.75a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H8.25m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0H12m4.125 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm0 0h-.375m-13.5 3.01c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.184-4.183a1.14 1.14 0 01.778-.332 48.294 48.294 0 005.83-.498c1.585-.233 2.708-1.626 2.708-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z" />
                 </svg> 
               </div>
-              <div className="flex flex-row w-full bg-white gap-2 ">
+              <form>
+              <div className="flex flex-row flex-wrap w-full bg-white gap-2 ">
                 <label htmlFor="twitter-account" className="text-base ">متن</label>
-                <textarea onChange={fillCommentText} name="" id="" rows={2}  className="w-8/12 outline-none rounded-lg bg-transparent border border-gray-600 p-2"></textarea>
-                <button onClick={ () => {sendComment()}} className='bg-green-400 h-10 inline px-4 py-2 rounded-md text-white'>ارسال</button>
+                <textarea required onChange={fillCommentText} name="" id="" rows={2}  className="w-10/12 outline-none rounded-lg bg-transparent border border-gray-600 p-2"></textarea>
+                <button type="submit" onClick={ submitSendComment} className=' bg-green-400 h-10 inline px-4 py-2 rounded-md text-white'>ارسال</button>
+                <p className="mr-8 text-red-600 text-xs ">{commentForm.commentTextError}</p>
+
               </div>
+              </form>
             </div>
 
             {/* visit-svg */}

@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import {User,Post, LoginForm} from '../../models/entities';
+import {User,Post, LoginForm, CommentForm, Comment, PostForm} from '../../models/entities';
 const myAppContext = createContext({
   createPostModal: false,
   setCreatePostModal: (createPostModal :boolean) => {},
@@ -20,6 +20,24 @@ const myAppContext = createContext({
     followings: [""]
   },
   setUserProfile: (user: User) => {},
+  addPostForm : {
+    _id: ""  ,
+    author: new User() ,
+    title: "" ,
+    body: "" ,
+    rate: 0 ,
+    img: "" ,
+    date: "" ,
+    isVisible: false ,
+    documents: [""] ,
+    tags: [""] ,
+    links: [""] ,
+    comments: Array<Comment> (),
+    formIsValid: false,
+    bodyError: "",
+    titleError:"" 
+  },
+setAddPostForm : (addPostForm : PostForm) => {},
   selectedPost: {
     _id: ""  ,
     author: new User() ,
@@ -29,10 +47,10 @@ const myAppContext = createContext({
     img: "" ,
     date: "" ,
     isVisible: false ,
-    documents: [] ,
-    tags: [] ,
-    links: [] ,
-    comments: []
+    documents: [""] ,
+    tags: [""] ,
+    links: [""] ,
+    comments: Array<Comment> ()
   },
   setSelectedPost :(post: Post) => {},
   comments : [],
@@ -45,9 +63,14 @@ const myAppContext = createContext({
     formIsValid : false
   },
   setLoginForm:(loginForm: LoginForm) => {},
-  commentText:"",
-  setCommentText:(commentText: string) => {},
-
+  commentForm: {
+    commentText: "",
+    commentTextError: "",
+    formIsValid:  false
+  },
+  setCommentForm:(commentForm: CommentForm) => {},
+  addPostTagInput : "",
+  setAddPostTagInput : (addPostTagInput: string) => {}
 });
 
 

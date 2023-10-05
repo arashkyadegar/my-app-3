@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import MainLayout from '@/components/common/mainLayout';
 import myAppContext from '@/components/context/context';
 import { useState } from 'react';
-import { LoginForm , Post, User } from '@/models/entities';
+import { CommentForm, LoginForm , Post, PostForm, User } from '@/models/entities';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [createPostModal, setCreatePostModal] = useState(false);
@@ -14,14 +14,17 @@ export default function App({ Component, pageProps }: AppProps) {
   const [userProfile, setUserProfile] = useState(new User());
 
   const [loginForm, setLoginForm] = useState(new LoginForm());
-  const [commentText, setCommentText] = useState("");
+  const [commentForm, setCommentForm] = useState(new CommentForm());
 
-  
+  const [addPostForm, setAddPostForm] = useState(new PostForm());
+  const [addPostTagInput, setAddPostTagInput] = useState("");
   return (
         <myAppContext.Provider value={{ createPostModal, setCreatePostModal 
           ,navbarMenu ,setNavBarMenu ,userProfile,setUserProfile,userSignInModal,
           setUserSignInModal,selectedPost,setSelectedPost,comments,setComments
-          ,loginForm,setLoginForm,commentText,setCommentText}} >
+          ,loginForm,setLoginForm,commentForm,setCommentForm,addPostForm,setAddPostForm
+          ,addPostTagInput,setAddPostTagInput
+          }} >
           <MainLayout>
             <Component {...pageProps} />
           </MainLayout>
