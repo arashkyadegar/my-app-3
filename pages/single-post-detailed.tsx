@@ -1,8 +1,10 @@
 import { Inter } from 'next/font/google'
 import SinglePostDetailedComponent from '@/components/single-post-detailed-component';
 const inter = Inter({ subsets: ['latin'] })
-
+import { PostService } from '@/services/postService';
+import { CommentService } from '@/services/commentService';
 export default function SinglePost(rslt:any) {
+
   let props = {
     post: (JSON.parse(rslt.post))[0] ,
     comments: (JSON.parse(rslt.comments)),
@@ -15,15 +17,13 @@ export default function SinglePost(rslt:any) {
 }
   // This gets called on every request
   export async function getServerSideProps(context:any) {
+    const _postService = new PostService();
+    const _commentService = new CommentService();
     const { postId } = context.query;
 
-    const resPost = await fetch(`http://localhost:8000/posts/${postId}`);
-    const repoPost = await resPost.json();
-    let post = JSON.stringify(repoPost);
+    let post = await _postService.fetchOnePost(postId);
 
-    const resComments = await fetch(`http://localhost:8000/comments/${postId}`)
-    const repoComments = await resComments.json();
-    let comments = JSON.stringify(repoComments);
+    let comments = await _commentService.fetchCommentsByPostId(postId);
 
 
     return { props: {post , comments , postId}}
