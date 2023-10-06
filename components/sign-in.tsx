@@ -12,7 +12,7 @@ export default function SignIn({props} : any)  {
 
   async function submitSigninApi(event: any): Promise<void>{
     event.preventDefault();
-    console.log(loginForm);
+
     if(loginForm.formIsValid){
       const requestOptions = {
         method: 'POST',
@@ -21,9 +21,11 @@ export default function SignIn({props} : any)  {
       };
 
       const res = await fetch(`http://localhost:8000/auth/login/`,requestOptions);
+      if(res.status != 200 ){
+        return;
+      }
+
       const repo = (await res.json())[0];
-
-
       setUserProfile ({
         ...userProfile,
         name : repo.name,
@@ -33,7 +35,6 @@ export default function SignIn({props} : any)  {
         followers: repo.followers,
         followings:repo.followings
       });
-
       setUserSignInModal(false);
     }
   }
@@ -51,6 +52,7 @@ export default function SignIn({props} : any)  {
         setLoginForm({
             ...loginForm,
             username:text,
+            usernameError:"",
             formIsValid:true
         }
         ) 
@@ -73,6 +75,7 @@ export default function SignIn({props} : any)  {
       setLoginForm({
           ...loginForm,
           password:text,
+          passwordError:"",
           formIsValid:true
       }
       ) 
