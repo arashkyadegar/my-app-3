@@ -5,6 +5,7 @@ import SingleCommentComponent from "./single-comment-component";
 import React from "react";
 import myAppContext from "./context/context";
 import { CommentForm } from "@/models/entities";
+import { CommentService } from "@/services/commentService";
 
 
 export default function SinglePostDetailedComponent({props} : any)  {
@@ -22,12 +23,15 @@ export default function SinglePostDetailedComponent({props} : any)  {
     setPostDrpDwnHide(!postDrpDwnHide);
   };
 
-  function loadComments(){
-      fetch(`http://localhost:8000/comments/${postId}`)
-        .then((res) => res.json())
-          .then((data) => {
-            setComments(data);
-          })
+  async function loadComments(){
+    const _commentService = new CommentService();
+    let comments = await _commentService.fetchCommentsByPostId(postId);
+    setComments(JSON.parse(comments));
+      // fetch(`http://localhost:8000/comments/${postId}`)
+      //   .then((res) => res.json())
+      //     .then((data) => {
+      //       setComments(data);
+      //     })
   }
 
   function fillCommentText(event: any) {
@@ -58,35 +62,18 @@ export default function SinglePostDetailedComponent({props} : any)  {
     if(!userProfile._id) {
       alert("not logged in");
     } else {
-
       if(commentForm.formIsValid){
-        const requestOptions = {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(
-            { 
-              "userId": userProfile._id,
-              "postId": postId,
-              "commentId": "",
-              "text": commentForm.commentText,
-              "rate": 0,
-              "isVisible": false,
-              "date": ""
-            }
-            )
-        };
+       const _commentService = new CommentService();
+       let rslt =  _commentService.fetchAddNewComment(userProfile._id,postId,commentForm.commentText);
 
-        fetch(`http://localhost:8000/comments/${postId}`,requestOptions)
-          .then((res) => res.json())
-            .then((data) => {
-              loadComments();
-              setCommentForm({
-                ...commentForm,
-                   commentText:"",
-                   formIsValid:false
-                }
-             ) 
-        });
+       loadComments();
+
+       setCommentForm({
+         ...commentForm,
+            commentText:"",
+            formIsValid:false
+         }
+      ) 
       }else{
         console.log(commentForm.formIsValid);
       }
