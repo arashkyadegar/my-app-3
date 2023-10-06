@@ -213,7 +213,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
           </div>
 
           {comments.map((comment: any)=> {
-            return <SingleCommentComponent props = {comment}/>
+            return <SingleCommentComponent key={comment._id} props = {comment}/>
           })}
         </div>
       </div>
