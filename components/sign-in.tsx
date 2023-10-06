@@ -1,7 +1,6 @@
-
+import { LoginService } from "@/services/loginService";
 import myAppContext from "./context/context";
 import React, { useEffect, useState } from "react";
-
 
 
 export default function SignIn({props} : any)  {
@@ -11,16 +10,11 @@ export default function SignIn({props} : any)  {
 
 
   async function submitSigninApi(event: any): Promise<void>{
+    let _loginService= new LoginService();
     event.preventDefault();
-
     if(loginForm.formIsValid){
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name:loginForm.username,password:loginForm.password,remember:'true' })
-      };
+      const res = await _loginService.login(loginForm.username,loginForm.password,'true');
 
-      const res = await fetch(`http://localhost:8000/auth/login/`,requestOptions);
       if(res.status != 200 ){
         return;
       }
