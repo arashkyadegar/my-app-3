@@ -13,6 +13,7 @@ export class IPost {
   comments!: Array<Comment> ;
 }
 
+
 export class CommentForm {
   commentText: string = "";
   commentTextError: string ="";
@@ -46,9 +47,18 @@ export interface IDocument {
 }
 
 
-export class  IUser {
+export class IUser {
   _id: string = "";
   name: string = "";
+  constructor(_id: string ,name: string) {
+    this._id = _id;
+    this.name = name;
+  }
+}
+
+
+
+export class User extends IUser  {
   img:string = "";
   password: string = "";
   token: string = "";
@@ -57,9 +67,8 @@ export class  IUser {
   likes: string[] = [];
   followers: string[] = [];
   followings: string[] = [];
-}
 
-export class User extends IUser  {}
+}
 
 export class ILoginFields {
   username: string = "";
@@ -74,5 +83,5 @@ export class LoginForm extends ILoginFields {
 
 
 module.exports = {
-  Post,User,LoginForm,CommentForm,Comment,PostForm
+  Post,User,LoginForm,CommentForm,Comment,PostForm,IUser
 }

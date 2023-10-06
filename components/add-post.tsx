@@ -1,6 +1,8 @@
 import React from "react";
 import { PropsWithChildren, useState } from "react";
 import myAppContext from "./context/context";
+import { IUser, Post } from "@/models/entities";
+import { PostService } from "@/services/postService";
 
 export default function AddPost({props} : any)  {
   // const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
@@ -8,11 +10,27 @@ export default function AddPost({props} : any)  {
   const {addPostForm,setAddPostForm} = React.useContext(myAppContext);
   const {addPostTagInput,setAddPostTagInput} = React.useContext(myAppContext);
 
-   function createPost() {
-    setUserProfile({
-      ...userProfile,
-      name : 'ashkan yadegar'
-    })
+    function createPost() {
+    let _postService = new PostService();
+    let post = new Post();
+    
+    post._id = "";
+    post.author = new IUser(userProfile._id,"");
+    post.title = addPostForm.title;
+    post.body = addPostForm.body;
+    post.rate = 0;
+    post.date = "";
+    post.tags = addPostForm.tags;
+    post.img = "";
+    post.isVisible = true ;
+    post.documents = [];
+    post.links = [];
+    post.comments = [];
+    console.log(post);
+      _postService.fetchAddNewPost(post).then((data: any) => {
+       
+      });
+
    }
 
    function fillTag(event:any) {

@@ -75,7 +75,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
          }
       ) 
       }else{
-        console.log(commentForm.formIsValid);
+        alert(commentForm.formIsValid);
       }
 
     }
@@ -194,7 +194,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
               <form>
               <div className="flex flex-row flex-wrap w-full bg-white gap-2 ">
                 <label htmlFor="twitter-account" className="text-base ">متن</label>
-                <textarea required onChange={fillCommentText} name="" id="" rows={2}  className="w-10/12 outline-none rounded-lg bg-transparent border border-gray-600 p-2"></textarea>
+                <textarea  required onChange={fillCommentText} name="" id="" rows={2}  className="w-10/12 outline-none rounded-lg bg-transparent border border-gray-600 p-2"></textarea>
                 <button type="submit" onClick={ submitSendComment} className=' bg-green-400 h-10 inline px-4 py-2 rounded-md text-white'>ارسال</button>
                 <p className="mr-8 text-red-600 text-xs ">{commentForm.commentTextError}</p>
 
