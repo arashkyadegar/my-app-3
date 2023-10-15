@@ -42,7 +42,7 @@ export default function SignIn({props} : any)  {
 
   function fillLoginUsername(event: any){
      let text: string = validator.escape( event.target.value);
-      if(text.length == 0) {
+      if(!validator.isEmpty(text)) {
              setLoginForm({
                 ...loginForm,
                 usernameError:"لطفا نام کاربری را وارد کنید",
@@ -64,7 +64,7 @@ export default function SignIn({props} : any)  {
 
   function fillLoginPassword(event: any){
     let text: string = validator.escape( event.target.value);
-    if(text.length == 0) {
+    if(!validator.isEmpty(text)) {
       setLoginForm({
               ...loginForm,
               passwordError:"لطفا کلمه عبور را وارد کنید",

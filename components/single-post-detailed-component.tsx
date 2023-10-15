@@ -45,7 +45,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
 
   function fillCommentText(event: any) {
     let text: string = validator.escape(event.target.value);
-     if(text.length == 0) {
+     if(!validator.isEmpty(text)) {
             setCommentForm({
                ...commentForm,
                commentTextError:"لطفا متن نظر خود را وارد کنید",

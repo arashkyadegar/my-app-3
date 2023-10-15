@@ -41,7 +41,7 @@ export default function AddPost({props} : any)  {
 
    function addTags(event: any) {
     let text: string = addPostTagInput;
-    if(text.length != 0) { 
+    if(!validator.isEmpty(text)) { 
       let list = addPostForm.tags;
       list.push(text);
         setAddPostForm({
@@ -55,7 +55,7 @@ export default function AddPost({props} : any)  {
 
   function fillTitleText(event: any) {
     let text: string =validator.escape( event.target.value);
-     if(text.length == 0) {
+     if(!validator.isEmpty(text)) {
       setAddPostForm({
                ...addPostForm,
                titleError:"لطفا عنوان نظر خود را وارد کنید",
@@ -76,7 +76,7 @@ export default function AddPost({props} : any)  {
   
   function fillBodyText(event: any) {
     let text: string = validator.escape( event.target.value);
-     if(text.length == 0) {
+     if(!validator.isEmpty(text)) {
             setAddPostForm({
                ...addPostForm,
                bodyError:"لطفا متن نظر خود را وارد کنید",
