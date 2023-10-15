@@ -5,15 +5,54 @@ import SideNewWriters from "./side-new-writers";
 import AddPost from "./add-post";
 import SideMostViewedPeople from "./side-most-viewed-people";
 import myAppContext from '@/components/context/context';
-import React from "react";
+import React, { useEffect } from "react";
 import SignIn from "./sign-in";
+import { User } from "@/models/entities";
+
 
 export default function IndexComponent({props} : any)  {
-
+  let {userProfile,setUserProfile} = React.useContext(myAppContext);
   const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
   const {userSignInModal} = React.useContext(myAppContext);
   const posts = JSON.parse(props.post);
+  let name:string;
+  let img:string;
+  let token:string;
+  let _id:string;
 
+   useEffect(() => {
+    if(localStorage.getItem('_id') != undefined){
+      _id = localStorage.getItem('_id')!;
+    }
+    
+    if(localStorage.getItem('name') != undefined){
+      name = localStorage.getItem('name')!;
+    }
+
+
+    if(localStorage.getItem('img') != undefined){
+      img = localStorage.getItem('img')!;
+    }
+
+    if(localStorage.getItem('token') != undefined){
+      token = localStorage.getItem('token')!;
+    }
+
+    setUserProfile({
+      ...userProfile,
+      _id : _id,
+      name : name,
+      img: img,
+      token: token
+    })
+  //   if(localStorage.getItem('name') != undefined) {
+  //      console.log(localStorage.getItem('name'));
+  //      img = localStorage.getItem('img');
+  //      console.log(img);
+  //     //  localStorage.getItem('img');
+  //     //  localStorage.getItem('token');
+  //   }
+   }, []);
   return (
     <div>
       <div  className="fixed rounded-full top-96 overflow-hidden shadow-lg">

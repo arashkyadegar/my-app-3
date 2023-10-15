@@ -3,15 +3,16 @@ import { PropsWithChildren } from "react";
 export default function SideLink({props} : any)  {
   return (
     <div className="flex w-full flex-col mb-10 border border-gray-400 rounded-lg bg-white shadow-lg ">
-      <div className="flex flex-row flex-wrap border-b border-gray-400 p-1 gap-1 text-xs font-semibold text-gray-400 justify-center">
-        <a href="" className="border-l border-gray-200 px-2 py-1">W3school</a>
-        <a href="" className="border-l border-gray-200 px-2 py-1">Yahoo</a>
-        <a href="" className="border-l border-gray-200 px-2 py-1">Google</a>
-        <a href="" className=" border-gray-200 px-2 py-1">Msn</a>
-        <a href="" className="border-l border-gray-200 px-2 py-1">tailwindCss</a>
-        <a href="" className="border-l border-gray-200 px-2 py-1">Youtube</a>
-        <a href="" className=" border-gray-200 px-2 py-1">Netfelix</a>
-      </div>
+      <ul className="first:border-none
+      flex flex-row flex-wrap border-b border-gray-400 p-1 gap-1 text-xs font-semibold text-gray-400 justify-center">
+        <li className="border-l border-gray-200 px-2 py-1">W3school</li>
+        <li className="border-l border-gray-200 px-2 py-1">Yahoo</li>
+        <li className="border-l border-gray-200 px-2 py-1">Google</li>
+        <li className="border-l border-gray-200 px-2 py-1">Msn</li>
+        <li className="border-l border-gray-200 px-2 py-1">tailwindCss</li>
+        <li className="border-l border-gray-200 px-2 py-1">Youtube</li>
+        <li className="border-l border-gray-200 px-2 py-1">Netfelix</li>
+      </ul>
 
       <div className="flex flex-row justify-center pt-3 pb-4 text-xs">
         <div className="">

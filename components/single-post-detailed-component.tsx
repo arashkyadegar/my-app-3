@@ -6,6 +6,7 @@ import React from "react";
 import myAppContext from "./context/context";
 import { CommentForm } from "@/models/entities";
 import { CommentService } from "@/services/commentService";
+import { Familjen_Grotesk } from "next/font/google";
 
 
 export default function SinglePostDetailedComponent({props} : any)  {
@@ -14,9 +15,17 @@ export default function SinglePostDetailedComponent({props} : any)  {
 
   const {userProfile,setUserProfile} = React.useContext(myAppContext);
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
-  const [commentForm, setCommentForm] = useState(new CommentForm);
+  const [firstRender, setFirstrender] = useState(false);
+  const [commentForm, setCommentForm] = useState(new CommentForm());
   const [comments, setComments] = useState(props.comments);
 
+  useEffect(() => {
+    if(firstRender) {
+     loadComments();
+     setFirstrender(true);
+    }
+  }, []);
+  
   moment.locale();
 
   const togglePostDrpDwn = () => {
@@ -24,14 +33,14 @@ export default function SinglePostDetailedComponent({props} : any)  {
   };
 
   async function loadComments(){
+    console.log('load comments executed.');
     const _commentService = new CommentService();
     let comments = await _commentService.fetchCommentsByPostId(postId);
-    setComments(JSON.parse(comments));
-      // fetch(`http://localhost:8000/comments/${postId}`)
-      //   .then((res) => res.json())
-      //     .then((data) => {
-      //       setComments(data);
-      //     })
+
+    _commentService.fetchCommentsByPostId(postId)
+          .then((data) => {
+            setComments(JSON.parse(data));
+          })
   }
 
   function fillCommentText(event: any) {
@@ -56,15 +65,15 @@ export default function SinglePostDetailedComponent({props} : any)  {
  
   }
 
-  function submitSendComment(event: any): void {
+  async function submitSendComment(event: any): Promise<void> {
     event.preventDefault();
 
-    if(!userProfile._id) {
-      alert("not logged in");
-    } else {
+    if(userProfile._id) {
+
+      console.log(commentForm.formIsValid);
       if(commentForm.formIsValid){
        const _commentService = new CommentService();
-       let rslt =  _commentService.fetchAddNewComment(userProfile._id,postId,commentForm.commentText);
+       let rslt = await  _commentService.fetchAddNewComment(userProfile._id,postId,commentForm.commentText);
 
        loadComments();
 
@@ -74,10 +83,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
             formIsValid:false
          }
       ) 
-      }else{
-        alert(commentForm.formIsValid);
       }
-
     }
   }
   return(
@@ -194,9 +200,10 @@ export default function SinglePostDetailedComponent({props} : any)  {
               <form>
               <div className="flex flex-row flex-wrap w-full bg-white gap-2 ">
                 <label htmlFor="twitter-account" className="text-base ">متن</label>
-                <textarea  required onChange={fillCommentText} name="" id="" rows={2}  className="w-10/12 outline-none rounded-lg bg-transparent border border-gray-600 p-2"></textarea>
+                <textarea required  onChange={fillCommentText} name="" id="" rows={2} 
+                 className="peer w-10/12 outline-none rounded-lg bg-transparent border border-gray-600 p-2"></textarea>
                 <button type="submit" onClick={ submitSendComment} className=' bg-green-400 h-10 inline px-4 py-2 rounded-md text-white'>ارسال</button>
-                <p className="mr-8 text-red-600 text-xs ">{commentForm.commentTextError}</p>
+                <p className="invisible peer-invalid:visible mr-8 text-red-600 text-xs ">"لطفا متن پیام خود را بنویسید"</p>
 
               </div>
               </form>
@@ -213,7 +220,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
           </div>
 
           {comments.map((comment: any)=> {
-            return <SingleCommentComponent key={comment._id} props = {comment}/>
+            return <SingleCommentComponent  key={comment._id} props = {comment}/>
           })}
         </div>
       </div>

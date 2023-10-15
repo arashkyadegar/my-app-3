@@ -1,7 +1,7 @@
 import React from "react";
 import { PropsWithChildren, useState } from "react";
 import myAppContext from "./context/context";
-import { IUser, Post } from "@/models/entities";
+import { User, Post } from "@/models/entities";
 import { PostService } from "@/services/postService";
 
 export default function AddPost({props} : any)  {
@@ -15,7 +15,7 @@ export default function AddPost({props} : any)  {
     let post = new Post();
     
     post._id = "";
-    post.author = new IUser(userProfile._id,"");
+    post.author = new User(userProfile._id,"");
     post.title = addPostForm.title;
     post.body = addPostForm.body;
     post.rate = 0;
@@ -106,7 +106,8 @@ export default function AddPost({props} : any)  {
       <div className="basis-2/3 p-4">
         <div className="flex flex-col relative  mb-2">
           <label htmlFor="twitter-account" className="text-base pb-1">عنوان</label>
-          <input onChange={fillTitleText} type="text" id="twitterAccount" name="twitter-account" className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8" />
+          <input onChange={fillTitleText} type="text" id="twitterAccount" name="twitter-account" 
+          className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8 invalid:border-red-600" />
           <p className="text-red-600 text-xs">{addPostForm.titleError}</p>
         </div>
 

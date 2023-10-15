@@ -9,7 +9,7 @@ export default function SingleCommentComponent({props} : any)  {
   const [data, setData] = useState([]);
 
   return ( 
-      <div  className="flex flex-row border bg-white border-gray-300 p-4">
+      <div  className="flex flex-row border even:bg-gray-100 bg-white border-gray-300 p-4">
         <img src={((props.user == null)? "unknown-avatar.png": props.user.img)} alt="avatar" className=" cursor-pointer w-10 h-10 rounded-full ml-2" />
 
         <div className="flex flex-col ">

@@ -1,6 +1,6 @@
 export class IPost {
   _id!: string;
-  author!: IUser;
+  author: User = new User("","") ;
   title!: string;
   body!: string;
   rate!: number;
@@ -67,8 +67,9 @@ export class User extends IUser  {
   likes: string[] = [];
   followers: string[] = [];
   followings: string[] = [];
-
 }
+
+
 
 export class ILoginFields {
   username: string = "";

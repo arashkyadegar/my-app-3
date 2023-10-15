@@ -22,7 +22,7 @@ const myAppContext = createContext({
   setUserProfile: (user: User) => {},
   addPostForm : {
     _id: ""  ,
-    author: new User() ,
+    author: new User("","") ,
     title: "" ,
     body: "" ,
     rate: 0 ,
@@ -40,7 +40,7 @@ const myAppContext = createContext({
 setAddPostForm : (addPostForm : PostForm) => {},
   selectedPost: {
     _id: ""  ,
-    author: new User() ,
+    author: new User("","") ,
     title: "" ,
     body: "" ,
     rate: 0 ,
@@ -70,7 +70,9 @@ setAddPostForm : (addPostForm : PostForm) => {},
   },
   setCommentForm:(commentForm: CommentForm) => {},
   addPostTagInput : "",
-  setAddPostTagInput : (addPostTagInput: string) => {}
+  setAddPostTagInput : (addPostTagInput: string) => {},
+  firstRender: true,
+  setFirstrender : (firstRender: boolean) => {}
 });
 
 

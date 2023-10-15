@@ -1,9 +1,11 @@
-import { PropsWithChildren, useState } from "react";
+import { PropsWithChildren, useEffect, useState } from "react";
 import myAppContext from "./context/context";
 import React from "react";
 
 export default function SideProfile({props} : any)  {
 let {userProfile} = React.useContext(myAppContext);
+
+
   return (
     <>
     <div className="flex flex-col rounded-lg  border border-gray-400 bg-white shadow-lg">
