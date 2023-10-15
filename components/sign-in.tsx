@@ -1,6 +1,7 @@
 import { LoginService } from "@/services/loginService";
 import myAppContext from "./context/context";
 import React, { useEffect, useState } from "react";
+import validator from "validator";
 
 
 export default function SignIn({props} : any)  {
@@ -40,7 +41,7 @@ export default function SignIn({props} : any)  {
   }
 
   function fillLoginUsername(event: any){
-     let text: string = event.target.value;
+     let text: string = validator.escape( event.target.value);
       if(text.length == 0) {
              setLoginForm({
                 ...loginForm,
@@ -62,7 +63,7 @@ export default function SignIn({props} : any)  {
   }
 
   function fillLoginPassword(event: any){
-    let text: string = event.target.value;
+    let text: string = validator.escape( event.target.value);
     if(text.length == 0) {
       setLoginForm({
               ...loginForm,

@@ -7,7 +7,7 @@ import myAppContext from "./context/context";
 import { CommentForm } from "@/models/entities";
 import { CommentService } from "@/services/commentService";
 import { Familjen_Grotesk } from "next/font/google";
-
+import validator from 'validator';
 
 export default function SinglePostDetailedComponent({props} : any)  {
   const post = props.post;
@@ -44,7 +44,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
   }
 
   function fillCommentText(event: any) {
-    let text: string = event.target.value;
+    let text: string = validator.escape(event.target.value);
      if(text.length == 0) {
             setCommentForm({
                ...commentForm,

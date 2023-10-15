@@ -3,6 +3,7 @@ import { PropsWithChildren, useState } from "react";
 import myAppContext from "./context/context";
 import { User, Post } from "@/models/entities";
 import { PostService } from "@/services/postService";
+import validator from "validator";
 
 export default function AddPost({props} : any)  {
   // const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
@@ -34,7 +35,7 @@ export default function AddPost({props} : any)  {
    }
 
    function fillTag(event:any) {
-      let text = event.target.value;
+      let text = validator.escape(event.target.value);
       setAddPostTagInput(text);
    }
 
@@ -53,7 +54,7 @@ export default function AddPost({props} : any)  {
    }
 
   function fillTitleText(event: any) {
-    let text: string = event.target.value;
+    let text: string =validator.escape( event.target.value);
      if(text.length == 0) {
       setAddPostForm({
                ...addPostForm,
@@ -74,7 +75,7 @@ export default function AddPost({props} : any)  {
 
   
   function fillBodyText(event: any) {
-    let text: string = event.target.value;
+    let text: string = validator.escape( event.target.value);
      if(text.length == 0) {
             setAddPostForm({
                ...addPostForm,
