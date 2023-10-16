@@ -8,6 +8,7 @@ import { CommentForm } from "@/models/entities";
 import { CommentService } from "@/services/commentService";
 import { Familjen_Grotesk } from "next/font/google";
 import validator from 'validator';
+import Swal from 'sweetalert2';
 
 export default function SinglePostDetailedComponent({props} : any)  {
   const post = props.post;
@@ -80,7 +81,12 @@ export default function SinglePostDetailedComponent({props} : any)  {
       ) 
       }
     }else{
-      alert('not logged in')
+      Swal.fire({
+        title: 'خطا در انجام عملیات!',
+        text: 'برای ثبت نظر لطفا وارد سایت شوید',
+        icon: 'error',
+        confirmButtonText: 'Cool'
+      })
     }
   }
   return(
