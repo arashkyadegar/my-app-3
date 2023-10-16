@@ -6,8 +6,7 @@ import { PostService } from "@/services/postService";
 import validator from "validator";
 
 export default function AddPost({props} : any)  {
-  // const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
-  const {userProfile,setUserProfile} = React.useContext(myAppContext);
+
   const {addPostForm,setAddPostForm} = React.useContext(myAppContext);
   const {addPostTagInput,setAddPostTagInput} = React.useContext(myAppContext);
 
@@ -16,7 +15,7 @@ export default function AddPost({props} : any)  {
     let post = new Post();
     
     post._id = "";
-    post.author = new User(userProfile._id,"");
+    post.author = new User(localStorage.getItem('_id')!,"");
     post.title = addPostForm.title;
     post.body = addPostForm.body;
     post.rate = 0;
@@ -27,9 +26,12 @@ export default function AddPost({props} : any)  {
     post.documents = [];
     post.links = [];
     post.comments = [];
-    console.log(post);
+    console.log(post.author._id);
+
       _postService.fetchAddNewPost(post).then((data: any) => {
        
+      }).catch((error: any) => {
+        console.log(error);
       });
 
    }
@@ -55,7 +57,7 @@ export default function AddPost({props} : any)  {
 
   function fillTitleText(event: any) {
     let text: string =validator.escape( event.target.value);
-     if(!validator.isEmpty(text)) {
+     if(validator.isEmpty(text)) {
       setAddPostForm({
                ...addPostForm,
                titleError:"لطفا عنوان نظر خود را وارد کنید",
@@ -76,7 +78,7 @@ export default function AddPost({props} : any)  {
   
   function fillBodyText(event: any) {
     let text: string = validator.escape( event.target.value);
-     if(!validator.isEmpty(text)) {
+     if(validator.isEmpty(text)) {
             setAddPostForm({
                ...addPostForm,
                bodyError:"لطفا متن نظر خود را وارد کنید",

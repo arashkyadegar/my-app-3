@@ -45,7 +45,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
 
   function fillCommentText(event: any) {
     let text: string = validator.escape(event.target.value);
-     if(!validator.isEmpty(text)) {
+     if(validator.isEmpty(text)) {
             setCommentForm({
                ...commentForm,
                commentTextError:"لطفا متن نظر خود را وارد کنید",
@@ -67,16 +67,11 @@ export default function SinglePostDetailedComponent({props} : any)  {
 
   async function submitSendComment(event: any): Promise<void> {
     event.preventDefault();
-
     if(userProfile._id) {
-
-      console.log(commentForm.formIsValid);
       if(commentForm.formIsValid){
        const _commentService = new CommentService();
        let rslt = await  _commentService.fetchAddNewComment(userProfile._id,postId,commentForm.commentText);
-
        loadComments();
-
        setCommentForm({
          ...commentForm,
             commentText:"",
@@ -84,6 +79,8 @@ export default function SinglePostDetailedComponent({props} : any)  {
          }
       ) 
       }
+    }else{
+      alert('not logged in')
     }
   }
   return(

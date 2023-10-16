@@ -6,12 +6,27 @@ import { useState } from 'react';
 import { CommentForm, LoginForm , Post, PostForm, User } from '@/models/entities';
 
 export default function App({ Component, pageProps }: AppProps) {
+  const [userProfile, setUserProfile] = useState({
+    _id: "unknown",
+    name: "unknown",
+    img: "img_avatar1.png",
+    password: "",
+    token: "",
+    remember: false,
+    tags: [""],
+    likes: [""],
+    followers: [""],
+    followings: [""]
+  });
+
+
+
   const [createPostModal, setCreatePostModal] = useState(false);
   const [navbarMenu, setNavBarMenu] = useState(true);
   const [userSignInModal, setUserSignInModal] = useState(false);
   const [selectedPost, setSelectedPost] = useState(new Post());
   const [comments, setComments] = useState([]);
-  const [userProfile, setUserProfile] = useState(new User("",""));
+
 
   const [loginForm, setLoginForm] = useState(new LoginForm());
   const [commentForm, setCommentForm] = useState(new CommentForm());

@@ -6,11 +6,11 @@ import { PostService } from '@/services/postService';
 
 export default function Home(rslt:any) {
   return (
-        <IndexComponent props={rslt} />
+      <IndexComponent props={rslt} />
   )
 }
   // This gets called on every request
-  export async function getServerSideProps() {
+  export async function getStaticProps() {
     const _postService = new PostService();
     let post = await _postService.fetchAllPosts();
     return { props: {post}}

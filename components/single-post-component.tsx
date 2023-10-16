@@ -22,7 +22,7 @@ export default function SinglePostComponent({props} : any)  {
           <div className=" w-full flex-wrap flex flex-row ">
             {/* img-div  */}
             <div className="">
-              <img src={(post.author === undefined ? "unknown-avatar.png" : post.author.img)} alt="avatar" className=" cursor-pointer aspect-square w-16 h-16 rounded-full mr-2 shadow-sm shadow-black" />
+              <img src={post.author.img} alt="avatar" className=" cursor-pointer aspect-square w-16 h-16 rounded-full mr-2 shadow-sm shadow-black" />
             </div>
             <div className="flex flex-col p-4 ">
               <h3 className="w-full font-bold text-sm mb-1">

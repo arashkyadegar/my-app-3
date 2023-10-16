@@ -5,13 +5,13 @@ import SideNewWriters from "./side-new-writers";
 import AddPost from "./add-post";
 import SideMostViewedPeople from "./side-most-viewed-people";
 import myAppContext from '@/components/context/context';
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import SignIn from "./sign-in";
 import { User } from "@/models/entities";
 
 
 export default function IndexComponent({props} : any)  {
-  let {userProfile,setUserProfile} = React.useContext(myAppContext);
+  const {userProfile, setUserProfile} = React.useContext(myAppContext);
   const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
   const {userSignInModal} = React.useContext(myAppContext);
   const posts = JSON.parse(props.post);
@@ -21,39 +21,34 @@ export default function IndexComponent({props} : any)  {
   let _id:string;
 
    useEffect(() => {
-    if(localStorage.getItem('_id') != undefined){
+    if(!localStorage.getItem('_id') === null){
       _id = localStorage.getItem('_id')!;
     }
     
-    if(localStorage.getItem('name') != undefined){
+    if(!localStorage.getItem('name') === null){
       name = localStorage.getItem('name')!;
     }
 
 
-    if(localStorage.getItem('img') != undefined){
+    if(!localStorage.getItem('img') === null){
       img = localStorage.getItem('img')!;
     }
 
-    if(localStorage.getItem('token') != undefined){
+    if(!localStorage.getItem('token') === null){
       token = localStorage.getItem('token')!;
     }
 
-    setUserProfile({
-      ...userProfile,
-      _id : _id,
-      name : name,
-      img: img,
-      token: token
-    })
-  //   if(localStorage.getItem('name') != undefined) {
-  //      console.log(localStorage.getItem('name'));
-  //      img = localStorage.getItem('img');
-  //      console.log(img);
-  //     //  localStorage.getItem('img');
-  //     //  localStorage.getItem('token');
-  //   }
+    setUserProfile(
+      {...userProfile,
+        _id: localStorage.getItem('_id')!,
+        name: localStorage.getItem('name')!,
+        img: localStorage.getItem('img')!,
+        token: localStorage.getItem('token')!,
+      });
    }, []);
+
   return (
+
     <div>
       <div  className="fixed rounded-full top-96 overflow-hidden shadow-lg">
           <svg  onClick={() => setCreatePostModal(true)} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-12 h-12 cursor-pointer text-white  bg-green-300 hover:bg-green-500" >
@@ -63,12 +58,12 @@ export default function IndexComponent({props} : any)  {
       <div className='flex'>
         <div className=" flex flex-col sm:flex-row w-full gap-2  ">
           <div className="flex flex-col sm:w-3/12 gap-4 rounded-lg  overflow-hidden">
-            <SideProfile />
+            <SideProfile props = {userProfile}/>
           </div>
 
           <div className=" flex flex-col sm:w-9/12">
             {posts.map((post:any) => (
-              <SinglePostComponent key={post._id}  props = {post} />
+              <SinglePostComponent key={userProfile._id}  props = {post} />
             ))}  
             <div className="flex flex-row gap-2">
               <SideNewWriters />

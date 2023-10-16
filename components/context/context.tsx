@@ -8,8 +8,8 @@ const myAppContext = createContext({
   userSignInModal: false,
   setUserSignInModal: (userSignInModal: boolean) => {},
   userProfile : {
-    _id: "",
-    name: "not logged in",
+    _id: "unknown",
+    name: "unknown",
     img: "unknown-avatar.png",
     password: "",
     token: "",
