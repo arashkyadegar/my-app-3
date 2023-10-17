@@ -7,7 +7,7 @@ import { CommentForm, LoginForm , Post, PostForm, User } from '@/models/entities
 
 export default function App({ Component, pageProps }: AppProps) {
   const [userProfile, setUserProfile] = useState({
-    _id: "unknown",
+    _id: "",
     name: "unknown",
     img: "img_avatar1.png",
     password: "",

@@ -11,6 +11,7 @@ export default function Home(rslt:any) {
 }
   // This gets called on every request
   export async function getStaticProps() {
+    console.log('executed');
     const _postService = new PostService();
     let post = await _postService.fetchAllPosts();
     return { props: {post}}

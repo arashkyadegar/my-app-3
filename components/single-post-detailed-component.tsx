@@ -68,6 +68,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
 
   async function submitSendComment(event: any): Promise<void> {
     event.preventDefault();
+
     if(userProfile._id) {
       if(commentForm.formIsValid){
        const _commentService = new CommentService();

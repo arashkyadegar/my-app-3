@@ -2,10 +2,48 @@
 import React, { PropsWithChildren, useState } from "react";
 import Link from "next/link";
 import myAppContext from "../context/context";
+import { User } from "@/models/entities";
+import Swal from "sweetalert2";
 
 export default function MainNavBar({ children }: PropsWithChildren)  {
   const {navbarMenu,setNavBarMenu} = React.useContext(myAppContext);
   const {userSignInModal,setUserSignInModal} = React.useContext(myAppContext);
+  const {userProfile,setUserProfile} = React.useContext(myAppContext);
+  function callUserExit(){
+
+    Swal.fire({
+      title: 'خروج از سایت ',
+      text: "ایا قصد خروج از سایت را دارید ؟ ",
+      icon: 'warning',
+      showCancelButton: true,
+      cancelButtonText:"خیر",
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'بله'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        localStorage.clear();
+        setUserProfile(   {_id: "",
+        name: "unknown",
+        img: "img_avatar1.png",
+        password: "",
+        token: "",
+        remember: false,
+        tags: [""],
+        likes: [""],
+        followers: [""],
+        followings: [""]});
+        Swal.fire(
+          {
+            title: 'عملیات موفقیت امیز بود',
+            text: 'شما با موفقیت از سایت خارج شدید',
+            icon: 'success',
+            confirmButtonText: 'باشه'
+          }
+        )
+      }
+    })
+  }
 
   return (
     <div className="flex flex-wrap lg:flex-nowrap w-full p-2 bg-purple-800 text-gray-200 justify-between">
@@ -30,11 +68,16 @@ export default function MainNavBar({ children }: PropsWithChildren)  {
               </Link>
         </li>
 
-        <li onClick={() => {setUserSignInModal(!userSignInModal)}}  className="hover:text-gray-300 cursor-pointer">ورود / ثبت نام</li>
+        <li onClick={() => {setUserSignInModal(!userSignInModal)}} 
+         className="hover:text-gray-300 cursor-pointer">ورود / ثبت نام</li>
+          
+          {(userProfile._id != "") && <li onClick={() => {callUserExit()}} 
+         className="hover:text-gray-300 cursor-pointer">خروج</li>
+            }
       </ul>)}
     </div>
     <div className="visible sm:hidden ">
-      <svg onClick={() => { setNavBarMenu (!navbarMenu)}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 border border-gray-200">
+      <svg onClick={() => { callUserExit ()}} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 border border-gray-200">
         <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
       </svg>
     </div>

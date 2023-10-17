@@ -11,9 +11,9 @@ import { User } from "@/models/entities";
 
 
 export default function IndexComponent({props} : any)  {
-  const {userProfile, setUserProfile} = React.useContext(myAppContext);
-  const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
-  const {userSignInModal} = React.useContext(myAppContext);
+   const {userProfile} = React.useContext(myAppContext);
+   const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
+   const {userSignInModal} = React.useContext(myAppContext);
   const posts = JSON.parse(props.post);
   let name:string;
   let img:string;
@@ -38,13 +38,13 @@ export default function IndexComponent({props} : any)  {
       token = localStorage.getItem('token')!;
     }
 
-    setUserProfile(
-      {...userProfile,
-        _id: localStorage.getItem('_id')!,
-        name: localStorage.getItem('name')!,
-        img: localStorage.getItem('img')!,
-        token: localStorage.getItem('token')!,
-      });
+    // setUserProfile(
+    //   {...userProfile,
+    //     _id: localStorage.getItem('_id')!,
+    //     name: localStorage.getItem('name')!,
+    //     img: localStorage.getItem('img')!,
+    //     token: localStorage.getItem('token')!,
+    //   });
    }, []);
 
   return (
@@ -81,7 +81,7 @@ export default function IndexComponent({props} : any)  {
             <div  className=" flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">
               <AddPost  />
             </div>
-          )}
+          )} 
           
         </div>
       </div>

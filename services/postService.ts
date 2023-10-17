@@ -25,6 +25,9 @@ export class PostService {
       .then((res) => res.json())
         .then((data) => {
             console.log(data);
-    });
+    }).catch((error: any) => {
+      console.error('Exception got caught...');
+      console.error(error);
+    });;
   }
 }

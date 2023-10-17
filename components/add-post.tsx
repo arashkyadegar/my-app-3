@@ -28,11 +28,9 @@ export default function AddPost({props} : any)  {
     post.comments = [];
     console.log(post.author._id);
 
-      _postService.fetchAddNewPost(post).then((data: any) => {
-       
-      }).catch((error: any) => {
-        console.log(error);
-      });
+    _postService.fetchAddNewPost(post).then((data: any) => {
+      
+    })
 
    }
 
@@ -56,7 +54,8 @@ export default function AddPost({props} : any)  {
    }
 
   function fillTitleText(event: any) {
-    let text: string =validator.escape( event.target.value);
+    let text: string = validator.escape( event.target.value);
+
      if(validator.isEmpty(text)) {
       setAddPostForm({
                ...addPostForm,
