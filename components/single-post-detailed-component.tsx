@@ -6,6 +6,7 @@ import React from "react";
 import myAppContext from "./context/context";
 import { CommentForm,TreeEntity } from "@/models/entities";
 import { CommentService } from "@/services/commentService";
+import { LikeService } from "@/services/likeService";
 import { Familjen_Grotesk } from "next/font/google";
 import validator from 'validator';
 import Swal from 'sweetalert2';
@@ -68,12 +69,54 @@ console.log(post)
 //   }
 //   return list;
 // }
-
+    let name:string;
+    let img:string;
+    let token:string;
+    let _id:string;
+    let following:string;
+    let follower:string;
   useEffect(() => {
     if(firstRender) {
      loadComments();
      setFirstrender(true);
     }
+
+
+    if(!localStorage.getItem('_id') === null){
+      _id = localStorage.getItem('_id')!;
+    }
+    
+    if(!localStorage.getItem('name') === null){
+      name = localStorage.getItem('name')!;
+    }
+
+
+    if(!localStorage.getItem('img') === null){
+      img = localStorage.getItem('img')!;
+    }
+
+    if(!localStorage.getItem('token') === null){
+      token = localStorage.getItem('token')!;
+    }
+
+
+    if(!localStorage.getItem('following') === null){
+      following = localStorage.getItem('following')!;
+    }
+
+    if(!localStorage.getItem('follower') === null){
+      follower = localStorage.getItem('follower')!;
+    }
+
+    setUserProfile(
+      {...userProfile,
+        _id: localStorage.getItem('_id')!,
+        name: localStorage.getItem('name')!,
+        img: localStorage.getItem('img')!,
+        token: localStorage.getItem('token')!,
+        following:localStorage.getItem('following')!,
+        follower:localStorage.getItem('follower')!
+      });
   }, []);
   
   moment.locale();
@@ -112,6 +155,21 @@ console.log(post)
 
  
   }
+  async function submitSendLike(event: any): Promise<void> {
+    if(userProfile._id) {
+      const _likeService = new LikeService();
+        _likeService.fetchAddNewLike(userProfile._id,postId).then(()=> {
+      });
+    } else{
+      Swal.fire({
+        title: 'خطا در انجام عملیات!',
+        text: 'برای ثبت در علاقه مندی ها وارد سایت شوید',
+        icon: 'error',
+        confirmButtonText: 'Cool'
+      })
+    }
+  }
+
 
   async function submitSendComment(event: any): Promise<void> {
     event.preventDefault();
@@ -195,7 +253,8 @@ console.log(post)
                 </div>
               </div>
               <div className="flex flex-row m-4 gap-2 ">
-               <div><button className=' bg-yellow-400 h-10 inline px-2 py-2 rounded-md text-white'>like</button> </div>
+               <div>
+                <button onClick={ submitSendLike} className=' bg-yellow-400 h-10 inline px-2 py-2 rounded-md text-white'>like</button> </div>
                 <div className="flex items-center justify-center  bg-red-300 hover:bg-red-400 p-1 rounded-md ">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 cursor-pointer bg-transparent text-white" >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />

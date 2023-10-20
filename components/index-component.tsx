@@ -55,7 +55,7 @@ export default function IndexComponent({props} : any)  {
         img: localStorage.getItem('img')!,
         token: localStorage.getItem('token')!,
         following:localStorage.getItem('following')!,
-        follower:localStorage.getItem('follower')!,
+        follower:localStorage.getItem('follower')!
       });
    }, []);
 

@@ -64,7 +64,6 @@ export class User extends IUser  {
   token: string = "";
   remember: boolean = false;
   tags: string[] = [];
-  likes: string[] = [];
   follower: string ="";
   following: string ="";
 }
