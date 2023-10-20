@@ -11,7 +11,7 @@ import { User } from "@/models/entities";
 
 
 export default function IndexComponent({props} : any)  {
-   const {userProfile} = React.useContext(myAppContext);
+   const {userProfile,setUserProfile} = React.useContext(myAppContext);
    const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
    const {userSignInModal} = React.useContext(myAppContext);
   const posts = JSON.parse(props.post);
@@ -19,7 +19,8 @@ export default function IndexComponent({props} : any)  {
   let img:string;
   let token:string;
   let _id:string;
-
+  let following:string;
+  let follower:string;
    useEffect(() => {
     if(!localStorage.getItem('_id') === null){
       _id = localStorage.getItem('_id')!;
@@ -38,13 +39,24 @@ export default function IndexComponent({props} : any)  {
       token = localStorage.getItem('token')!;
     }
 
-    // setUserProfile(
-    //   {...userProfile,
-    //     _id: localStorage.getItem('_id')!,
-    //     name: localStorage.getItem('name')!,
-    //     img: localStorage.getItem('img')!,
-    //     token: localStorage.getItem('token')!,
-    //   });
+
+    if(!localStorage.getItem('following') === null){
+      following = localStorage.getItem('following')!;
+    }
+
+    if(!localStorage.getItem('follower') === null){
+      follower = localStorage.getItem('follower')!;
+    }
+
+    setUserProfile(
+      {...userProfile,
+        _id: localStorage.getItem('_id')!,
+        name: localStorage.getItem('name')!,
+        img: localStorage.getItem('img')!,
+        token: localStorage.getItem('token')!,
+        following:localStorage.getItem('following')!,
+        follower:localStorage.getItem('follower')!,
+      });
    }, []);
 
   return (
@@ -63,7 +75,7 @@ export default function IndexComponent({props} : any)  {
 
           <div className=" flex flex-col sm:w-9/12">
             {posts.map((post:any) => (
-              <SinglePostComponent key={userProfile._id}  props = {post} />
+              <SinglePostComponent key={post._id}   props = {post} />
             ))}  
             <div className="flex flex-row gap-2">
               <SideNewWriters />

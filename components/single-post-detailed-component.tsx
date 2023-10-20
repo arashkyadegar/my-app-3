@@ -4,21 +4,70 @@ import { useEffect, useState } from "react";
 import SingleCommentComponent from "./single-comment-component";
 import React from "react";
 import myAppContext from "./context/context";
-import { CommentForm } from "@/models/entities";
+import { CommentForm,TreeEntity } from "@/models/entities";
 import { CommentService } from "@/services/commentService";
 import { Familjen_Grotesk } from "next/font/google";
 import validator from 'validator';
 import Swal from 'sweetalert2';
+import { test } from "node:test";
+const parse = require('html-react-parser');
 
-export default function SinglePostDetailedComponent({props} : any)  {
+var _ = require('lodash');
+ export default function  SinglePostDetailedComponent (this: any, {props} : any)  {
   const post = props.post;
   const postId = props.postId;
+
 
   const {userProfile,setUserProfile} = React.useContext(myAppContext);
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
   const [firstRender, setFirstrender] = useState(false);
   const [commentForm, setCommentForm] = useState(new CommentForm());
   const [comments, setComments] = useState(props.comments);
+
+
+// function x(text: any,img: any){
+// return ('<div key={props._id}  className="flex flex-row border even:bg-gray-100 bg-white border-gray-300 p-4">' +
+// '<img src="' + img+'" alt="avatar" className=" cursor-pointer w-10 h-10 rounded-full ml-2" />' +
+// '<div className="flex flex-col ">'+
+//   '<h3 className=" font-bold text-sm"></h3>'+
+//   '<div className="flex flex-row justify-between">'+
+//     '<p className="line-clamp-1 w-full">'+text+'</p>'+
+//     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-red-700 mr-10">'+
+//       '<path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />'+
+//     '</svg>'+
+//   '</div>'+
+
+//   '<div className="flex flex-row pt-2 text-gray-600 ">'+
+//     '<a>{props.rate} پسندیدند</a>'+
+//     '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">'+
+//       '<path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />'+
+//    ' </svg>'+
+//   '</div>'+
+// '</div>'+
+// '</div>')
+
+// }
+//   LoadAllChilds_fdBack(comments,0);
+// function LoadAllChilds_fdBack(tree: any,id :any) {
+//   var list = new Array();
+//   rslt = rslt + "<ul style='padding-right:40px;'>";
+//   list = getChildern_fdBack(tree, id);
+//   for (var j = 0; j < list.length; j++) {
+//     console.log(list[j])
+//     rslt = rslt + ("<li>" + x(list[j].text,list[j].user.img) + "</li>");
+//       LoadAllChilds_fdBack(tree, list[j]._id);
+//   }
+//   rslt = rslt + "</ul>";
+// }
+// function getChildern_fdBack(tree: any, pid: any) {
+//   var list = new Array();
+//   for (var i = 0; i < tree.length; i++) {
+//       if (((tree[i].commentId) == pid)) {
+//           list.push(tree[i]);
+//       }
+//   }
+//   return list;
+// }
 
   useEffect(() => {
     if(firstRender) {
@@ -34,10 +83,8 @@ export default function SinglePostDetailedComponent({props} : any)  {
   };
 
   async function loadComments(){
-    console.log('load comments executed.');
-    const _commentService = new CommentService();
-    let comments = await _commentService.fetchCommentsByPostId(postId);
 
+    const _commentService = new CommentService();
     _commentService.fetchCommentsByPostId(postId)
           .then((data) => {
             setComments(JSON.parse(data));
@@ -72,8 +119,10 @@ export default function SinglePostDetailedComponent({props} : any)  {
     if(userProfile._id) {
       if(commentForm.formIsValid){
        const _commentService = new CommentService();
-       let rslt = await  _commentService.fetchAddNewComment(userProfile._id,postId,commentForm.commentText);
-       loadComments();
+       _commentService.fetchAddNewComment(userProfile._id,postId,commentForm.commentText).then(()=> {
+        loadComments();
+       });
+
        setCommentForm({
          ...commentForm,
             commentText:"",
@@ -91,6 +140,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
     }
   }
   return(
+
     <div key={post._id} className=" text-sm rounded-lg  overflow-hidden border border-gray-400 shadow-lg">
       <div className="flex flex-col bg-white ">
         <div className="bg-white flex flex-row p-2 ">
@@ -125,6 +175,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
             <div className=" w-full flex flex-row justify-between">
               <div className="flex flex-row p-4 gap-2">
                 <div className="flex">
+
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-amber-950">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0M12 12.75h.008v.008H12v-.008z" />
                   </svg> 
@@ -133,6 +184,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
                   </h3>
                 </div>
                 <div className="flex">
+               
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 text-green-800 ">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
@@ -143,6 +195,7 @@ export default function SinglePostDetailedComponent({props} : any)  {
                 </div>
               </div>
               <div className="flex flex-row m-4 gap-2 ">
+               <div><button className=' bg-yellow-400 h-10 inline px-2 py-2 rounded-md text-white'>like</button> </div>
                 <div className="flex items-center justify-center  bg-red-300 hover:bg-red-400 p-1 rounded-md ">
                   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 cursor-pointer bg-transparent text-white" >
                     <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -222,12 +275,18 @@ export default function SinglePostDetailedComponent({props} : any)  {
               </svg>
             </div>
           </div>
+          
+           {comments.map((comment: any)=> {
+              return <SingleCommentComponent  key={comment._id} props = {comment}/>
+          })}  
 
-          {comments.map((comment: any)=> {
-            return <SingleCommentComponent  key={comment._id} props = {comment}/>
-          })}
+
+
+        
         </div>
       </div>
     </div>
   )
 }
+
+

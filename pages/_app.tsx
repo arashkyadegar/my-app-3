@@ -15,8 +15,8 @@ export default function App({ Component, pageProps }: AppProps) {
     remember: false,
     tags: [""],
     likes: [""],
-    followers: [""],
-    followings: [""]
+    follower: "",
+    following: ""
   });
 
 

@@ -19,12 +19,15 @@ export default function SignIn({props} : any)  {
       if(res.status != 200 ){
         return;
       }
-      const repo = (await res.json())[0];
 
+      const repo = (await res.json())[0];
+      console.log(repo);
       localStorage.setItem('name',repo.name);
       localStorage.setItem('img',repo.img);
       localStorage.setItem('_id',repo._id);
       localStorage.setItem('token',repo.token);
+      localStorage.setItem('following', repo.following.length);
+      localStorage.setItem('follower',repo.follower.length);
 
 
       setUserProfile ({
@@ -33,8 +36,8 @@ export default function SignIn({props} : any)  {
         img : repo.img,
         _id : repo._id,
         token :repo.token,
-        followers: repo.followers,
-        followings:repo.followings
+        follower: repo.follower.length,
+        following: repo.following.length
       });
       setUserSignInModal(false);
     }

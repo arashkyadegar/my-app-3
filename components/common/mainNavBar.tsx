@@ -22,17 +22,25 @@ export default function MainNavBar({ children }: PropsWithChildren)  {
       confirmButtonText: 'بله'
     }).then((result) => {
       if (result.isConfirmed) {
-        localStorage.clear();
+//        localStorage.clear();
+        localStorage.setItem('name',"unknown");
+        localStorage.setItem('img',"img_avatar1.png");
+        localStorage.setItem('_id',"");
+        localStorage.setItem('token',"");
+        localStorage.setItem('following', "");
+        localStorage.setItem('follower',"");
+
+
         setUserProfile(   {_id: "",
-        name: "unknown",
-        img: "img_avatar1.png",
-        password: "",
-        token: "",
-        remember: false,
-        tags: [""],
-        likes: [""],
-        followers: [""],
-        followings: [""]});
+          name: "unknown",
+          img: "img_avatar1.png",
+          password: "",
+          token: "",
+          remember: false,
+          tags: [""],
+          likes: [""],
+          follower: "",
+          following: ""});
         Swal.fire(
           {
             title: 'عملیات موفقیت امیز بود',

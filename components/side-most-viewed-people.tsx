@@ -17,7 +17,7 @@ export default function SideMostViewedPeople({props} : any)  {
         <div className="flex flex-row border-b border-gray-200">
           <div className="flex flex-row text-xs  w-full pr-2">
             <div className="border border-gray-400  w-12 h-12 m-1 bg-white  rounded-full overflow-hidden cursor-pointer">
-              <img src="../css/images/avator (1).png" alt="" />
+              <img  alt="" />
             </div>
             <div className="text-xs  w-4/4 p-2">
               <h3 className=" font-bold">Senior </h3>
@@ -39,7 +39,7 @@ export default function SideMostViewedPeople({props} : any)  {
         <div className="flex flex-row border-b border-gray-200">
           <div className="flex flex-row text-xs  w-full pr-2">
             <div className="border border-gray-400  w-12 h-12 m-1 bg-white  rounded-full overflow-hidden cursor-pointer">
-              <img src="../css/images/avator (1).png" alt="" />
+              <img  alt="" />
             </div>
             <div className="text-xs  w-3/4 p-2">
               <h3 className=" font-bold">Senior </h3>
@@ -61,7 +61,7 @@ export default function SideMostViewedPeople({props} : any)  {
         <div className="flex flex-row border-b border-gray-200">
           <div className="flex flex-row text-xs  w-full pr-2">
             <div className="border border-gray-400  w-12 h-12 m-1 bg-white  rounded-full overflow-hidden cursor-pointer">
-              <img src="../css/images/avator (1).png" alt="" />
+              <img  alt="" />
             </div>
             <div className="text-xs  w-3/4 p-2">
               <h3 className=" font-bold">Senior </h3>
@@ -83,7 +83,7 @@ export default function SideMostViewedPeople({props} : any)  {
         <div className="flex flex-row border-b border-gray-200">
           <div className="flex flex-row text-xs  w-full pr-2">
             <div className="border border-gray-400  w-12 h-12 m-1 bg-white  rounded-full overflow-hidden cursor-pointer">
-              <img src="../css/images/avator (1).png" alt="" />
+              <img  alt="" />
             </div>
             <div className="text-xs  w-3/4 p-2">
               <h3 className=" font-bold">Senior </h3>

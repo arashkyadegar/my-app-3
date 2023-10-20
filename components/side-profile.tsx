@@ -8,7 +8,9 @@ let name = props.name;
 let img = props.img;
 let token = props.token;
 let _id = props._id;
- 
+let following = props.following;
+let follower = props.follower;
+
   return (
     <>
      <div className="flex flex-col rounded-lg  border border-gray-400 bg-white shadow-lg">
@@ -24,12 +26,12 @@ let _id = props._id;
         </div>
         <div className="flex flex-col w-full items-center py-2 border-b border-gray-400">
           <h1   className="text-sm font-semibold text-gray-400 w-full text-center">Following</h1>
-          <h1  className="text-sm font-semibold ">23</h1>
+          <h1  className="text-sm font-semibold ">{following}</h1>
         </div>
 
         <div className="flex flex-col w-full items-center py-2 border-b border-gray-400">
           <h1  className="text-sm font-semibold text-gray-400 w-full text-center">Followers</h1>
-          <h1 className="text-sm font-semibold ">156</h1>
+          <h1 className="text-sm font-semibold ">{follower}</h1>
         </div>
 
         <div className="flex flex-col w-full items-center pb-2 justify-center">

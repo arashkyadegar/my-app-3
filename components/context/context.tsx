@@ -8,16 +8,16 @@ const myAppContext = createContext({
   userSignInModal: false,
   setUserSignInModal: (userSignInModal: boolean) => {},
   userProfile : {
-    _id: "unknown",
+    _id: "",
     name: "unknown",
-    img: "unknown-avatar.png",
+    img: "img_avatar1.png",
     password: "",
     token: "",
     remember: false,
     tags: [""],
     likes: [""],
-    followers: [""],
-    followings: [""]
+    follower: "",
+    following: ""
   },
   setUserProfile: (user: User) => {},
   addPostForm : {

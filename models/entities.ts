@@ -65,8 +65,8 @@ export class User extends IUser  {
   remember: boolean = false;
   tags: string[] = [];
   likes: string[] = [];
-  followers: string[] = [];
-  followings: string[] = [];
+  follower: string ="";
+  following: string ="";
 }
 
 
@@ -82,7 +82,10 @@ export class LoginForm extends ILoginFields {
   formIsValid: boolean = false;
 }
 
-
+export class TreeEntity {
+  _id : string ="";
+  children: TreeEntity[]= [];
+}
 module.exports = {
-  Post,User,LoginForm,CommentForm,Comment,PostForm,IUser
+  Post,User,LoginForm,CommentForm,Comment,PostForm,IUser,TreeEntity
 }

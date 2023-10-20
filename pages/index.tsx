@@ -5,6 +5,7 @@ const inter = Inter({ subsets: ['latin'] })
 import { PostService } from '@/services/postService';
 
 export default function Home(rslt:any) {
+ // console.log(rslt);
   return (
       <IndexComponent props={rslt} />
   )
