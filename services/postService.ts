@@ -3,7 +3,6 @@ import { Post } from "@/models/entities";
 export class PostService {
   baseUrl: string = "http://localhost:8000/posts/";
   async fetchOnePost(postId: string):Promise<any> {
-    console.log('cccc');
     const resPost = await fetch(this.baseUrl + postId);
     const repoPost = await resPost.json();
     return JSON.stringify(repoPost);

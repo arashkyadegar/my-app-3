@@ -15,7 +15,7 @@ const myAppContext = createContext({
     token: "",
     remember: false,
     tags: [""],
-    likes: [""],
+    likes: "",
     follower: "",
     following: ""
   },
