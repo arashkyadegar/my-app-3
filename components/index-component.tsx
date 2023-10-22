@@ -15,12 +15,14 @@ export default function IndexComponent({props} : any)  {
    const {createPostModal,setCreatePostModal} = React.useContext(myAppContext);
    const {userSignInModal} = React.useContext(myAppContext);
   const posts = JSON.parse(props.post);
+
   let name:string;
   let img:string;
   let token:string;
   let _id:string;
   let following:string;
   let follower:string;
+
    useEffect(() => {
     if(!localStorage.getItem('_id') === null){
       _id = localStorage.getItem('_id')!;
@@ -57,6 +59,7 @@ export default function IndexComponent({props} : any)  {
         following:localStorage.getItem('following')!,
         follower:localStorage.getItem('follower')!
       });
+
    }, []);
 
   return (

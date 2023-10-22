@@ -34,12 +34,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const [addPostForm, setAddPostForm] = useState(new PostForm());
   const [addPostTagInput, setAddPostTagInput] = useState("");
   const [firstRender, setFirstrender] = useState(true);
+  const [postLikeSign, setPostLikeSign] = useState(false);
   return (
         <myAppContext.Provider value={{ createPostModal, setCreatePostModal 
           ,navbarMenu ,setNavBarMenu ,userProfile,setUserProfile,userSignInModal,
           setUserSignInModal,selectedPost,setSelectedPost,comments,setComments
           ,loginForm,setLoginForm,commentForm,setCommentForm,addPostForm,setAddPostForm
-          ,addPostTagInput,setAddPostTagInput,firstRender,setFirstrender
+          ,addPostTagInput,setAddPostTagInput,firstRender,setFirstrender,postLikeSign,setPostLikeSign
           }} >
           <MainLayout>
             <Component {...pageProps} />

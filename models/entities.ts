@@ -11,6 +11,8 @@ export class IPost {
   tags : Array<string> = [];
   links !: Array<string>;
   comments!: Array<Comment> ;
+  likes:Array<LikeEntity> = [];
+  liked :boolean = false;
 }
 
 
@@ -39,7 +41,11 @@ export class IComment {
   formIsValid: boolean = false;
  }
 
-
+export class LikeEntity  {
+  userId : string = "";
+  postId : string = "";
+  date: string ="";
+}
 export interface IDocument {
   title: string;
   url: string;

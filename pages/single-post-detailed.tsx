@@ -11,6 +11,7 @@ export default function SinglePost(rslt:any) {
     postId: rslt.postId
   }
 
+
   return (
       <SinglePostDetailedComponent props={props} />
   )
@@ -19,12 +20,17 @@ export default function SinglePost(rslt:any) {
   export async function getServerSideProps(context:any) {
     const _postService = new PostService();
     const _commentService = new CommentService();
+    let post;
+    let comments;
     const { postId } = context.query;
-
-    let post = await _postService.fetchOnePost(postId);
-
-    let comments = await _commentService.fetchCommentsByPostId(postId);
-
+    const { userId } = context.query;
+    if(userId === undefined) {
+     post = await _postService.fetchOnePost(postId,"");
+     comments = await _commentService.fetchCommentsByPostId(postId);
+    }else {
+      post = await _postService.fetchOnePost(postId,userId);
+      comments = await _commentService.fetchCommentsByPostId(postId);
+    }
 
     return { props: {post , comments , postId}}
   }

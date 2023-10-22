@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import {User,Post, LoginForm, CommentForm, Comment, PostForm} from '../../models/entities';
+import {User,Post, LoginForm, CommentForm, Comment, PostForm, LikeEntity} from '../../models/entities';
 const myAppContext = createContext({
   createPostModal: false,
   setCreatePostModal: (createPostModal :boolean) => {},
@@ -15,8 +15,7 @@ const myAppContext = createContext({
     token: "",
     remember: false,
     tags: [""],
-    follower: "",
-    following: ""
+    follower: ""
   },
   setUserProfile: (user: User) => {},
   addPostForm : {
@@ -36,7 +35,7 @@ const myAppContext = createContext({
     bodyError: "",
     titleError:"" 
   },
-setAddPostForm : (addPostForm : PostForm) => {},
+  setAddPostForm : (addPostForm : PostForm) => {},
   selectedPost: {
     _id: ""  ,
     author: new User("","") ,
@@ -49,7 +48,9 @@ setAddPostForm : (addPostForm : PostForm) => {},
     documents: [""] ,
     tags: [""] ,
     links: [""] ,
-    comments: Array<Comment> ()
+    likes: Array<LikeEntity>(),
+    comments: Array<Comment> (),
+    liked : false
   },
   setSelectedPost :(post: Post) => {},
   comments : [],
@@ -71,7 +72,9 @@ setAddPostForm : (addPostForm : PostForm) => {},
   addPostTagInput : "",
   setAddPostTagInput : (addPostTagInput: string) => {},
   firstRender: true,
-  setFirstrender : (firstRender: boolean) => {}
+  setFirstrender : (firstRender: boolean) => {},
+  postLikeSign : false,
+  setPostLikeSign :(firstRender: boolean) => {}
 });
 
 

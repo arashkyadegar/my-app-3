@@ -6,7 +6,26 @@ export class LikeService {
   //   return JSON.stringify(repoComments);
   // }
 
-  
+  async fetchDeleteLike(userId: string,postId: string):Promise<any> {
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(
+          { 
+            "userId": userId,
+            "postId":postId,
+            "date":""
+          }
+        )
+    };
+
+    fetch(this.baseUrl,requestOptions)
+      .then((res) => res.json())
+        .then((data) => {
+            //console.log(data);
+    });
+   }
+
   async fetchAddNewLike(userId: string,postId: string):Promise<any> {
     const requestOptions = {
       method: 'POST',
@@ -19,7 +38,6 @@ export class LikeService {
           }
         )
     };
-
 
     fetch(this.baseUrl,requestOptions)
       .then((res) => res.json())
