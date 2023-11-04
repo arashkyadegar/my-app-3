@@ -103,6 +103,7 @@ export default function IndexComponent({props} : any)  {
       <div className='flex flex-row mr-1 mt-2 justify-end'>
         <SideLink/>
       </div>
+
     </div>
   )
 }

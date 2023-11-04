@@ -4,10 +4,9 @@ import { useEffect, useState } from "react";
 import SingleCommentComponent from "./single-comment-component";
 import React from "react";
 import myAppContext from "./context/context";
-import { CommentForm,TreeEntity } from "@/models/entities";
+import { CommentForm } from "@/models/entities";
 import { CommentService } from "@/services/commentService";
 import { LikeService } from "@/services/likeService";
-import { Familjen_Grotesk } from "next/font/google";
 import validator from 'validator';
 import Swal from 'sweetalert2';
 
@@ -17,7 +16,6 @@ var _ = require('lodash');
  export default function  SinglePostDetailedComponent (this: any, {props} : any)  {
   const post = props.post;
   const postId = props.postId;
-  console.log(post);
 
   const {userProfile,setUserProfile} = React.useContext(myAppContext);
   const {selectedPost,setSelectedPost} = React.useContext(myAppContext);
@@ -26,7 +24,7 @@ var _ = require('lodash');
   const [firstRender, setFirstrender] = useState(false);
   const [commentForm, setCommentForm] = useState(new CommentForm());
   const [comments, setComments] = useState(props.comments);
-  const [postLikeSign, setPostLikeSign] = useState(false);
+
 
     async function submitDeleteLike(event: any): Promise<void> {
 
@@ -182,11 +180,13 @@ var _ = require('lodash');
   async function submitSendComment(event: any): Promise<void> {
     event.preventDefault();
 
-    if(userProfile._id) {
+     if(userProfile._id) {
+
       if(commentForm.formIsValid){
        const _commentService = new CommentService();
-       _commentService.fetchAddNewComment(userProfile._id,postId,commentForm.commentText).then(()=> {
-        loadComments();
+       _commentService.fetchAddNewComment(userProfile._id,postId,commentForm.commentText)
+          .then(()=> {
+          loadComments();
        });
 
        setCommentForm({
@@ -201,10 +201,10 @@ var _ = require('lodash');
         title: 'خطا در انجام عملیات!',
         text: 'برای ثبت نظر لطفا وارد سایت شوید',
         icon: 'error',
-        confirmButtonText: 'Cool'
+        confirmButtonText: 'باشه'
       })
-    }
-  }
+     }
+  }    
   return(
 
     <div key={post._id} className=" text-sm rounded-lg  overflow-hidden border border-gray-400 shadow-lg">
