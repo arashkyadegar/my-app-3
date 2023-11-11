@@ -9,9 +9,6 @@ export default function MainLayout({ children }: PropsWithChildren)  {
       <MainNavBar />
       <div className="px-6 py-6">{children}</div>
       <MainFooter />
-      <div className="">
-        chatbox
-      </div>
       </div>
     </>
   );

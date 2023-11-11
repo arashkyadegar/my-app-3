@@ -1,6 +1,6 @@
 export class IPost {
   _id!: string;
-  author: User = new User("","") ;
+  author: User = new User("", "");
   title!: string;
   body!: string;
   rate!: number;
@@ -8,17 +8,16 @@ export class IPost {
   date!: string;
   isVisible!: boolean;
   documents!: Array<string>;
-  tags : Array<string> = [];
-  links !: Array<string>;
-  comments!: Array<Comment> ;
-  likes:Array<LikeEntity> = [];
-  liked :boolean = false;
+  tags: Array<string> = [];
+  links!: Array<string>;
+  comments!: Array<Comment>;
+  likes: Array<LikeEntity> = [];
+  liked: boolean = false;
 }
-
 
 export class CommentForm {
   commentText: string = "";
-  commentTextError: string ="";
+  commentTextError: string = "";
   formIsValid: boolean = false;
 }
 
@@ -28,23 +27,23 @@ export class IComment {
   text: string = "";
   rate: number = 0;
   isVisible: boolean = false;
-  date: string ="";
+  date: string = "";
 }
 
- export class Comment extends IComment {}
+export class Comment extends IComment {}
 
- export class Post extends IPost {}
+export class Post extends IPost {}
 
- export class PostForm extends IPost {
-  bodyError: string = ""; 
-  titleError: string = ""; 
+export class PostForm extends IPost {
+  bodyError: string = "";
+  titleError: string = "";
   formIsValid: boolean = false;
- }
+}
 
-export class LikeEntity  {
-  userId : string = "";
-  postId : string = "";
-  date: string ="";
+export class LikeEntity {
+  userId: string = "";
+  postId: string = "";
+  date: string = "";
 }
 export interface IDocument {
   title: string;
@@ -52,29 +51,24 @@ export interface IDocument {
   category: number;
 }
 
-
 export class IUser {
   _id: string = "";
   name: string = "";
-  constructor(_id: string ,name: string) {
+  constructor(_id: string, name: string) {
     this._id = _id;
     this.name = name;
   }
 }
 
-
-
-export class User extends IUser  {
-  img:string = "";
+export class User extends IUser {
+  img: string = "";
   password: string = "";
   token: string = "";
   remember: boolean = false;
   tags: string[] = [];
-  follower: string ="";
-  following: string ="";
+  follower: string = "";
+  following: string = "";
 }
-
-
 
 export class ILoginFields {
   username: string = "";
@@ -82,15 +76,22 @@ export class ILoginFields {
 }
 
 export class LoginForm extends ILoginFields {
-  usernameError: string ="";
-  passwordError: string =""
+  usernameError: string = "";
+  passwordError: string = "";
   formIsValid: boolean = false;
 }
 
 export class TreeEntity {
-  _id : string ="";
-  children: TreeEntity[]= [];
+  _id: string = "";
+  children: TreeEntity[] = [];
 }
 module.exports = {
-  Post,User,LoginForm,CommentForm,Comment,PostForm,IUser,TreeEntity
-}
+  Post,
+  User,
+  LoginForm,
+  CommentForm,
+  Comment,
+  PostForm,
+  IUser,
+  TreeEntity,
+};

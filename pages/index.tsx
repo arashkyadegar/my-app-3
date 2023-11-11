@@ -12,10 +12,9 @@ export default function Home(rslt:any) {
 }
   // This gets called on every request
   export async function getStaticProps() {
-
     const _postService = new PostService();
-    let post = await _postService.fetchAllPosts();
-    return { props: {post}}
+    let posts = await _postService.fetchAllPosts();
+    return { props: {posts}}
   }
   
 Home.Layout = "Main"
