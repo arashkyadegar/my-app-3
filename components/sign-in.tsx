@@ -6,7 +6,7 @@ import * as actions from "../redux/store/api";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
 
 export default function SignIn({ props }: any) {
-  const { userProfile, setUserProfile } = React.useContext(myAppContext);
+
   const { loginForm, setLoginForm } = React.useContext(myAppContext);
   const { userSignInModal, setUserSignInModal } =
     React.useContext(myAppContext);
@@ -24,34 +24,34 @@ export default function SignIn({ props }: any) {
         })
       );
 
-      const res = await _loginService.login(
-        loginForm.username,
-        loginForm.password,
-        "true"
-      );
+      // const res = await _loginService.login(
+      //   loginForm.username,
+      //   loginForm.password,
+      //   "true"
+      // );
 
-      if (res.status != 200) {
-        return;
-      }
+      // if (res.status != 200) {
+      //   return;
+      // }
 
-      const repo = (await res.json())[0];
-      console.log(repo);
-      localStorage.setItem("name", repo.name);
-      localStorage.setItem("img", repo.img);
-      localStorage.setItem("_id", repo._id);
-      localStorage.setItem("token", repo.token);
-      localStorage.setItem("following", repo.following.length);
-      localStorage.setItem("follower", repo.follower.length);
+      // const repo = (await res.json())[0];
+      // console.log(repo);
+      // localStorage.setItem("name", repo.name);
+      // localStorage.setItem("img", repo.img);
+      // localStorage.setItem("_id", repo._id);
+      // localStorage.setItem("token", repo.token);
+      // localStorage.setItem("following", repo.following.length);
+      // localStorage.setItem("follower", repo.follower.length);
 
-      setUserProfile({
-        ...userProfile,
-        name: repo.name,
-        img: repo.img,
-        _id: repo._id,
-        token: repo.token,
-        follower: repo.follower.length,
-        following: repo.following.length,
-      });
+      // setUserProfile({
+      //   ...userProfile,
+      //   name: repo.name,
+      //   img: repo.img,
+      //   _id: repo._id,
+      //   token: repo.token,
+      //   follower: repo.follower.length,
+      //   following: repo.following.length,
+      // });
       setUserSignInModal(false);
     }
   }

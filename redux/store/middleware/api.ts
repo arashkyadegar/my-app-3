@@ -6,14 +6,17 @@ const api =
     if (action.type !== actions.apiCallBegan.type) return next(action);
     next(action);
     const baseURL = process.env.NEXT_PUBLIC_BASEURL;
-    const { url, method, onSuccess, onError } = action.payload;
+    const { url, method, onSuccess, onError,body } = action.payload;
+
+    console.log(action.payload);
     const requestOptions = {
       method: method,
       headers: { "Content-Type": "application/json" },
+      body: body
     };
     try {
       const response = await fetch(
-        baseURL + url + "/" + "65361b81fbfd766bf16b6ff4",
+        baseURL + url ,
         requestOptions
       );
       const comments = await response.json();

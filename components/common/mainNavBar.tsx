@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 export default function MainNavBar({ children }: PropsWithChildren) {
   const { navbarMenu, setNavBarMenu } = React.useContext(myAppContext);
   const { userSignInModal, setUserSignInModal } = React.useContext(myAppContext);
-  const { userProfile, setUserProfile } = React.useContext(myAppContext);
+  //const { userProfile, setUserProfile } = React.useContext(myAppContext);
   function callUserExit() {
     Swal.fire({
       title: "خروج از سایت ",
@@ -27,17 +27,17 @@ export default function MainNavBar({ children }: PropsWithChildren) {
         localStorage.setItem("following", "");
         localStorage.setItem("follower", "");
 
-        setUserProfile({
-          _id: "",
-          name: "unknown",
-          img: "img_avatar1.png",
-          password: "",
-          token: "",
-          remember: false,
-          tags: [""],
-          follower: "",
-          following: "",
-        });
+        // setUserProfile({
+        //   _id: "",
+        //   name: "unknown",
+        //   img: "img_avatar1.png",
+        //   password: "",
+        //   token: "",
+        //   remember: false,
+        //   tags: [""],
+        //   follower: "",
+        //   following: "",
+        // });
         Swal.fire({
           title: "عملیات موفقیت امیز بود",
           text: "شما با موفقیت از سایت خارج شدید",
@@ -102,7 +102,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
               ورود / ثبت نام
             </li>
 
-            {userProfile._id != "" && (
+           {/* {userProfile._id != "" && ( */}
               <li
                 onClick={() => {
                   callUserExit();
@@ -111,7 +111,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
               >
                 خروج
               </li>
-            )}
+            {/* )} */}
           </ul>
         )}
       </div>
