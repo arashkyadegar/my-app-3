@@ -26,10 +26,6 @@ export default function SignIn({ props }: any) {
           }),
         })
       );
-      const user = useAppSelector((state) => state.entities.user);
-      console.log('sign-in user');
-
-      console.log(user);
       // if (user.data._id !== "") {
       //   return;
       // } else {

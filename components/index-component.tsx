@@ -50,19 +50,6 @@ export default function IndexComponent({ props }: any) {
     if (!localStorage.getItem("follower") === null) {
       follower = localStorage.getItem("follower")!;
     }
-
-
-    console.log(name);
-    dispatch(
-      userRemembered({
-        _id: _id,
-        name: name,
-        img: img,
-        token: token,
-        following: following,
-        follower: follower,
-      })
-    );
   }, []);
 
   dispatch(
