@@ -9,26 +9,60 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
 import SignIn from "./sign-in";
 import * as actions from "../redux/store/api";
+import { userRemembered } from "@/redux/store/user";
 
 export default function IndexComponent({ props }: any) {
-  const { createPostModal, setCreatePostModal } = React.useContext(myAppContext);
+  const { createPostModal, setCreatePostModal } =
+    React.useContext(myAppContext);
   const { userSignInModal } = React.useContext(myAppContext);
   const posts = JSON.parse(props.posts);
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.entities);
   const user = useAppSelector((state) => state.entities.user);
+  let _id = "";
+  let name = "";
+  let img = "";
+  let token = "";
+  let following = "";
+  let follower = "";
 
   useEffect(() => {
-    let x = {
-      _id: "1",
-      user: "arashk",
-      text: "sample text",
-      rate: 0,
-      isVisible: false,
-      date: Date.now().toString(),
-    };
+    if (!localStorage.getItem("_id") === null) {
+      _id = localStorage.getItem("_id")!;
+    }
+
+    if (!localStorage.getItem("name") === null) {
+      name = localStorage.getItem("name")!;
+    }
+
+    if (!localStorage.getItem("img") === null) {
+      img = localStorage.getItem("img")!;
+    }
+
+    if (!localStorage.getItem("token") === null) {
+      token = localStorage.getItem("token")!;
+    }
+
+    if (!localStorage.getItem("following") === null) {
+      following = localStorage.getItem("following")!;
+    }
+
+    if (!localStorage.getItem("follower") === null) {
+      follower = localStorage.getItem("follower")!;
+    }
 
 
+    console.log(name);
+    dispatch(
+      userRemembered({
+        _id: _id,
+        name: name,
+        img: img,
+        token: token,
+        following: following,
+        follower: follower,
+      })
+    );
   }, []);
 
   dispatch(
@@ -68,7 +102,7 @@ export default function IndexComponent({ props }: any) {
       <div className="flex">
         <div className=" flex flex-col sm:flex-row w-full gap-2  ">
           <div className="flex flex-col sm:w-3/12 gap-4 rounded-lg  overflow-hidden">
-             <SideProfile props={user.data} /> 
+            <SideProfile props={user.data} />
           </div>
 
           <div className=" flex flex-col sm:w-9/12">

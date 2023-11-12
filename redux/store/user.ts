@@ -19,14 +19,12 @@ export const userSlice = createSlice({
       state.data = action.payload[0];
       state.lastFetch = Date.now();
     },
-    UserUpdated: (state, action: PayloadAction<any>) => {
-      // state._id = action.payload._id;
-      // state.name = action.payload.name;
-      // state.img = action.payload.img;
-      // state.token = action.payload.token;
+    userRemembered: (state, action: PayloadAction<any>) => {
+      console.log('reducer');
+      console.log(action.payload);
+      state.data = action.payload;
     },
     userLoggedOut: (state, action: PayloadAction<any>) => {
-      console.log('userLoggedOut');
       state.data._id = "";
       state.data.name = "";
       state.data.img = "img_avatar1.png";
@@ -38,5 +36,5 @@ export const userSlice = createSlice({
 });
 
 // Part 3
-export const { UserUpdated, userLoggedOut } = userSlice.actions;
+export const { userRemembered, userLoggedOut } = userSlice.actions;
 export default userSlice.reducer;

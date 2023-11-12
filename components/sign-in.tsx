@@ -9,8 +9,8 @@ export default function SignIn({ props }: any) {
   const { loginForm, setLoginForm } = React.useContext(myAppContext);
   const { userSignInModal, setUserSignInModal } =
     React.useContext(myAppContext);
-  const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.entities.user);
+  const dispatch = useAppDispatch();
   async function submitSigninApi(event: any): Promise<void> {
     event.preventDefault();
     if (loginForm.formIsValid) {
@@ -26,19 +26,26 @@ export default function SignIn({ props }: any) {
           }),
         })
       );
+      const user = useAppSelector((state) => state.entities.user);
+      console.log('sign-in user');
 
-      if (user.data._id !== "") {
-        return;
-      }
+      console.log(user);
+      // if (user.data._id !== "") {
+      //   return;
+      // } else {
+      //   console.log(user.data.name);
+      //   localStorage.setItem("name", user.data.name);
+      //   localStorage.setItem("img", user.data.img);
+      //   localStorage.setItem("_id", user.data._id);
+      //   localStorage.setItem("token", user.data.token);
+      //   localStorage.setItem(
+      //     "following",
+      //     user.data.following.length.toString()
+      //   );
+      //   localStorage.setItem("follower", user.data.follower.length.toString());
 
-      localStorage.setItem("name", user.data.name);
-      localStorage.setItem("img", user.data.img);
-      localStorage.setItem("_id", user.data._id);
-      localStorage.setItem("token", user.data.token);
-      localStorage.setItem("following", user.data.following.length.toString());
-      localStorage.setItem("follower", user.data.follower.length.toString());
-
-
+      //   console.log(localStorage.getItem("name"));
+      // }
       setUserSignInModal(false);
     }
   }
