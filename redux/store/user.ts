@@ -1,19 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// Part 1
-
-
-// Part 2
 export const userSlice = createSlice({
   name: "user",
-  initialState : {
-    data:{},
+  initialState: {
+    data: {
+      _id: "",
+      name: "",
+      img: "",
+      following: [],
+      follower: [],
+      token: "",
+    },
     isLoading: false,
-    lastFetch: null
-},
+    lastFetch: null,
+  },
   reducers: {
     userRecieved: (state: any, action: PayloadAction<any>) => {
-      state.data._id = action.payload[0];
+      state.data = action.payload[0];
       state.lastFetch = Date.now();
     },
     UserUpdated: (state, action: PayloadAction<any>) => {
@@ -22,15 +25,18 @@ export const userSlice = createSlice({
       // state.img = action.payload.img;
       // state.token = action.payload.token;
     },
-    UserCleared: (state, action: PayloadAction<any>) => {
-      // state._id = initialState._id;
-      // state.name = initialState.name;
-      // state.img = initialState.img;
-      // state.token = initialState.token;
+    userLoggedOut: (state, action: PayloadAction<any>) => {
+      console.log('userLoggedOut');
+      state.data._id = "";
+      state.data.name = "";
+      state.data.img = "img_avatar1.png";
+      state.data.token = "";
+      state.data.following = [];
+      state.data.follower = [];
     },
   },
 });
 
 // Part 3
-export const { UserUpdated, UserCleared } = userSlice.actions;
+export const { UserUpdated, userLoggedOut } = userSlice.actions;
 export default userSlice.reducer;

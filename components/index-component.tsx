@@ -6,25 +6,18 @@ import AddPost from "./add-post";
 import SideMostViewedPeople from "./side-most-viewed-people";
 import myAppContext from "@/components/context/context";
 import React, { useEffect, useState } from "react";
-
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
 import SignIn from "./sign-in";
-import { Comment, User } from "@/models/entities";
-import { Provider } from "react-redux";
-import { wrapper } from "../redux/store/store";
-import comments, {
-  commentAdded,
-  getVisibleComments,
-} from "@/redux/store/comments";
-import { postAdded } from "@/redux/store/posts";
-import { AnyAction } from "redux";
 import * as actions from "../redux/store/api";
+
 export default function IndexComponent({ props }: any) {
   const { createPostModal, setCreatePostModal } = React.useContext(myAppContext);
-  const { userSignInModal, setUserSignInModal } = React.useContext(myAppContext);
+  const { userSignInModal } = React.useContext(myAppContext);
   const posts = JSON.parse(props.posts);
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.entities);
+  const user = useAppSelector((state) => state.entities.user);
+
   useEffect(() => {
     let x = {
       _id: "1",
@@ -75,7 +68,7 @@ export default function IndexComponent({ props }: any) {
       <div className="flex">
         <div className=" flex flex-col sm:flex-row w-full gap-2  ">
           <div className="flex flex-col sm:w-3/12 gap-4 rounded-lg  overflow-hidden">
-            {/* <SideProfile props={userProfile} /> */}
+             <SideProfile props={user.data} /> 
           </div>
 
           <div className=" flex flex-col sm:w-9/12">

@@ -6,13 +6,12 @@ import * as actions from "../redux/store/api";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
 
 export default function SignIn({ props }: any) {
-
   const { loginForm, setLoginForm } = React.useContext(myAppContext);
   const { userSignInModal, setUserSignInModal } =
     React.useContext(myAppContext);
-    const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.entities.user);
   async function submitSigninApi(event: any): Promise<void> {
-    let _loginService = new LoginService();
     event.preventDefault();
     if (loginForm.formIsValid) {
       dispatch(
@@ -20,38 +19,26 @@ export default function SignIn({ props }: any) {
           url: "/auth/login/",
           method: "POST",
           onSuccess: "user/userRecieved",
-          body: JSON.stringify({ name: loginForm.username,password:loginForm.password,remember: true})
+          body: JSON.stringify({
+            name: loginForm.username,
+            password: loginForm.password,
+            remember: true,
+          }),
         })
       );
 
-      // const res = await _loginService.login(
-      //   loginForm.username,
-      //   loginForm.password,
-      //   "true"
-      // );
+      if (user.data._id !== "") {
+        return;
+      }
 
-      // if (res.status != 200) {
-      //   return;
-      // }
+      localStorage.setItem("name", user.data.name);
+      localStorage.setItem("img", user.data.img);
+      localStorage.setItem("_id", user.data._id);
+      localStorage.setItem("token", user.data.token);
+      localStorage.setItem("following", user.data.following.length.toString());
+      localStorage.setItem("follower", user.data.follower.length.toString());
 
-      // const repo = (await res.json())[0];
-      // console.log(repo);
-      // localStorage.setItem("name", repo.name);
-      // localStorage.setItem("img", repo.img);
-      // localStorage.setItem("_id", repo._id);
-      // localStorage.setItem("token", repo.token);
-      // localStorage.setItem("following", repo.following.length);
-      // localStorage.setItem("follower", repo.follower.length);
 
-      // setUserProfile({
-      //   ...userProfile,
-      //   name: repo.name,
-      //   img: repo.img,
-      //   _id: repo._id,
-      //   token: repo.token,
-      //   follower: repo.follower.length,
-      //   following: repo.following.length,
-      // });
       setUserSignInModal(false);
     }
   }
