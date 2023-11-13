@@ -14,7 +14,7 @@ export const initialState: PostInitialState = {
 
 // Part 2
 export const postSlice = createSlice({
-    name: 'post',
+    name: 'posts',
     initialState : {
         list:[],
         isLoading: false,
@@ -25,7 +25,7 @@ export const postSlice = createSlice({
             state.list = action.payload;
             state.lastFetch = Date.now();
           },
-        postAdded: (state, action: PayloadAction<number>) => {
+        postAdded: (state: any, action: PayloadAction<number>) => {
            
         }
     }

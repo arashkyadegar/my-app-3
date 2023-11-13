@@ -10,18 +10,15 @@ import { LikeService } from "@/services/likeService";
 import validator from "validator";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
-import { selectedPostUpdated } from "@/redux/store/selectedPost";
+import { selectedPostLike,selectedPostDislike, selectedPostUpdated } from "@/redux/store/selectedPost";
 import * as actions from "../redux/store/api";
-const parse = require("html-react-parser");
 
-var _ = require("lodash");
 export default function SinglePostDetailedComponent(this: any, { props }: any) {
   const post = props.post;
   const postId = props.postId;
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.entities.user);
-  const { selectedPost, setSelectedPost } = React.useContext(myAppContext);
-
+  const p =  useAppSelector((state) => state.entities.selectedPost);
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
   const [firstRender, setFirstrender] = useState(false);
   const [commentForm, setCommentForm] = useState(new CommentForm());
@@ -29,13 +26,23 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
 
   async function submitDeleteLike(event: any): Promise<void> {
     if (user.data._id !== "") {
-      const _likeService = new LikeService();
-      _likeService.fetchDeleteLike(user.data._id, postId).then(() => {
-        setSelectedPost({
-          ...post,
-          liked: false,
-        });
-      });
+      dispatch(
+        actions.apiCallBegan({
+          url: "/likes/",
+          method: "DELETE",
+          onSuccess: "selectedPost/selectedPostDislike",
+          body: JSON.stringify(
+            { 
+              "userId": user.data._id,
+              "postId":p.data._id,
+              "date":""
+            }
+          )
+        })
+      );
+      // dispatch(
+      //   selectedPostDislike({liked : false})
+      // );
     } else {
       Swal.fire({
         title: "خطا در انجام عملیات!",
@@ -48,13 +55,25 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
 
   async function submitSendLike(event: any): Promise<void> {
     if (user.data._id) {
-      const _likeService = new LikeService();
-      _likeService.fetchAddNewLike(user.data._id, postId).then(() => {
-        setSelectedPost({
-          ...post,
-          liked: true,
-        });
-      });
+      // dispatch(
+      //   selectedPostLike({
+      //     liked: true
+      //   })
+      // );
+      dispatch(
+        actions.apiCallBegan({
+          url: "/likes/",
+          method: "POST",
+          onSuccess: "selectedPost/selectedPostLike",
+          body: JSON.stringify(
+            { 
+              "userId": user.data._id,
+              "postId":p.data._id,
+              "date":""
+            }
+          )
+        })
+      );
     } else {
       Swal.fire({
         title: "خطا در انجام عملیات!",
@@ -65,12 +84,6 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     }
   }
 
-  let name: string;
-  let img: string;
-  let token: string;
-  let _id: string;
-  let following: string;
-  let follower: string;
   useEffect(() => {
     if (firstRender) {
       loadComments();
@@ -159,6 +172,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     }
   }
   return (
+
     <div
       key={post._id}
       className=" text-sm rounded-lg  overflow-hidden border border-gray-400 shadow-lg"
@@ -281,7 +295,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
               </div>
               <div className="flex flex-row m-4 gap-2 ">
                 <div>
-                  {selectedPost.liked && (
+                  {p.data.liked && (
                     <a>
                       <img
                         src="icons8-heart-red-filled.png"
@@ -291,7 +305,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
                     </a>
                   )}
 
-                  {!selectedPost.liked && (
+                  {!p.data.liked && (
                     <a>
                       <img
                         src="icons8-heart-black-empty.png"
@@ -378,7 +392,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
             <div className="flex flex-col gap-2 w-full">
               <div className="flex flex-row gap-2">
                 {/* heart-svg  */}
-                <a>{selectedPost.likes.length} نفر پسندیدند</a>
+                <a>{post.likes.length} نفر پسندیدند</a>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

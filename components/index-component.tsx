@@ -17,35 +17,22 @@ export default function IndexComponent({ props }: any) {
   const { userSignInModal } = React.useContext(myAppContext);
   const posts = JSON.parse(props.posts);
   const dispatch = useAppDispatch();
-  const state = useAppSelector((state) => state.entities);
-  const user = useAppSelector((state) => state.entities.user);
-  let _id = "";
-  let name = "";
-  let img = "";
-  let token = "";
-  let following = "";
-  let follower = "";
+  const {user} = useAppSelector((state) => state.entities);
 
   useEffect(() => {
 
   }, []);
 
-  dispatch(
-    actions.apiCallBegan({
-      url: "/posts",
-      method: "GET",
-      onSuccess: "posts/postsRecieved",
-    })
-  );
+  // dispatch(
+  //   actions.apiCallBegan({
+  //     url: "/posts",
+  //     method: "GET",
+  //     onSuccess: "posts/postsRecieved",
+  //   })
+  // );
 
-  //console.log(posts);
+
   return (
-    // <>
-    //   {state.comments.list.map((comment: any) => {
-    //     return <p key={comment._id}>{comment.text}</p>;
-    //   })}
-    // </>
-
     <div>
       <div className="fixed rounded-full top-96 overflow-hidden shadow-lg">
         <svg
