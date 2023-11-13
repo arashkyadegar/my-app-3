@@ -27,29 +27,7 @@ export default function IndexComponent({ props }: any) {
   let follower = "";
 
   useEffect(() => {
-    if (!localStorage.getItem("_id") === null) {
-      _id = localStorage.getItem("_id")!;
-    }
 
-    if (!localStorage.getItem("name") === null) {
-      name = localStorage.getItem("name")!;
-    }
-
-    if (!localStorage.getItem("img") === null) {
-      img = localStorage.getItem("img")!;
-    }
-
-    if (!localStorage.getItem("token") === null) {
-      token = localStorage.getItem("token")!;
-    }
-
-    if (!localStorage.getItem("following") === null) {
-      following = localStorage.getItem("following")!;
-    }
-
-    if (!localStorage.getItem("follower") === null) {
-      follower = localStorage.getItem("follower")!;
-    }
   }, []);
 
   dispatch(

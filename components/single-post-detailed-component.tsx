@@ -19,7 +19,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   const post = props.post;
   const postId = props.postId;
   const dispatch = useAppDispatch();
-  const { userProfile, setUserProfile } = React.useContext(myAppContext);
+  const user = useAppSelector((state) => state.entities.user);
   const { selectedPost, setSelectedPost } = React.useContext(myAppContext);
 
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
@@ -28,9 +28,9 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   const [comments, setComments] = useState(props.comments);
 
   async function submitDeleteLike(event: any): Promise<void> {
-    if (userProfile._id) {
+    if (user.data._id !== "") {
       const _likeService = new LikeService();
-      _likeService.fetchDeleteLike(userProfile._id, postId).then(() => {
+      _likeService.fetchDeleteLike(user.data._id, postId).then(() => {
         setSelectedPost({
           ...post,
           liked: false,
@@ -47,9 +47,9 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   }
 
   async function submitSendLike(event: any): Promise<void> {
-    if (userProfile._id) {
+    if (user.data._id) {
       const _likeService = new LikeService();
-      _likeService.fetchAddNewLike(userProfile._id, postId).then(() => {
+      _likeService.fetchAddNewLike(user.data._id, postId).then(() => {
         setSelectedPost({
           ...post,
           liked: true,
@@ -77,33 +77,6 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
       setFirstrender(true);
     }
 
-    if (!localStorage.getItem("_id") === null) {
-      _id = localStorage.getItem("_id")!;
-    }
-
-    if (!localStorage.getItem("name") === null) {
-      name = localStorage.getItem("name")!;
-    }
-
-    if (!localStorage.getItem("img") === null) {
-      img = localStorage.getItem("img")!;
-    }
-
-    if (!localStorage.getItem("token") === null) {
-      token = localStorage.getItem("token")!;
-    }
-
-    if (!localStorage.getItem("following") === null) {
-      following = localStorage.getItem("following")!;
-    }
-
-    if (!localStorage.getItem("follower") === null) {
-      follower = localStorage.getItem("follower")!;
-    }
-
-    //   setSelectedPost({
-    //     ...post,
-    // );
     dispatch(
       selectedPostUpdated({
         _id: post._id,
@@ -161,11 +134,11 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   async function submitSendComment(event: any): Promise<void> {
     event.preventDefault();
 
-    if (userProfile._id) {
+    if (user.data._id) {
       if (commentForm.formIsValid) {
         const _commentService = new CommentService();
         _commentService
-          .fetchAddNewComment(userProfile._id, postId, commentForm.commentText)
+          .fetchAddNewComment(user.data._id, postId, commentForm.commentText)
           .then(() => {
             loadComments();
           });

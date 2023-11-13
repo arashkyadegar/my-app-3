@@ -26,22 +26,6 @@ export default function SignIn({ props }: any) {
           }),
         })
       );
-      // if (user.data._id !== "") {
-      //   return;
-      // } else {
-      //   console.log(user.data.name);
-      //   localStorage.setItem("name", user.data.name);
-      //   localStorage.setItem("img", user.data.img);
-      //   localStorage.setItem("_id", user.data._id);
-      //   localStorage.setItem("token", user.data.token);
-      //   localStorage.setItem(
-      //     "following",
-      //     user.data.following.length.toString()
-      //   );
-      //   localStorage.setItem("follower", user.data.follower.length.toString());
-
-      //   console.log(localStorage.getItem("name"));
-      // }
       setUserSignInModal(false);
     }
   }
