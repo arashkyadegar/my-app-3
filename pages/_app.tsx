@@ -10,23 +10,19 @@ import {
   PostForm,
   User,
 } from "@/models/entities";
-import { wrapper } from "../redux/store/store";
-
+import { wrapperForPersistStore,wrapperForStore } from "../redux/store/store";
 import { Provider } from "react-redux";
 import { initialState } from "@/redux/store/posts";
-
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import ReactDOM from "react-dom";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const { store } = wrapper.useWrappedStore(initialState);
-  let persistor = persistStore(store);
+
 
   const [createPostModal, setCreatePostModal] = useState(false);
   const [navbarMenu, setNavBarMenu] = useState(true);
   const [userSignInModal, setUserSignInModal] = useState(false);
-  const [selectedPost, setSelectedPost] = useState(new Post());
-  //const [comments, setComments] = useState([]);
 
   const [loginForm, setLoginForm] = useState(new LoginForm());
   const [commentForm, setCommentForm] = useState(new CommentForm());
@@ -35,7 +31,43 @@ export default function App({ Component, pageProps }: AppProps) {
   const [addPostTagInput, setAddPostTagInput] = useState("");
   const [firstRender, setFirstrender] = useState(true);
   const [postLikeSign, setPostLikeSign] = useState(false);
-
+  // if (typeof window === "undefined") {
+  //   const { store } = wrapperForStore.useWrappedStore(initialState);
+  //   return (
+  //     <myAppContext.Provider
+  //       value={{
+  //         createPostModal,
+  //         setCreatePostModal,
+  //         navbarMenu,
+  //         setNavBarMenu,
+  //         userSignInModal,
+  //         setUserSignInModal,
+  //         loginForm,
+  //         setLoginForm,
+  //         commentForm,
+  //         setCommentForm,
+  //         addPostForm,
+  //         setAddPostForm,
+  //         addPostTagInput,
+  //         setAddPostTagInput,
+  //         firstRender,
+  //         setFirstrender,
+  //         postLikeSign,
+  //         setPostLikeSign,
+  //       }}
+  //     >
+  
+  //       <Provider store={store}>
+  //           <MainLayout>
+  //             <Component {...pageProps} />
+  //           </MainLayout>
+  //       </Provider>
+  //     </myAppContext.Provider>
+  
+  //   );
+  // }else {
+    const { store } = wrapperForPersistStore.useWrappedStore(initialState);
+    let persistor = persistStore(store);
   return (
     <myAppContext.Provider
       value={{
@@ -45,8 +77,6 @@ export default function App({ Component, pageProps }: AppProps) {
         setNavBarMenu,
         userSignInModal,
         setUserSignInModal,
-        selectedPost,
-        setSelectedPost,
         loginForm,
         setLoginForm,
         commentForm,
@@ -61,6 +91,7 @@ export default function App({ Component, pageProps }: AppProps) {
         setPostLikeSign,
       }}
     >
+
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <MainLayout>
@@ -69,5 +100,7 @@ export default function App({ Component, pageProps }: AppProps) {
         </PersistGate>
       </Provider>
     </myAppContext.Provider>
+
   );
+    // }
 }
