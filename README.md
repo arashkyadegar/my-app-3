@@ -7,7 +7,7 @@ A simple blog/posts webapp in which you can:
 + 2- Create a new post
 + 3- View other people's posts and if you want, add them to your favorites list and you can also comment on existing posts.
 These items have been used in this project:
-# nextjs - reduxToolkit - contextapi - tailwindcss 
+# nextjs - typescript - reduxToolkit - contextapi - tailwindcss 
 
 
 
