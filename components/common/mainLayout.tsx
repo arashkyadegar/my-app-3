@@ -7,7 +7,7 @@ export default function MainLayout({ children }: PropsWithChildren)  {
     <>
       <div>
       <MainNavBar />
-      <div className="px-6 py-6">{children}</div>
+      <div className="text-base px-6 py-6 top-10 relative">{children}</div>
       <MainFooter />
       </div>
     </>

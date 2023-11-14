@@ -33,7 +33,7 @@ export default function IndexComponent({ props }: any) {
 
 
   return (
-    <div>
+    <div >
       <div className="fixed rounded-full top-96 overflow-hidden shadow-lg">
         <svg
           onClick={() => setCreatePostModal(true)}
@@ -68,13 +68,13 @@ export default function IndexComponent({ props }: any) {
           </div>
 
           {userSignInModal && (
-            <div className="flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">
+            <div className="z-20 flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">
               <SignIn />
             </div>
           )}
 
           {createPostModal && (
-            <div className=" flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">
+            <div className="z-20 flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">
               <AddPost />
             </div>
           )}

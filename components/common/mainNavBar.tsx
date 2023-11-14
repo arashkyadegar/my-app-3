@@ -7,8 +7,8 @@ import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { userLoggedOut } from "@/redux/store/user";
 export default function MainNavBar({ children }: PropsWithChildren) {
   const { navbarMenu, setNavBarMenu } = React.useContext(myAppContext);
-  const { userSignInModal, setUserSignInModal } =
-    React.useContext(myAppContext);
+  const { userSignInModal, setUserSignInModal } = React.useContext(myAppContext);
+  const {user} = useAppSelector((state) => state.entities);
   const dispatch = useAppDispatch();
   //const { userProfile, setUserProfile } = React.useContext(myAppContext);
   function callUserExit() {
@@ -41,7 +41,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
   }
 
   return (
-    <div className="flex flex-wrap container lg:flex-nowrap w-full p-2 bg-purple-800 text-gray-200 justify-between">
+    <div className="z-10 fixed flex flex-wrap container lg:flex-nowrap w-full p-2 bg-purple-800 text-gray-200 justify-between">
       <div className="">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -94,7 +94,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
               ورود / ثبت نام
             </li>
 
-            {/* {userProfile._id != "" && ( */}
+           {user.data._id != "" && ( 
             <li
               onClick={() => {
                 callUserExit();
@@ -103,7 +103,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
             >
               خروج
             </li>
-            {/* )} */}
+             )} 
           </ul>
         }
       </div>

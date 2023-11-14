@@ -56,11 +56,6 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
 
   async function submitSendLike(event: any): Promise<void> {
     if (user.data._id) {
-      // dispatch(
-      //   selectedPostLike({
-      //     liked: true
-      //   })
-      // );
       dispatch(
         actions.apiCallBegan({
           url: "/likes/",
@@ -117,7 +112,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     setPostDrpDwnHide(!postDrpDwnHide);
   };
 
-  async function loadComments() {
+   function loadComments() {
     dispatch(
       actions.apiCallBegan({
         url: "/comments/" + postId,
