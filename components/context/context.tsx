@@ -1,51 +1,71 @@
-import { createContext, useContext, useState } from 'react';
-import {User,Post, LoginForm, CommentForm, Comment, PostForm, LikeEntity} from '../../models/entities';
+import { createContext, useContext, useState } from "react";
+import {
+  User,
+  Post,
+  LoginForm,
+  CommentForm,
+  Comment,
+  PostForm,
+  LikeEntity,
+} from "../../models/entities";
 const myAppContext = createContext({
   createPostModal: false,
-  setCreatePostModal: (createPostModal :boolean) => {},
+  setCreatePostModal: (createPostModal: boolean) => {},
   navbarMenu: false,
   setNavBarMenu: (navbarMenu: boolean) => {},
   userSignInModal: false,
   setUserSignInModal: (userSignInModal: boolean) => {},
-  addPostForm : {
-    _id: ""  ,
-    author: new User("","") ,
-    title: "" ,
-    body: "" ,
-    rate: 0 ,
-    img: "" ,
-    date: "" ,
-    isVisible: false ,
-    documents: [""] ,
-    tags: [""] ,
-    links: [""] ,
-    comments: Array<Comment> (),
+  addPostForm: {
+    _id: "",
+    author: {
+      _id: "",
+      name: "",
+      img: "",
+      password: "",
+      token: "",
+      remember: false,
+      tags: [],
+      likes: [],
+      followers: [""],
+      followings: [""],
+    },
+    title: "",
+    body: "",
+    rate: 0,
+    img: "",
+    date: "",
+    isVisible: false,
+    documents: [""],
+    tags: [""],
+    links: [""],
+    comments: Array<Comment>(),
     formIsValid: false,
     bodyError: "",
-    titleError:"" 
+    titleError: "",
+    likes: [],
+    liked: false,
   },
-  setAddPostForm : (addPostForm : PostForm) => {},
+  setAddPostForm: (addPostForm: PostForm) => {},
   loginForm: {
-    username : "",
-    password  : "",
-    usernameError :"",
-    passwordError  :"",
-    formIsValid : false
+    username: "",
+    password: "",
+    usernameError: "",
+    passwordError: "",
+    formIsValid: false,
   },
-  setLoginForm:(loginForm: LoginForm) => {},
+  setLoginForm: (loginForm: LoginForm) => {},
   commentForm: {
     commentText: "",
     commentTextError: "",
-    formIsValid:  false
+    formIsValid: false,
   },
-  setCommentForm:(commentForm: CommentForm) => {},
-  addPostTagInput : "",
-  setAddPostTagInput : (addPostTagInput: string) => {},
+  setCommentForm: (commentForm: CommentForm) => {},
+  addPostTagInput: "",
+  setAddPostTagInput: (addPostTagInput: string) => {},
   firstRender: true,
-  setFirstrender : (firstRender: boolean) => {},
-  postLikeSign : false,
-  setPostLikeSign :(firstRender: boolean) => {}
+  setFirstrender: (firstRender: boolean) => {},
+  postLikeSign: false,
+  setPostLikeSign: (firstRender: boolean) => {},
 });
-
 
 export default myAppContext;

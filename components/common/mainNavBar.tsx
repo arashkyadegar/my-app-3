@@ -5,11 +5,17 @@ import myAppContext from "../context/context";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { userLoggedOut } from "@/redux/store/user";
+import { useMediaQuery } from 'react-responsive'
 export default function MainNavBar({ children }: PropsWithChildren) {
+  const isBigScreen = useMediaQuery({ query: '(min-width: 640px)' });
+
   const { navbarMenu, setNavBarMenu } = React.useContext(myAppContext);
   const { userSignInModal, setUserSignInModal } = React.useContext(myAppContext);
   const {user} = useAppSelector((state) => state.entities);
   const dispatch = useAppDispatch();
+  if(isBigScreen) {
+    setNavBarMenu(true);
+  }
   //const { userProfile, setUserProfile } = React.useContext(myAppContext);
   function callUserExit() {
     Swal.fire({
@@ -44,7 +50,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
   };
   
   return (
-    <div className="z-10 fixed flex flex-wrap container lg:flex-nowrap w-full p-2 bg-purple-800 text-gray-200 justify-between">
+    <div className="z-10 fixed w-full flex flex-wrap  lg:flex-nowrap  p-2 bg-purple-800 text-gray-200 justify-between">
       <div className="">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -62,7 +68,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
         </svg>
         { navbarMenu &&
           <ul
-            className="w-4/4 flex flex-col sm:flex-row sm:flex
+            className="w-4/4  flex-col  sm:flex-row sm:flex
               gap-4 transition-transform items-center"
           >
             <li className="hover:text-gray-300 cursor-pointer">
@@ -130,5 +136,6 @@ export default function MainNavBar({ children }: PropsWithChildren) {
         </svg>
       </div>
     </div>
+    
   );
 }

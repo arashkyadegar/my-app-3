@@ -4,18 +4,32 @@ import myAppContext from "./context/context";
 import { User, Post } from "@/models/entities";
 import { PostService } from "@/services/postService";
 import validator from "validator";
+import { useAppSelector } from "@/redux/store/hooks";
 
 export default function AddPost({ props }: any) {
+  const { user } = useAppSelector((state) => state.entities);
   const { addPostForm, setAddPostForm } = React.useContext(myAppContext);
   const { addPostTagInput, setAddPostTagInput } =
     React.useContext(myAppContext);
-
+  const { createPostModal, setCreatePostModal } =
+    React.useContext(myAppContext);
   function createPost() {
     let _postService = new PostService();
     let post = new Post();
 
     post._id = "";
-    post.author = new User(localStorage.getItem("_id")!, "");
+    post.author = {
+      _id: user.data._id,
+      name: "",
+      img: "",
+      password: "",
+      token: "",
+      remember: false,
+      tags: [],
+       likes: [],
+      followers: [""],
+      followings: [""],
+    };
     post.title = addPostForm.title;
     post.body = addPostForm.body;
     post.rate = 0;
@@ -26,8 +40,6 @@ export default function AddPost({ props }: any) {
     post.documents = [];
     post.links = [];
     post.comments = [];
-    console.log(post.author._id);
-
     _postService.fetchAddNewPost(post).then((data: any) => {});
   }
 
@@ -93,73 +105,82 @@ export default function AddPost({ props }: any) {
         <img src="icons-new-post-64.png" alt="" />
       </div>
       {/* right-col */}
-      <div className="basis-2/3 p-4">
-        <div className="flex flex-col relative  mb-2">
-          <label htmlFor="twitter-account" className="text-base pb-1">
-            عنوان
-          </label>
-          <input
-            onChange={fillTitleText}
-            type="text"
-            id="twitterAccount"
-            name="twitter-account"
-            className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8 invalid:border-red-600"
-          />
-          <p className="text-red-600 text-xs">{addPostForm.titleError}</p>
-        </div>
-
-        <div className="flex flex-col relative ">
-          <label htmlFor="twitter-account" className="text-base pb-1">
-            متن
-          </label>
-          <textarea
-            onChange={fillBodyText}
-            name=""
-            id=""
-            rows={3}
-            className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8"
-          ></textarea>
-
-          <p className="text-red-600 text-xs">{addPostForm.bodyError}</p>
-        </div>
-
-        <div className="flex flex-col relative  mb-2">
-          <label htmlFor="twitter-account" className="text-base pb-1">
-            تگ ها
-          </label>
-          <div className="flex flex-row gap-2">
+      <div className="container">
+        <div className="basis-2/3 p-4">
+          <div className="flex flex-col relative  mb-2">
+            <label htmlFor="twitter-account" className="text-base pb-1">
+              عنوان
+            </label>
             <input
-              onChange={fillTag}
+              onChange={fillTitleText}
               type="text"
               id="twitterAccount"
               name="twitter-account"
-              className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8"
+              className="outline-none rounded-lg bg-transparent border border-gray-400 p-1 pl-8 invalid:border-red-600"
             />
+            <p className="text-red-600 text-xs">{addPostForm.titleError}</p>
+          </div>
+
+          <div className="flex flex-col relative mb-2">
+            <label htmlFor="twitter-account" className="text-base pb-1">
+              متن
+            </label>
+            <textarea
+              onChange={fillBodyText}
+              name=""
+              id=""
+              rows={3}
+              className="outline-none rounded-lg bg-transparent border border-gray-400 p-1 pl-8"
+            ></textarea>
+
+            <p className="text-red-600 text-xs">{addPostForm.bodyError}</p>
+          </div>
+
+          <div className="flex flex-col relative  mb-2">
+            <label htmlFor="twitter-account" className="text-base pb-1">
+              تگ ها
+            </label>
+            <div className="flex flex-row gap-2">
+              <input
+                onChange={fillTag}
+                type="text"
+                id="twitterAccount"
+                name="twitter-account"
+                className="outline-none w-full rounded-lg bg-transparent border border-gray-400 p-1 pl-8"
+              />
+              <button
+                onClick={addTags}
+                className="bg-blue-400 hover:bg-blue-600 transition-all duration-200 inline px-3 py-2   rounded-md text-white"
+              >
+                +
+              </button>
+            </div>
+            <ul className="flex gap-2 p-2 flex-wrap">
+              {addPostForm.tags.map((element: any) => {
+                return (
+                  <li className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">
+                    {element}
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          <div className="flex justify-end gap-2">
             <button
-              onClick={addTags}
-              className="bg-green-600 inline px-2  rounded-md text-white"
+              onClick={createPost}
+              className="bg-blue-400 hover:bg-blue-600 transition-all duration-200  inline px-4 py-2 rounded-md text-white"
             >
               ثبت
             </button>
-          </div>
-          <ul className="flex gap-2 p-2 flex-wrap">
-            {addPostForm.tags.map((element: any) => {
-              return (
-                <li className="bg-gray-400  text-xs inline px-3 py-2 rounded-full text-white hover:text-gray-500 shadow-md shadow-gray-500">
-                  {element}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
 
-        <div className="flex justify-end">
-          <button
-            onClick={createPost}
-            className="bg-green-600 inline px-4 py-2 rounded-md text-white"
-          >
-            ثبت
-          </button>
+            <button
+              onClick={() => setCreatePostModal(false)}
+              className="bg-red-400 hover:bg-red-600 transition-all duration-200 inline px-4 py-2 rounded-md text-white"
+            >
+              لغو
+            </button>
+          </div>
         </div>
       </div>
     </div>
