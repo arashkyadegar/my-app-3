@@ -3,16 +3,26 @@ import { PropsWithChildren } from "react";
 import { useState, useEffect } from 'react'
 import myAppContext from "./context/context";
 import router, { useRouter } from "next/router";
+import moment from "moment";
 export default function SingleCommentComponent({props} : any)  {
 
   return ( 
       <div key={props._id}  className="flex flex-row border even:bg-gray-100 bg-white border-gray-300 p-4">
+ 
         <img src={((props.user == null)? "unknown-avatar.png": props.user.img)} alt="avatar" className=" cursor-pointer w-10 h-10 rounded-full ml-2" />
 
-        <div className="flex flex-col ">
-          <h3 className=" font-bold text-sm"></h3>
-          
-          <div className="flex flex-row justify-between">
+        <div className="flex flex-col gap-2 w-full">
+          <div className="flex flex-col">
+          <h3 className=" font-bold text-xs">
+          {props.user.name}
+          </h3>
+          <h3 className=" text-xs text-gray-500 ">
+          {moment(new Date(props.date)).startOf('hour').fromNow()}
+          {/* {moment(new Date(props.date)).subtract(10, 'days').calendar()} */}
+          </h3>
+          </div>
+
+          <div className="flex flex-row ">
             <p className="line-clamp-1 w-full">
               {props.text}
             </p>
@@ -21,7 +31,7 @@ export default function SingleCommentComponent({props} : any)  {
             </svg>
           </div>
 
-          <div className="flex flex-row pt-2 text-gray-600 ">
+          <div className="flex flex-row pt-2 text-gray-600">
             {/* heart-svg  */}
             <a>{props.rate} پسندیدند</a>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">

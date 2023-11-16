@@ -34,7 +34,7 @@ export const commentsSlice = createSlice({
   },
 });
 
-export const { commentAdded, commentRemoved } = commentsSlice.actions;
+export const { commentAdded, commentRemoved , commentsRecieved } = commentsSlice.actions;
 export default commentsSlice.reducer;
 
 // //selectors with cache enabled
