@@ -1,5 +1,16 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## about this project 
+A simple blog/posts webapp in which you can:
+
++ 1- Log in as a user
++ 2- Create a new post
++ 3- View other people's posts and if you want, add them to your favorites list and you can also comment on existing posts.
+These items have been used in this project:
+# nextjs - typescript - reduxToolkit - contextapi - tailwindcss 
+
+
+
 ## Getting Started
 
 First, run the development server:
