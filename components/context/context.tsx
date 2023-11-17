@@ -13,7 +13,9 @@ const myAppContext = createContext({
   setCreatePostModal: (createPostModal: boolean) => {},
   navbarMenu: false,
   setNavBarMenu: (navbarMenu: boolean) => {},
-  userSignInModal: false,
+  userSignInModalTab:true,
+  setUserSignInModalTab : (userSignInModal: boolean) => {},
+  userSignInModal: true,
   setUserSignInModal: (userSignInModal: boolean) => {},
   addPostForm: {
     _id: "",

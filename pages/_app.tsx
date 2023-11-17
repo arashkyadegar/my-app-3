@@ -22,7 +22,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const [createPostModal, setCreatePostModal] = useState(false);
   const [navbarMenu, setNavBarMenu] = useState(true);
-  const [userSignInModal, setUserSignInModal] = useState(false);
+  const [userSignInModal, setUserSignInModal] = useState(true);
+  const [userSignInModalTab, setUserSignInModalTab] = useState(true);
 
   const [loginForm, setLoginForm] = useState(new LoginForm());
   const [commentForm, setCommentForm] = useState(new CommentForm());
@@ -73,6 +74,7 @@ export default function App({ Component, pageProps }: AppProps) {
       value={{
         createPostModal,
         setCreatePostModal,
+        setUserSignInModalTab,
         navbarMenu,
         setNavBarMenu,
         userSignInModal,
