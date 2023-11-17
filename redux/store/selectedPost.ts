@@ -35,7 +35,6 @@ export const selectedPostSlice = createSlice({
       state.data.liked = true;
     },
     selectedPostUpdated: (state: any, action: PayloadAction<any>) => {
-      console.log(action.payload);
       state.data = action.payload;
     },
   },

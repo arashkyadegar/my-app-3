@@ -118,7 +118,7 @@ export default function AddPost({ props }: any) {
               name="twitter-account"
               className="outline-none rounded-lg bg-transparent border border-gray-400 p-1 pl-8 invalid:border-red-600"
             />
-            <p className="text-red-600 text-xs">{addPostForm.titleError}</p>
+            <p className="text-red-400 text-xs">{addPostForm.titleError}</p>
           </div>
 
           <div className="flex flex-col relative mb-2">
@@ -133,7 +133,7 @@ export default function AddPost({ props }: any) {
               className="outline-none rounded-lg bg-transparent border border-gray-400 p-1 pl-8"
             ></textarea>
 
-            <p className="text-red-600 text-xs">{addPostForm.bodyError}</p>
+            <p className="text-red-400 text-xs">{addPostForm.bodyError}</p>
           </div>
 
           <div className="flex flex-col relative  mb-2">

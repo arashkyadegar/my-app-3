@@ -5,7 +5,8 @@ import myAppContext from "../context/context";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { userLoggedOut } from "@/redux/store/user";
-import { useMediaQuery } from 'react-responsive'
+import { useMediaQuery } from 'react-responsive';
+import SignIn from "../sign-in";
 export default function MainNavBar({ children }: PropsWithChildren) {
   const isBigScreen = useMediaQuery({ query: '(min-width: 640px)' });
 
@@ -93,7 +94,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
                 ارتباط با ما
               </Link>
             </li>
-
+            {user.data._id === "" && ( 
             <li
               onClick={() => {
                 setUserSignInModal(true);
@@ -102,6 +103,7 @@ export default function MainNavBar({ children }: PropsWithChildren) {
             >
               ورود / ثبت نام
             </li>
+            )}
 
            {user.data._id != "" && ( 
             <li
@@ -135,6 +137,12 @@ export default function MainNavBar({ children }: PropsWithChildren) {
           />
         </svg>
       </div>
+
+      {userSignInModal && (
+            <div className="z-20 flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">
+              <SignIn />
+            </div>
+          )}
     </div>
     
   );

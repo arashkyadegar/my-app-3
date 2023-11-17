@@ -67,7 +67,7 @@ export default function SignIn({ props }: any) {
   }
 
   return (
-    <div className="absolute bg-white w-6/12  rounded-lg">
+    <div className="absolute bg-white w-6/12 text-black  rounded-lg">
       <div className=" mb-10 mx-auto  border-gray-500 w-full  p-5">
         <ul className="flex flex-row gap-2 ">
           <li className="cursor-pointer p-2 border-gray-900">Sign-up</li>
@@ -203,12 +203,20 @@ export default function SignIn({ props }: any) {
             <p className="text-red-600 text-xs">{loginForm.passwordError}</p>
           </div>
 
-          <div className="flex flex-row mt-4 justify-end">
+          <div className="flex flex-row mt-4 gap-2 justify-end  text-white">
             <button
               type="submit"
-              className="bg-cyan-300 inline px-4 py-2 rounded-md text-black"
+              className="bg-blue-400 hover:bg-blue-600 transition-all duration-200 inline px-4 py-2 rounded-md"
             >
               ورود
+            </button>
+
+            <button
+              onClick={() => setUserSignInModal(false)}
+              type="button"
+              className="bg-red-400 hover:bg-red-600 transition-all duration-200 inline px-4 py-2 rounded-md"
+            >
+              لغو
             </button>
           </div>
         </form>

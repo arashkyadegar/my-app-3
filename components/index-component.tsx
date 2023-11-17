@@ -7,9 +7,6 @@ import SideMostViewedPeople from "./side-most-viewed-people";
 import myAppContext from "@/components/context/context";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
-import SignIn from "./sign-in";
-import * as actions from "../redux/store/api";
-import { userRemembered } from "@/redux/store/user";
 
 export default function IndexComponent({ props }: any) {
   const { createPostModal, setCreatePostModal } =
@@ -67,11 +64,7 @@ export default function IndexComponent({ props }: any) {
             </div>
           </div>
 
-          {userSignInModal && (
-            <div className="z-20 flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">
-              <SignIn />
-            </div>
-          )}
+
 
           {createPostModal && (
             <div className="z-20 flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">

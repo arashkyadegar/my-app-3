@@ -3,30 +3,35 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import SingleCommentComponent from "./single-comment-component";
 import React from "react";
-import myAppContext from "./context/context";
 import { CommentForm } from "@/models/entities";
 import { CommentService } from "@/services/commentService";
 import { LikeService } from "@/services/likeService";
 import validator from "validator";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
-import { selectedPostLike,selectedPostDislike, selectedPostUpdated } from "@/redux/store/selectedPost";
-import {commentsRecieved} from "../redux/store/comments";
+import {
+  selectedPostLike,
+  selectedPostDislike,
+  selectedPostUpdated,
+} from "@/redux/store/selectedPost";
+import { commentsRecieved } from "../redux/store/comments";
 import * as actions from "../redux/store/api";
 
 export default function SinglePostDetailedComponent(this: any, { props }: any) {
+
   const post = props.post;
   const comments = props.comments;
   const postId = props.postId;
   const dispatch = useAppDispatch();
   const userState = useAppSelector((state) => state.entities.user);
-  const selectedPostState =  useAppSelector((state) => state.entities.selectedPost);
-  const commentsState =  useAppSelector((state) => state.entities.comments);
+  const selectedPostState = useAppSelector(
+    (state) => state.entities.selectedPost
+  );
+  const commentsState = useAppSelector((state) => state.entities.comments);
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
   const [firstRender, setFirstrender] = useState(false);
   const [commentForm, setCommentForm] = useState(new CommentForm());
-
-
+  console.log(selectedPostState.data.liked);
   async function submitDeleteLike(event: any): Promise<void> {
     if (userState.data._id !== "") {
       dispatch(
@@ -34,13 +39,11 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
           url: "/likes/",
           method: "DELETE",
           onSuccess: "selectedPost/selectedPostDislike",
-          body: JSON.stringify(
-            { 
-              "userId": userState.data._id,
-              "postId":selectedPostState.data._id,
-              "date":""
-            }
-          )
+          body: JSON.stringify({
+            userId: userState.data._id,
+            postId: selectedPostState.data._id,
+            date: "",
+          }),
         })
       );
       // dispatch(
@@ -63,13 +66,11 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
           url: "/likes/",
           method: "POST",
           onSuccess: "selectedPost/selectedPostLike",
-          body: JSON.stringify(
-            { 
-              "userId": userState.data._id,
-              "postId":selectedPostState.data._id,
-              "date":""
-            }
-          )
+          body: JSON.stringify({
+            userId: userState.data._id,
+            postId: selectedPostState.data._id,
+            date: "",
+          }),
         })
       );
     } else {
@@ -83,11 +84,12 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   }
 
   useEffect(() => {
-   // if (firstRender) {
-      loadComments();
+    // if (firstRender) {
+    loadComments();
     //  setFirstrender(true);
     //}
     dispatch(commentsRecieved(comments));
+    console.log(post);
     dispatch(
       selectedPostUpdated({
         _id: post._id,
@@ -114,7 +116,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     setPostDrpDwnHide(!postDrpDwnHide);
   };
 
-   function loadComments() {
+  function loadComments() {
     dispatch(
       actions.apiCallBegan({
         url: "/comments/" + postId,
@@ -149,7 +151,11 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
       if (commentForm.formIsValid) {
         const _commentService = new CommentService();
         _commentService
-          .fetchAddNewComment(userState.data._id, postId, commentForm.commentText)
+          .fetchAddNewComment(
+            userState.data._id,
+            postId,
+            commentForm.commentText
+          )
           .then(() => {
             loadComments();
           });
@@ -170,7 +176,6 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     }
   }
   return (
-
     <div
       key={post._id}
       className=" text-sm rounded-lg  overflow-hidden border border-gray-400 shadow-lg"
@@ -482,5 +487,3 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     </div>
   );
 }
-
-

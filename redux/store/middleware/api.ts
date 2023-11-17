@@ -8,7 +8,6 @@ const api =
     const baseURL = process.env.NEXT_PUBLIC_BASEURL;
     const { url, method, onSuccess, onError,body } = action.payload;
 
-    console.log(action.payload);
     const requestOptions = {
       method: method,
       headers: { "Content-Type": "application/json" },
