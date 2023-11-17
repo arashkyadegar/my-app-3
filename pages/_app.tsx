@@ -74,6 +74,7 @@ export default function App({ Component, pageProps }: AppProps) {
       value={{
         createPostModal,
         setCreatePostModal,
+        userSignInModalTab,
         setUserSignInModalTab,
         navbarMenu,
         setNavBarMenu,
