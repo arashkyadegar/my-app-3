@@ -78,24 +78,44 @@ export default function SignIn({ props }: any) {
   return (
     <div className="absolute bg-white w-6/12 text-black  rounded-lg">
       <div className=" mb-10 mx-auto  border-gray-500 w-full">
-        <ul className="flex flex-row gap-2 bg-purple-800 text-white rounded-t-lg">
-          <li
-            onClick={() => {
-              setUserSignInModalTab(true);
-            }}
-            className="   cursor-pointer p-2 rounded-t-lg border border-white"
-          >
-            ورود
-          </li>
-          <li
-            onClick={() => {
-              setUserSignInModalTab(false);
-            }}
-            className="cursor-pointer p-2 rounded-t-lg  border border-white"
-          >
-            ثبت نام
+        <ul className="flex flex-row  bg-purple-800 text-white rounded-t-lg justify-between">
+          <ul className="flex flex-row gap-2">
+            <li
+              onClick={() => {
+                setUserSignInModalTab(true);
+              }}
+              className="   cursor-pointer p-2 rounded-t-lg border border-white"
+            >
+              ورود
+            </li>
+            <li
+              onClick={() => {
+                setUserSignInModalTab(false);
+              }}
+              className="cursor-pointer p-2 rounded-t-lg  border border-white clear-right"
+            >
+              ثبت نام
+            </li>
+          </ul>
+          <li className="">
+            <svg
+              onClick={() => setUserSignInModal(false)}
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth="1.5"
+              stroke="currentColor"
+              className="w-7 h-7 cursor-pointer m-1"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
           </li>
         </ul>
+
         {/* sign in div */}
         {userSignInModalTab && (
           <div className=" p-5">
