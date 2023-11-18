@@ -23,6 +23,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const [createPostModal, setCreatePostModal] = useState(false);
   const [navbarMenu, setNavBarMenu] = useState(true);
   const [userSignInModal, setUserSignInModal] = useState(true);
+  const [passwordVisiblity, setPasswordVisibility] = useState(false);
   const [userSignInModalTab, setUserSignInModalTab] = useState(true);
 
   const [loginForm, setLoginForm] = useState(new LoginForm());
@@ -72,6 +73,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <myAppContext.Provider
       value={{
+        passwordVisiblity,
+        setPasswordVisibility,
         createPostModal,
         setCreatePostModal,
         userSignInModalTab,

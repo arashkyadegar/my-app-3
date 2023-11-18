@@ -7,6 +7,8 @@ import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
 
 export default function SignIn({ props }: any) {
   const { loginForm, setLoginForm } = React.useContext(myAppContext);
+  const { passwordVisiblity, setPasswordVisibility } =
+    React.useContext(myAppContext);
   const { userSignInModalTab, setUserSignInModalTab } =
     React.useContext(myAppContext);
   const { userSignInModal, setUserSignInModal } =
@@ -69,30 +71,34 @@ export default function SignIn({ props }: any) {
     }
   }
 
+  function showPassword(event: any): void {
+    alert("done");
+  }
+
   return (
     <div className="absolute bg-white w-6/12 text-black  rounded-lg">
-      <div className=" mb-10 mx-auto  border-gray-500 w-full  p-5">
-        <ul className="flex flex-row gap-2 ">
+      <div className=" mb-10 mx-auto  border-gray-500 w-full">
+        <ul className="flex flex-row gap-2 bg-purple-800 text-white rounded-t-lg">
           <li
             onClick={() => {
               setUserSignInModalTab(true);
             }}
-            className="cursor-pointer p-2 border-gray-900"
+            className="   cursor-pointer p-2 rounded-t-lg border border-white"
           >
-            Sign-up
+            ورود
           </li>
           <li
             onClick={() => {
               setUserSignInModalTab(false);
             }}
-            className="cursor-pointer p-2 border-gray-900"
+            className="cursor-pointer p-2 rounded-t-lg  border border-white"
           >
-            Sign-in
+            ثبت نام
           </li>
         </ul>
         {/* sign in div */}
-        {userSignInModalTab  && (
-          <div>
+        {userSignInModalTab && (
+          <div className=" p-5">
             <div className=" flex flex-row justify-center items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -212,10 +218,30 @@ export default function SignIn({ props }: any) {
                     d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
                   />
                 </svg>
-
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="absolute top-9 left-8 w-6 h-6 cursor-pointer "
+                  onMouseDown={() => setPasswordVisibility(true)}
+                  onMouseUp={() => setPasswordVisibility(false)}
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
                 <input
                   required
-                  type="password"
+                  type={passwordVisiblity ? "text" : "password"}
                   onChange={fillLoginPassword}
                   id="password"
                   name="password"
@@ -246,8 +272,8 @@ export default function SignIn({ props }: any) {
           </div>
         )}
         {/* register  div */}
-        {!userSignInModalTab  && (
-          <div>
+        {!userSignInModalTab && (
+          <div className=" p-5">
             <form onSubmit={submitSigninApi} data-te-validation-init>
               <div className="flex flex-col relative  mb-2">
                 <label htmlFor="email" className="text-base mb-2">
@@ -307,6 +333,8 @@ export default function SignIn({ props }: any) {
                   stroke-width="1.5"
                   stroke="currentColor"
                   className="absolute top-9 left-8 w-6 h-6 cursor-pointer "
+                  onMouseDown={() => setPasswordVisibility(true)}
+                  onMouseUp={() => setPasswordVisibility(false)}
                 >
                   <path
                     stroke-linecap="round"
@@ -322,7 +350,7 @@ export default function SignIn({ props }: any) {
 
                 <input
                   required
-                  type="password"
+                  type={passwordVisiblity ? "text" : "password"}
                   onChange={fillLoginPassword}
                   id="password"
                   name="password"

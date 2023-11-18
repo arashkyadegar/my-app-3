@@ -9,6 +9,8 @@ import {
   LikeEntity,
 } from "../../models/entities";
 const myAppContext = createContext({
+  passwordVisiblity:false,
+  setPasswordVisibility: (passwordVisiblity: boolean) =>{},
   createPostModal: false,
   setCreatePostModal: (createPostModal: boolean) => {},
   navbarMenu: false,
