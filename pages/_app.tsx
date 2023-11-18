@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const [createPostModal, setCreatePostModal] = useState(false);
   const [navbarMenu, setNavBarMenu] = useState(true);
-  const [userSignInModal, setUserSignInModal] = useState(true);
+  const [userSignInModal, setUserSignInModal] = useState(false);
   const [passwordVisiblity, setPasswordVisibility] = useState(false);
   const [userSignInModalTab, setUserSignInModalTab] = useState(true);
 
