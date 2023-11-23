@@ -8,6 +8,17 @@ export const apiCallBegan = createAction(
     };
   }
 );
+
+export const apiCallFailed = createAction(
+  "api/callFailed",
+  function prepare(payload: any) {
+
+    return {
+      payload
+    };
+  }
+);
+
 export const apiCallSucceeded = createAction("api/callSucceeded");
-export const apiCallFailed = createAction("api/callFailed");
+//export const apiCallFailed = createAction("api/callFailed");
 

@@ -15,7 +15,7 @@ const api =
     };
     try {
       const response = await fetch(
-        baseURL + url ,
+       url ,
         requestOptions
       );
       const comments = await response.json();
@@ -25,7 +25,7 @@ const api =
       dispatch({ type: onSuccess, payload: comments });
     } catch (error: any) {
       // General handling
-      dispatch(actions.apiCallFailed(error.message));
+     // dispatch(actions.apiCallFailed(error.message));
       //specified handling
       if(onError) dispatch({ type: onError, payload: error.message });
     }

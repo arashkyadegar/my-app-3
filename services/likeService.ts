@@ -1,5 +1,6 @@
 export class LikeService {
-  baseUrl: string = "http://localhost:8000/likes/";
+  baseUrl: string = `${process.env.NEXT_PUBLIC_BASEURL}/likes`;
+
   // async fetchCommentsByPostId(postId: string):Promise<any> {
   //   const resComments = await fetch(this.baseUrl + postId)
   //   const repoComments = await resComments.json();

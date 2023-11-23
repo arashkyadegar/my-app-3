@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import validator from "validator";
 import * as actions from "../redux/store/api";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
+import Swal from "sweetalert2";
 
 export default function SignIn({ props }: any) {
   const { loginForm, setLoginForm } = React.useContext(myAppContext);
@@ -21,9 +22,10 @@ export default function SignIn({ props }: any) {
     if (loginForm.formIsValid) {
       dispatch(
         actions.apiCallBegan({
-          url: "/auth/login/",
+          url: "http://localhost:3005/auth/login",
           method: "POST",
           onSuccess: "user/userRecieved",
+          onError: "api/apiCallFailed",
           body: JSON.stringify({
             name: loginForm.username,
             password: loginForm.password,
@@ -34,7 +36,31 @@ export default function SignIn({ props }: any) {
       setUserSignInModal(false);
     }
   }
-
+  function x(payload: any) {
+    let timerInterval: any;
+    Swal.fire({
+      title: "error",
+      html: payload,
+      timer: 2000,
+      position: "bottom-end",
+      color: "white",
+      background: "#fa6b6b",
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup()!.querySelector("b");
+        timerInterval = setInterval(() => {}, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      /* Read more about handling dismissals below */
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log("I was closed by the timer");
+      }
+    });
+  }
   function fillLoginUsername(event: any) {
     let text: string = validator.escape(event.target.value);
     if (validator.isEmpty(text)) {

@@ -5,8 +5,8 @@ import { PostService } from "@/services/postService";
 import { CommentService } from "@/services/commentService";
 export default function SinglePost(rslt: any) {
   let props = {
-    post: JSON.parse(rslt.post)[0],
-    comments: JSON.parse(rslt.comments),
+    post: rslt.post,
+    comments: rslt.comments,
     postId: rslt.postId,
   };
 
@@ -17,7 +17,7 @@ export async function getServerSideProps(context: any) {
   const _postService = new PostService();
   const _commentService = new CommentService();
   let post;
-  let comments;
+  let comments = [];
   const { postId } = context.query;
   const { userId } = context.query;
   if (userId === undefined) {
@@ -26,8 +26,8 @@ export async function getServerSideProps(context: any) {
   } else {
     post = await _postService.fetchOnePost(postId, userId);
     comments = await _commentService.fetchCommentsByPostId(postId);
-  }
 
+  }
   return { props: { post, comments, postId } };
 }
 SinglePost.Layout = "Main";

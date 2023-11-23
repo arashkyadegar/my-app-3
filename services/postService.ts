@@ -1,37 +1,39 @@
 import { Post } from "@/models/entities";
 
 export class PostService {
-  baseUrl: string = "http://localhost:8000/posts/";
-  async fetchOnePost(postId: string,userId: string):Promise<any> {
-    let query= "";
-    if(userId != "") {
-      query=`?userId=${userId}`;
+  //baseUrl: string =  `http://localhost:3005/posts/`;
+  baseUrl: string =  process.env.NEXT_PUBLIC_BASEURL + "/posts";
+  async fetchOnePost(postId: string, userId: string): Promise<any> {
+    let query = "";
+    if (userId != "") {
+      query = `?userId=${userId}`;
     }
-    const resPost = await fetch(this.baseUrl + postId+ query);
+    const resPost = await fetch(this.baseUrl +"/findOne/655ce9ee79dd0947b3543ed7?userId=655bc51554641d13516444a5");
     const repoPost = await resPost.json();
-    return JSON.stringify(repoPost);
+    return repoPost;
   }
-  
-  async fetchAllPosts():Promise<any> {
-    const res = await fetch(this.baseUrl + "findAll");
+
+  async fetchAllPosts(): Promise<any> {
+    const res = await fetch(`${this.baseUrl}/findAll`);
     const repo = await res.json();
     return JSON.stringify(repo);
   }
 
-  async fetchAddNewPost(postEntity: Post):Promise<any> {
+  async fetchAddNewPost(postEntity: Post): Promise<any> {
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(postEntity)
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(postEntity),
     };
 
-    fetch(this.baseUrl ,requestOptions)
+    fetch(process.env.NEXT_PUBLIC_BASEURL + this.baseUrl, requestOptions)
       .then((res) => res.json())
-        .then((data) => {
-            console.log(data);
-    }).catch((error: any) => {
-      console.error('Exception got caught...');
-      console.error(error);
-    });;
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error: any) => {
+        console.error("Exception got caught...");
+        console.error(error);
+      });
   }
 }

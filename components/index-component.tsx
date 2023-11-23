@@ -7,6 +7,7 @@ import SideMostViewedPeople from "./side-most-viewed-people";
 import myAppContext from "@/components/context/context";
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
+import Swal from "sweetalert2";
 
 export default function IndexComponent({ props }: any) {
   const { createPostModal, setCreatePostModal } =
@@ -70,12 +71,14 @@ export default function IndexComponent({ props }: any) {
             <div className="z-20 flex flex-col items-center justify-center  bg-black-rgba fixed inset-0">
               <AddPost />
             </div>
+            
           )}
         </div>
       </div>
       <div className="flex flex-row mr-1 mt-2 justify-end">
         <SideLink />
       </div>
+
     </div>
   );
 }

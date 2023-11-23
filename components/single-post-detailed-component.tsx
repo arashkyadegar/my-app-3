@@ -19,9 +19,9 @@ import * as actions from "../redux/store/api";
 
 export default function SinglePostDetailedComponent(this: any, { props }: any) {
 
-  const post = props.post;
-  const comments = props.comments;
-  const postId = props.postId;
+   const post = props.post[0];
+   const comments = props.comments;
+   const postId = props.postId;
   const dispatch = useAppDispatch();
   const userState = useAppSelector((state) => state.entities.user);
   const selectedPostState = useAppSelector(
@@ -31,7 +31,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
   const [firstRender, setFirstrender] = useState(false);
   const [commentForm, setCommentForm] = useState(new CommentForm());
-  console.log(selectedPostState.data.liked);
+
   async function submitDeleteLike(event: any): Promise<void> {
     if (userState.data._id !== "") {
       dispatch(
@@ -89,7 +89,6 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     //  setFirstrender(true);
     //}
     dispatch(commentsRecieved(comments));
-    console.log(post);
     dispatch(
       selectedPostUpdated({
         _id: post._id,
@@ -108,7 +107,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
         liked: post.liked,
       })
     );
-  }, []);
+   }, []);
 
   moment.locale();
 
@@ -119,7 +118,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   function loadComments() {
     dispatch(
       actions.apiCallBegan({
-        url: "/comments/" + postId,
+        url: "comments/" +postId,
         method: "GET",
         onSuccess: "comments/commentsRecieved",
       })
@@ -146,27 +145,47 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
 
   async function submitSendComment(event: any): Promise<void> {
     event.preventDefault();
-
     if (userState.data._id) {
       if (commentForm.formIsValid) {
-        const _commentService = new CommentService();
-        _commentService
-          .fetchAddNewComment(
-            userState.data._id,
-            postId,
-            commentForm.commentText
-          )
-          .then(() => {
-            loadComments();
-          });
+        dispatch(
+          actions.apiCallBegan({
+            url: "comments/" +postId,
+            method: "Post",
+            onSuccess: "comments/commentsRecieved",
+            body :{
+                "userId": userState.data._id,
+                "postId": postId,
+                "commentId": "",
+                "text": commentForm.commentText,
+                "rate": 0,
+                "isVisible": false,
+                "date": ""
+              
+            }
+          })
+        );
 
-        setCommentForm({
-          ...commentForm,
-          commentText: "",
-          formIsValid: false,
-        });
-      }
-    } else {
+
+
+
+      //   const _commentService = new CommentService();
+      //   _commentService
+      //     .fetchAddNewComment(
+      //       userState.data._id,
+      //       postId,
+      //       commentForm.commentText
+      //     )
+      //     .then(() => {
+      //       loadComments();
+      //     });
+
+      //   setCommentForm({
+      //     ...commentForm,
+      //     commentText: "",
+      //     formIsValid: false,
+      //   });
+      // }
+    }} else {
       Swal.fire({
         title: "خطا در انجام عملیات!",
         text: "برای ثبت نظر لطفا وارد سایت شوید",
