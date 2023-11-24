@@ -22,7 +22,7 @@ export default function SignIn({ props }: any) {
     if (loginForm.formIsValid) {
       dispatch(
         actions.apiCallBegan({
-          url: "http://localhost:3005/auth/login",
+          url: "/auth/login/",
           method: "POST",
           onSuccess: "user/userRecieved",
           onError: "api/apiCallFailed",

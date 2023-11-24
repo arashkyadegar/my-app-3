@@ -14,8 +14,9 @@ const api =
       body: body
     };
     try {
+      console.log(baseURL + url );
       const response = await fetch(
-       url ,
+        baseURL + url ,
         requestOptions
       );
       const comments = await response.json();

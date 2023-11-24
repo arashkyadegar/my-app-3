@@ -8,7 +8,7 @@ export class PostService {
     if (userId != "") {
       query = `?userId=${userId}`;
     }
-    const resPost = await fetch(this.baseUrl +"/findOne/655ce9ee79dd0947b3543ed7?userId=655bc51554641d13516444a5");
+    const resPost = await fetch(this.baseUrl +"/findOne/" + postId + query);
     const repoPost = await resPost.json();
     return repoPost;
   }

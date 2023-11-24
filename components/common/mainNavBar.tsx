@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/store/hooks";
 import { userLoggedOut } from "@/redux/store/user";
 import { useMediaQuery } from "react-responsive";
 import SignIn from "../sign-in";
+import { selectedPostUpdated } from "@/redux/store/selectedPost";
 export default function MainNavBar({ children }: PropsWithChildren) {
   const isBigScreen = useMediaQuery({ query: "(min-width: 640px)" });
 
@@ -32,6 +33,27 @@ export default function MainNavBar({ children }: PropsWithChildren) {
     }).then((result) => {
       if (result.isConfirmed) {
         dispatch(userLoggedOut({}));
+        // dispatch(
+        //   selectedPostUpdated({
+        //     _id: "",
+        //     title: "",
+        //     body: "",
+        //     rate: 0,
+        //     img: "",
+        //     date: "",
+        //     isVisible: false,
+        //     documents: [],
+        //     tags: [],
+        //     links: [],
+        //     likes: [],
+        //     comments: [],
+        //     liked: false,
+        //     author: {
+        //       _id: "",
+        //       name: "",
+        //     },
+        //   })
+        // );
         localStorage.setItem("name", "");
         localStorage.setItem("img", "img_avatar1.png");
         localStorage.setItem("_id", "");

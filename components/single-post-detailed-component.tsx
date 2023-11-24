@@ -18,22 +18,23 @@ import { commentsRecieved } from "../redux/store/comments";
 import * as actions from "../redux/store/api";
 
 export default function SinglePostDetailedComponent(this: any, { props }: any) {
-
-   const post = props.post[0];
-   const comments = props.comments;
-   const postId = props.postId;
+  const post = props.post[0];
+  const comments = props.comments;
+  const postId = props.postId;
   const dispatch = useAppDispatch();
   const userState = useAppSelector((state) => state.entities.user);
   const selectedPostState = useAppSelector(
     (state) => state.entities.selectedPost
   );
+
   const commentsState = useAppSelector((state) => state.entities.comments);
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
   const [firstRender, setFirstrender] = useState(false);
   const [commentForm, setCommentForm] = useState(new CommentForm());
 
   async function submitDeleteLike(event: any): Promise<void> {
-    if (userState.data._id !== "") {
+    console.log('ok');
+    if (userState.data._id) {
       dispatch(
         actions.apiCallBegan({
           url: "/likes/",
@@ -42,13 +43,11 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
           body: JSON.stringify({
             userId: userState.data._id,
             postId: selectedPostState.data._id,
-            date: "",
+            date: ""
           }),
         })
       );
-      // dispatch(
-      //   selectedPostDislike({liked : false})
-      // );
+      dispatch(selectedPostDislike({ liked: false }));
     } else {
       Swal.fire({
         title: "خطا در انجام عملیات!",
@@ -69,10 +68,11 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
           body: JSON.stringify({
             userId: userState.data._id,
             postId: selectedPostState.data._id,
-            date: "",
+            date: ""
           }),
         })
       );
+      dispatch(selectedPostDislike({ liked: true }));
     } else {
       Swal.fire({
         title: "خطا در انجام عملیات!",
@@ -84,30 +84,30 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   }
 
   useEffect(() => {
-    // if (firstRender) {
-    loadComments();
-    //  setFirstrender(true);
-    //}
+   // if (firstRender) {
+      //loadComments();
+      // setFirstrender(true);
+       dispatch(
+        selectedPostUpdated({
+          _id: post._id,
+          author: post.author,
+          title: post.title,
+          body: post.body,
+          rate: post.rate,
+          img: post.img,
+          date: post.date,
+          isVisible: post.isVisible,
+          documents: post.documents,
+          tags: post.tags,
+          links: post.links,
+          likes: post.likes,
+          comments: post.comments,
+          liked: post.liked,
+        })
+      );
+   // }
     dispatch(commentsRecieved(comments));
-    dispatch(
-      selectedPostUpdated({
-        _id: post._id,
-        author: post.author,
-        title: post.title,
-        body: post.body,
-        rate: post.rate,
-        img: post.img,
-        date: post.date,
-        isVisible: post.isVisible,
-        documents: post.documents,
-        tags: post.tags,
-        links: post.links,
-        likes: post.likes,
-        comments: post.comments,
-        liked: post.liked,
-      })
-    );
-   }, []);
+  }, []);
 
   moment.locale();
 
@@ -118,7 +118,7 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
   function loadComments() {
     dispatch(
       actions.apiCallBegan({
-        url: "comments/" +postId,
+        url: "/comments/" + postId,
         method: "GET",
         onSuccess: "comments/commentsRecieved",
       })
@@ -149,43 +149,23 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
       if (commentForm.formIsValid) {
         dispatch(
           actions.apiCallBegan({
-            url: "comments/" +postId,
-            method: "Post",
-            onSuccess: "comments/commentsRecieved",
-            body :{
-                "userId": userState.data._id,
-                "postId": postId,
-                "commentId": "",
-                "text": commentForm.commentText,
-                "rate": 0,
-                "isVisible": false,
-                "date": ""
-              
-            }
+            url: "/comments/" + postId,
+            method: "POST",
+            onSuccess: "",
+            body: JSON.stringify({
+              userId: userState.data._id,
+              postId: postId,
+              commentId: "",
+              text: commentForm.commentText,
+              rate: 0,
+              isVisible: false,
+              date: "",
+            }),
           })
         );
-
-
-
-
-      //   const _commentService = new CommentService();
-      //   _commentService
-      //     .fetchAddNewComment(
-      //       userState.data._id,
-      //       postId,
-      //       commentForm.commentText
-      //     )
-      //     .then(() => {
-      //       loadComments();
-      //     });
-
-      //   setCommentForm({
-      //     ...commentForm,
-      //     commentText: "",
-      //     formIsValid: false,
-      //   });
-      // }
-    }} else {
+        loadComments();
+      }
+    } else {
       Swal.fire({
         title: "خطا در انجام عملیات!",
         text: "برای ثبت نظر لطفا وارد سایت شوید",

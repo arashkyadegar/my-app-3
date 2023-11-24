@@ -4,6 +4,8 @@ const inter = Inter({ subsets: ["latin"] });
 import { PostService } from "@/services/postService";
 import { CommentService } from "@/services/commentService";
 export default function SinglePost(rslt: any) {
+  console.log('selected post :');
+  console.log(rslt.post);
   let props = {
     post: rslt.post,
     comments: rslt.comments,
