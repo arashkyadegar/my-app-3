@@ -1,5 +1,6 @@
 import { User } from "@/models/entities";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { apiCallBegan } from "./api";
 
 // Part 2
 export const selectedPostSlice = createSlice({
@@ -43,4 +44,30 @@ export const selectedPostSlice = createSlice({
 // Part 3
 export const { selectedPostUpdated, selectedPostLike, selectedPostDislike } =
   selectedPostSlice.actions;
+
+// action creators
+export const submitSendLikeAction = (userId: any, postId: any) => apiCallBegan({
+  url: "/likes/",
+  method: "POST",
+  onSuccess: "selectedPost/selectedPostLike",
+  body: JSON.stringify({
+    userId: userId,
+    postId: postId,
+    date: ""
+  }),
+});
+
+export const submitDeleteLikeAction = (userId: any, postId: any) => apiCallBegan({
+  url: "/likes/",
+  method: "DELETE",
+  onSuccess: "selectedPost/selectedPostDislike",
+  body: JSON.stringify({
+    userId,
+    postId,
+    date: ""
+  }),
+});
+
+
+
 export default selectedPostSlice.reducer;

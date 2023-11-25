@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Comment } from "@/models/entities";
 import { CommentForm } from "@/models/entities";
 import { createSelector } from "reselect";
+import { apiCallBegan } from "./api";
 
 // Part 2
 export const commentsSlice = createSlice({
@@ -49,3 +50,17 @@ export const getVisibleComments = createSelector(
   (state: any) => state.comments,
   (comments: any) => comments.filter((comment: any) => comment.isVisible)
 );
+
+// action creators
+export const submitSendCommentAction = (postId: any,comment: any) => apiCallBegan({
+  url: "/comments/" + postId,
+  method: "POST",
+  onSuccess: "",
+  body: JSON.stringify(comment)
+});
+
+export const loadCommentsAction =  (postId: any) => apiCallBegan ({
+  url: "/comments/" + postId,
+  method: "GET",
+  onSuccess: "comments/commentsRecieved",
+});

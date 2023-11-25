@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import SingleCommentComponent from "./single-comment-component";
 import React from "react";
 import { CommentForm } from "@/models/entities";
-import { CommentService } from "@/services/commentService";
-import { LikeService } from "@/services/likeService";
 import validator from "validator";
 import Swal from "sweetalert2";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
@@ -13,9 +11,11 @@ import {
   selectedPostLike,
   selectedPostDislike,
   selectedPostUpdated,
+  submitSendLikeAction,
+  submitDeleteLikeAction,
 } from "@/redux/store/selectedPost";
-import { commentsRecieved } from "../redux/store/comments";
-import * as actions from "../redux/store/api";
+import { commentsRecieved, loadCommentsAction,submitSendCommentAction } from "../redux/store/comments";
+
 
 export default function SinglePostDetailedComponent(this: any, { props }: any) {
   const post = props.post[0];
@@ -29,24 +29,13 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
 
   const commentsState = useAppSelector((state) => state.entities.comments);
   const [postDrpDwnHide, setPostDrpDwnHide] = useState(false);
-  const [firstRender, setFirstrender] = useState(false);
   const [commentForm, setCommentForm] = useState(new CommentForm());
 
   async function submitDeleteLike(event: any): Promise<void> {
-    console.log('ok');
     if (userState.data._id) {
-      dispatch(
-        actions.apiCallBegan({
-          url: "/likes/",
-          method: "DELETE",
-          onSuccess: "selectedPost/selectedPostDislike",
-          body: JSON.stringify({
-            userId: userState.data._id,
-            postId: selectedPostState.data._id,
-            date: ""
-          }),
-        })
-      );
+      const userId = userState.data._id;
+      const postId = selectedPostState.data._id;
+      dispatch(submitDeleteLikeAction(userId,postId));
       dispatch(selectedPostDislike({ liked: false }));
     } else {
       Swal.fire({
@@ -60,18 +49,9 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
 
   async function submitSendLike(event: any): Promise<void> {
     if (userState.data._id) {
-      dispatch(
-        actions.apiCallBegan({
-          url: "/likes/",
-          method: "POST",
-          onSuccess: "selectedPost/selectedPostLike",
-          body: JSON.stringify({
-            userId: userState.data._id,
-            postId: selectedPostState.data._id,
-            date: ""
-          }),
-        })
-      );
+      const userId = userState.data._id;
+      const postId = selectedPostState.data._id;
+      dispatch(submitSendLikeAction(userId,postId));
       dispatch(selectedPostDislike({ liked: true }));
     } else {
       Swal.fire({
@@ -115,15 +95,6 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     setPostDrpDwnHide(!postDrpDwnHide);
   };
 
-  function loadComments() {
-    dispatch(
-      actions.apiCallBegan({
-        url: "/comments/" + postId,
-        method: "GET",
-        onSuccess: "comments/commentsRecieved",
-      })
-    );
-  }
 
   function fillCommentText(event: any) {
     let text: string = validator.escape(event.target.value);
@@ -147,23 +118,19 @@ export default function SinglePostDetailedComponent(this: any, { props }: any) {
     event.preventDefault();
     if (userState.data._id) {
       if (commentForm.formIsValid) {
-        dispatch(
-          actions.apiCallBegan({
-            url: "/comments/" + postId,
-            method: "POST",
-            onSuccess: "",
-            body: JSON.stringify({
-              userId: userState.data._id,
-              postId: postId,
-              commentId: "",
-              text: commentForm.commentText,
-              rate: 0,
-              isVisible: false,
-              date: "",
-            }),
-          })
-        );
-        loadComments();
+        const userId = userState.data._id;
+        const postId = selectedPostState.data._id;
+        const comment = {
+          userId: userId,
+          postId: postId,
+          commentId: "",
+          text: commentForm.commentText,
+          rate: 0,
+          isVisible: false,
+          date: "",
+        };
+        dispatch(submitSendCommentAction(postId,comment));
+        dispatch(loadCommentsAction(postId));
       }
     } else {
       Swal.fire({

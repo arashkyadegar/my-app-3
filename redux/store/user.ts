@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { apiCallBegan } from "./api";
 
 export const userSlice = createSlice({
   name: "user",
@@ -20,7 +21,7 @@ export const userSlice = createSlice({
       state.lastFetch = Date.now();
     },
     userRemembered: (state, action: PayloadAction<any>) => {
-      console.log('reducer');
+      console.log("reducer");
       console.log(action.payload);
       state.data = action.payload;
     },
@@ -35,6 +36,19 @@ export const userSlice = createSlice({
   },
 });
 
+// action creator
+export const submitSigninAction = (username: any, password: any) =>
+  apiCallBegan({
+    url: "/auth/login/",
+    method: "POST",
+    onSuccess: "user/userRecieved",
+    onError: "api/apiCallFailed",
+    body: JSON.stringify({
+      name: username,
+      password: password,
+      remember: true,
+    }),
+  });
 // Part 3
 export const { userRemembered, userLoggedOut } = userSlice.actions;
 export default userSlice.reducer;

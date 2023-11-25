@@ -5,6 +5,7 @@ import validator from "validator";
 import * as actions from "../redux/store/api";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
 import Swal from "sweetalert2";
+import { submitSigninAction } from "@/redux/store/user";
 
 export default function SignIn({ props }: any) {
   const { loginForm, setLoginForm } = React.useContext(myAppContext);
@@ -16,23 +17,12 @@ export default function SignIn({ props }: any) {
     React.useContext(myAppContext);
   const user = useAppSelector((state) => state.entities.user);
   const dispatch = useAppDispatch();
-  console.log(userSignInModalTab);
   async function submitSigninApi(event: any): Promise<void> {
     event.preventDefault();
     if (loginForm.formIsValid) {
-      dispatch(
-        actions.apiCallBegan({
-          url: "/auth/login/",
-          method: "POST",
-          onSuccess: "user/userRecieved",
-          onError: "api/apiCallFailed",
-          body: JSON.stringify({
-            name: loginForm.username,
-            password: loginForm.password,
-            remember: true,
-          }),
-        })
-      );
+      const username = loginForm.username;
+      const password = loginForm.password;
+      dispatch(submitSigninAction(username,password));
       setUserSignInModal(false);
     }
   }
