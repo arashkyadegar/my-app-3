@@ -4,7 +4,8 @@ import myAppContext from "./context/context";
 import { User, Post } from "@/models/entities";
 import { PostService } from "@/services/postService";
 import validator from "validator";
-import { useAppSelector } from "@/redux/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/store/hooks";
+import { submitCreatePostAction } from "@/redux/store/posts";
 
 export default function AddPost({ props }: any) {
   const { user } = useAppSelector((state) => state.entities);
@@ -13,10 +14,9 @@ export default function AddPost({ props }: any) {
     React.useContext(myAppContext);
   const { createPostModal, setCreatePostModal } =
     React.useContext(myAppContext);
+    const dispatch = useAppDispatch();
   function createPost() {
-    let _postService = new PostService();
     let post = new Post();
-
     post._id = "";
     post.author = {
       _id: user.data._id,
@@ -40,7 +40,7 @@ export default function AddPost({ props }: any) {
     post.documents = [];
     post.links = [];
     post.comments = [];
-    _postService.fetchAddNewPost(post).then((data: any) => {});
+    dispatch(submitCreatePostAction(post));
   }
 
   function fillTag(event: any) {

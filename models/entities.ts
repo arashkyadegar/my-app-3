@@ -68,7 +68,7 @@ export class User extends IUser {
   tags: string[] = [];
   followers: string[] = [];
   followings: string[] = [];
-  likes: string[] =[];
+  likes: string[] = [];
 }
 
 export class ILoginFields {
@@ -80,6 +80,7 @@ export class LoginForm extends ILoginFields {
   usernameError: string = "";
   passwordError: string = "";
   formIsValid: boolean = false;
+  uploaded_file: string = "";
 }
 
 export class TreeEntity {

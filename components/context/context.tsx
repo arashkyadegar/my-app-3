@@ -55,6 +55,7 @@ const myAppContext = createContext({
     password: "",
     usernameError: "",
     passwordError: "",
+    uploaded_file:"",
     formIsValid: false,
   },
   setLoginForm: (loginForm: LoginForm) => {},

@@ -20,9 +20,26 @@ export default function SignIn({ props }: any) {
   async function submitSigninApi(event: any): Promise<void> {
     event.preventDefault();
     if (loginForm.formIsValid) {
+      const formdata = new FormData();
       const username = loginForm.username;
       const password = loginForm.password;
-      dispatch(submitSigninAction(username,password));
+      const remember = true;
+
+      const file = loginForm.uploaded_file;
+      formdata.set("file",file);
+      formdata.set("name",username);
+
+      // dispatch(
+      //   actions.apiCallBegan({
+      //     url: "/uploads/",
+      //     method: "POST",
+      //     onSuccess: "user/userRecieved",
+      //     //onError: "api/apiCallFailed",
+      //     body: formdata,
+      //   })
+      // );
+      dispatch(submitSigninAction(username, password, remember));
+
       setUserSignInModal(false);
     }
   }
@@ -49,6 +66,14 @@ export default function SignIn({ props }: any) {
       if (result.dismiss === Swal.DismissReason.timer) {
         console.log("I was closed by the timer");
       }
+    });
+  }
+  function fillLoginFile(event: any) {
+    const fileInput = event.target.files[0];
+    // console.log(fileInput.value);
+    setLoginForm({
+      ...loginForm,
+      uploaded_file: fileInput,
     });
   }
   function fillLoginUsername(event: any) {
@@ -202,8 +227,18 @@ export default function SignIn({ props }: any) {
                 ></path>
               </svg>
             </div>
-            <form onSubmit={submitSigninApi} data-te-validation-init>
+            <form
+              onSubmit={submitSigninApi}
+              encType="multipart/form-data"
+              data-te-validation-init
+            >
               <div className="flex flex-col relative  mb-2">
+                <input
+                  onChange={fillLoginFile}
+                  type="file"
+                  className="form-control-file"
+                  name="uploaded_file"
+                />
                 <label htmlFor="email" className="text-base mb-2">
                   نام کاربری
                 </label>

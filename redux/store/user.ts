@@ -17,15 +17,16 @@ export const userSlice = createSlice({
   },
   reducers: {
     userRecieved: (state: any, action: PayloadAction<any>) => {
+      console.log(action.payload);
       state.data = action.payload[0];
       state.lastFetch = Date.now();
     },
-    userRemembered: (state, action: PayloadAction<any>) => {
+    userRemembered: (state: any, action: PayloadAction<any>) => {
       console.log("reducer");
       console.log(action.payload);
       state.data = action.payload;
     },
-    userLoggedOut: (state, action: PayloadAction<any>) => {
+    userLoggedOut: (state: any, action: PayloadAction<any>) => {
       state.data._id = "";
       state.data.name = "";
       state.data.img = "img_avatar1.png";
@@ -37,16 +38,17 @@ export const userSlice = createSlice({
 });
 
 // action creator
-export const submitSigninAction = (username: any, password: any) =>
+//export const submitSigninAction = (formData: any) =>
+export const submitSigninAction = (name: any, password: any, remember: any) =>
   apiCallBegan({
     url: "/auth/login/",
     method: "POST",
     onSuccess: "user/userRecieved",
     onError: "api/apiCallFailed",
     body: JSON.stringify({
-      name: username,
+      name: name,
       password: password,
-      remember: true,
+      remember: remember,
     }),
   });
 // Part 3

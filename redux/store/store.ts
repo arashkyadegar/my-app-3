@@ -25,12 +25,6 @@ const persistedReducer = persistReducer(persistConfig, reducer);
 export const makePersistStore = () =>
   configureStore({
     reducer: persistedReducer,
-    //  middleware: [reduxLogger,api]
-    // middleware: getDefaultMiddleware({
-    //   serializableCheck: {
-    //     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-    //   }
-    // })
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(reduxLogger, api),
   });
@@ -38,12 +32,6 @@ export const makePersistStore = () =>
 export const makeStore = () =>
   configureStore({
     reducer: reducer,
-    //  middleware: [reduxLogger,api]
-    // middleware: getDefaultMiddleware({
-    //   serializableCheck: {
-    //     ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
-    //   }
-    // })
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(reduxLogger, api),
   });
