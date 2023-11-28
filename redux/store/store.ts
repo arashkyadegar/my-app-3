@@ -12,6 +12,8 @@ import api from "./middleware/api";
 import { persistStore, persistReducer, FLUSH } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+
+
 const persistConfig = {
   key: "root",
   storage,

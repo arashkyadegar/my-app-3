@@ -8,6 +8,7 @@ import {
   LoginForm,
   Post,
   PostForm,
+  SignupForm,
   User,
 } from "@/models/entities";
 import { wrapperForPersistStore, wrapperForStore } from "../redux/store/store";
@@ -21,9 +22,13 @@ export default function App({ Component, pageProps }: AppProps) {
   const [createPostModal, setCreatePostModal] = useState(false);
   const [navbarMenu, setNavBarMenu] = useState(true);
   const [userSignInModal, setUserSignInModal] = useState(false);
+
+  const [passwordRepeatVisiblity, setPasswordRepeatVisibility] = useState(false);
+                                  
   const [passwordVisiblity, setPasswordVisibility] = useState(false);
   const [userSignInModalTab, setUserSignInModalTab] = useState(true);
 
+  const [signupForm, setSignupForm] = useState(new SignupForm());
   const [loginForm, setLoginForm] = useState(new LoginForm());
   const [commentForm, setCommentForm] = useState(new CommentForm());
 
@@ -37,6 +42,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <myAppContext.Provider
       value={{
+        passwordRepeatVisiblity,
+        setPasswordRepeatVisibility,
+        signupForm,
+        setSignupForm,
         passwordVisiblity,
         setPasswordVisibility,
         createPostModal,

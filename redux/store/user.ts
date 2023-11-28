@@ -16,8 +16,11 @@ export const userSlice = createSlice({
     lastFetch: null,
   },
   reducers: {
+    userCreatedRecieved: (state: any, action: PayloadAction<any>) => {
+      state.data = action.payload[0];
+      state.lastFetch = Date.now();
+    },
     userRecieved: (state: any, action: PayloadAction<any>) => {
-      console.log(action.payload);
       state.data = action.payload[0];
       state.lastFetch = Date.now();
     },
@@ -38,11 +41,28 @@ export const userSlice = createSlice({
 });
 
 // action creator
-//export const submitSigninAction = (formData: any) =>
+export const submitSignupAction = (user: any) =>
+  
+  apiCallBegan({
+    url: "/users/",
+    method: "POST",
+    onSuccess: "user/userCreatedRecieved",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    onError: "api/apiCallFailed",
+    body: JSON.stringify(
+      user
+    ),
+  });
+  
 export const submitSigninAction = (name: any, password: any, remember: any) =>
   apiCallBegan({
     url: "/auth/login/",
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     onSuccess: "user/userRecieved",
     onError: "api/apiCallFailed",
     body: JSON.stringify({
@@ -52,5 +72,5 @@ export const submitSigninAction = (name: any, password: any, remember: any) =>
     }),
   });
 // Part 3
-export const { userRemembered, userLoggedOut } = userSlice.actions;
+export const { userRemembered, userLoggedOut,userCreatedRecieved } = userSlice.actions;
 export default userSlice.reducer;

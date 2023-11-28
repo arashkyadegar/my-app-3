@@ -5,10 +5,14 @@ import validator from "validator";
 import * as actions from "../redux/store/api";
 import { useAppDispatch, useAppSelector } from "../redux/store/hooks";
 import Swal from "sweetalert2";
-import { submitSigninAction } from "@/redux/store/user";
+import { submitSigninAction, submitSignupAction } from "@/redux/store/user";
+import { submitUploadAction } from "@/redux/store/file";
 
 export default function SignIn({ props }: any) {
   const { loginForm, setLoginForm } = React.useContext(myAppContext);
+  const { signupForm, setSignupForm } = React.useContext(myAppContext);
+  const { passwordRepeatVisiblity, setPasswordRepeatVisibility } =
+    React.useContext(myAppContext);
   const { passwordVisiblity, setPasswordVisibility } =
     React.useContext(myAppContext);
   const { userSignInModalTab, setUserSignInModalTab } =
@@ -16,31 +20,47 @@ export default function SignIn({ props }: any) {
   const { userSignInModal, setUserSignInModal } =
     React.useContext(myAppContext);
   const user = useAppSelector((state) => state.entities.user);
+  const fileState = useAppSelector((state) => state.entities.file);
   const dispatch = useAppDispatch();
   async function submitSigninApi(event: any): Promise<void> {
     event.preventDefault();
     if (loginForm.formIsValid) {
-      const formdata = new FormData();
       const username = loginForm.username;
       const password = loginForm.password;
       const remember = true;
 
-      const file = loginForm.uploaded_file;
-      formdata.set("file",file);
-      formdata.set("name",username);
-
-      // dispatch(
-      //   actions.apiCallBegan({
-      //     url: "/uploads/",
-      //     method: "POST",
-      //     onSuccess: "user/userRecieved",
-      //     //onError: "api/apiCallFailed",
-      //     body: formdata,
-      //   })
-      // );
       dispatch(submitSigninAction(username, password, remember));
 
       setUserSignInModal(false);
+    }
+  }
+  async function submitSignupApi(event: any): Promise<void> {
+    event.preventDefault();
+    if (signupForm.formIsValid) {
+      const username = signupForm.username;
+      const password = signupForm.password;
+      const remember = true;
+
+      const formdata = new FormData();
+      const file = loginForm.uploaded_file;
+      formdata.set("file", file);
+      formdata.set("name", username);
+      dispatch(submitUploadAction(formdata));
+      const filename = fileState.data.name;
+      dispatch(
+        submitSignupAction({
+          name: username,
+          password: password,
+          token: "",
+          remember: remember,
+          tags: [],
+          likes: [],
+          followers: [],
+          followings: [],
+          img: filename,
+          _id: "",
+        })
+      );
     }
   }
   function x(payload: any) {
@@ -76,6 +96,23 @@ export default function SignIn({ props }: any) {
       uploaded_file: fileInput,
     });
   }
+  function fillSignupUsername(event: any) {
+    let text: string = validator.escape(event.target.value);
+    if (validator.isEmpty(text)) {
+      setSignupForm({
+        ...signupForm,
+        usernameError: "لطفا نام کاربری را وارد کنید",
+        formIsValid: false,
+      });
+    } else {
+      setSignupForm({
+        ...signupForm,
+        username: text,
+        usernameError: "",
+        formIsValid: true,
+      });
+    }
+  }
   function fillLoginUsername(event: any) {
     let text: string = validator.escape(event.target.value);
     if (validator.isEmpty(text)) {
@@ -93,7 +130,40 @@ export default function SignIn({ props }: any) {
       });
     }
   }
-
+  function fillSignupPasswordRepeat(event: any) {
+    let text: string = validator.escape(event.target.value);
+    if (validator.isEmpty(text)) {
+      setSignupForm({
+        ...signupForm,
+        passwordRepeatError: "لطفا تکرار کلمه عبور را وارد کنید",
+        formIsValid: false,
+      });
+    } else {
+      setSignupForm({
+        ...signupForm,
+        passwordRepeat: text,
+        passwordRepeatError: "",
+        formIsValid: true,
+      });
+    }
+  }
+  function fillSignupPassword(event: any) {
+    let text: string = validator.escape(event.target.value);
+    if (validator.isEmpty(text)) {
+      setSignupForm({
+        ...signupForm,
+        passwordError: "لطفا کلمه عبور را وارد کنید",
+        formIsValid: false,
+      });
+    } else {
+      setSignupForm({
+        ...signupForm,
+        password: text,
+        passwordError: "",
+        formIsValid: true,
+      });
+    }
+  }
   function fillLoginPassword(event: any) {
     let text: string = validator.escape(event.target.value);
     if (validator.isEmpty(text)) {
@@ -233,15 +303,10 @@ export default function SignIn({ props }: any) {
               data-te-validation-init
             >
               <div className="flex flex-col relative  mb-2">
-                <input
-                  onChange={fillLoginFile}
-                  type="file"
-                  className="form-control-file"
-                  name="uploaded_file"
-                />
                 <label htmlFor="email" className="text-base mb-2">
                   نام کاربری
                 </label>
+
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -345,7 +410,7 @@ export default function SignIn({ props }: any) {
         {/* register  div */}
         {!userSignInModalTab && (
           <div className=" p-5">
-            <form onSubmit={submitSigninApi} data-te-validation-init>
+            <form onSubmit={submitSignupApi} data-te-validation-init>
               <div className="flex flex-col relative  mb-2">
                 <label htmlFor="email" className="text-base mb-2">
                   نام کاربری
@@ -367,7 +432,7 @@ export default function SignIn({ props }: any) {
 
                 <input
                   required
-                  onChange={fillLoginUsername}
+                  onChange={fillSignupUsername}
                   type="text"
                   id="email"
                   name="email"
@@ -375,7 +440,7 @@ export default function SignIn({ props }: any) {
                 />
 
                 <p className="text-red-600 text-xs">
-                  {loginForm.usernameError}
+                  {signupForm.usernameError}
                 </p>
               </div>
 
@@ -422,17 +487,17 @@ export default function SignIn({ props }: any) {
                 <input
                   required
                   type={passwordVisiblity ? "text" : "password"}
-                  onChange={fillLoginPassword}
+                  onChange={fillSignupPassword}
                   id="password"
                   name="password"
                   className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8"
                 />
                 <p className="text-red-600 text-xs">
-                  {loginForm.passwordError}
+                  {signupForm.passwordError}
                 </p>
               </div>
 
-              <div className="flex flex-col relative ">
+              <div className="flex flex-col relative mb-2">
                 <label htmlFor="passwordRe" className="text-base mb-2 ">
                   تکرار کلمه عبور
                 </label>
@@ -443,7 +508,7 @@ export default function SignIn({ props }: any) {
                   viewBox="0 0 24 24"
                   strokeWidth="1.5"
                   stroke="currentColor"
-                  className="absolute top-9 left-1 w-6 h-6 "
+                  className="absolute top-9 left-1 w-6 h-6"
                 >
                   <path
                     strokeLinecap="round"
@@ -452,19 +517,47 @@ export default function SignIn({ props }: any) {
                   />
                 </svg>
 
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  className="absolute top-9 left-8 w-6 h-6 cursor-pointer "
+                  onMouseDown={() => setPasswordRepeatVisibility(true)}
+                  onMouseUp={() => setPasswordRepeatVisibility(false)}
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"
+                  />
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
                 <input
                   required
-                  type="password"
-                  onChange={fillLoginPassword}
-                  id="passwordRe"
-                  name="passwordRe"
+                  type={passwordRepeatVisiblity ? "text" : "password"}
+                  onChange={fillSignupPasswordRepeat}
+                  id="passwordRepeat"
+                  name="passwordRepeat"
                   className="outline-none rounded-lg bg-transparent border border-gray-600 p-1 pl-8"
                 />
                 <p className="text-red-600 text-xs">
-                  {loginForm.passwordError}
+                  {signupForm.passwordRepeatError}
                 </p>
               </div>
-
+              <div className="flex flex-col">
+                <input
+                  onChange={fillLoginFile}
+                  type="file"
+                  className="form-control-file"
+                  name="uploaded_file"
+                />
+              </div>
               <div className="flex flex-row mt-4 gap-2 justify-end  text-white">
                 <button
                   type="submit"

@@ -83,6 +83,18 @@ export class LoginForm extends ILoginFields {
   uploaded_file: string = "";
 }
 
+export class SignupForm extends ILoginFields {
+  passwordRepeat: string ="";
+  passwordRepeatError: string ="";
+
+  usernameError: string = "";
+
+  passwordError: string = "";
+
+  formIsValid: boolean = false;
+
+  uploaded_file: string = "";
+}
 export class TreeEntity {
   _id: string = "";
   children: TreeEntity[] = [];
@@ -91,6 +103,7 @@ module.exports = {
   Post,
   User,
   LoginForm,
+  SignupForm,
   CommentForm,
   Comment,
   PostForm,

@@ -7,14 +7,11 @@ const api =
     next(action);
     const baseURL = process.env.NEXT_PUBLIC_BASEURL;
     const { url, method, onSuccess, onError, body, headers } = action.payload;
-
+    console.log(action.payload);
     const requestOptions = {
       method: method,
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: body
+      headers: headers,
+      body: body,
     };
     try {
       console.log(baseURL + url);
